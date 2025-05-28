@@ -7,9 +7,15 @@
 
 import UIKit
 
-class HomeViewController: UIViewController {
+protocol HomeViewDisplay: AnyObject{
     
-    var screen: HomeScreen?
+}
+
+
+final class HomeViewController: UIViewController {
+    
+    private var screen: HomeScreen?
+    var interactor: HomeInteracting?
     
     override func loadView() {
         screen = HomeScreen()
@@ -24,3 +30,6 @@ class HomeViewController: UIViewController {
 
 }
 
+extension HomeViewController: HomeViewDisplay {
+    
+}

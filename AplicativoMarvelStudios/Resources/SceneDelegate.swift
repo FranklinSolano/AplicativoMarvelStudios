@@ -10,17 +10,35 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
+    var loginCoordinator: HomeCoordinator? // Referência forte ao Coordinator
 
-
-    func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+    func scene(_ scene: UIScene,
+               willConnectTo session: UISceneSession,
+               options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
+        
+        // Cria a janela principal
         let window = UIWindow(windowScene: windowScene)
-        let vc: HomeViewController = HomeViewController()
-        let navVC = UINavigationController(rootViewController: vc)
-        window.rootViewController = navVC
+        
+        // Cria o UINavigationController
+        let navigationController = UINavigationController()
+        
+        // Cria o LoginViewController e o LoginCoordinator usando a LoginFactory
+        let homeFactory = HomeFactory()
+        let (homeVC, coordinator) = homeFactory.make(navigationController: navigationController)
+        
+        // Mantém uma referência forte ao Coordinatorpod inst
+        self.loginCoordinator = coordinator
+        
+        // Define o LoginViewController como root do UINavigationController
+        navigationController.viewControllers = [homeVC]
+        
+        // Define o UINavigationController como rootViewController da janela
+        window.rootViewController = navigationController
         window.makeKeyAndVisible()
         self.window = window
     }
+
 
     func sceneDidDisconnect(_ scene: UIScene) {
         // Called as the scene is being released by the system.
