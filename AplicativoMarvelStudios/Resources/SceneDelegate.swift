@@ -10,7 +10,7 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-    var loginCoordinator: HomeCoordinator? // Referência forte ao Coordinator
+    var loginCoordinator: LoginCoordinator? // Referência forte ao Coordinator
 
     func scene(_ scene: UIScene,
                willConnectTo session: UISceneSession,
@@ -21,12 +21,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let window = UIWindow(windowScene: windowScene)
         
         // Cria o UINavigationController
-        let navigationController = UINavigationController(rootViewController: HomeViewController())
+        let navigationController = UINavigationController(rootViewController: LoginViewController())
         navigationController.setNavigationBarHidden(true, animated: false)
         
         // Cria o LoginViewController e o LoginCoordinator usando a LoginFactory
-        let homeFactory = HomeFactory()
-        let (homeVC, coordinator) = homeFactory.make(navigationController: navigationController)
+        let loginFactory = LoginFactory()
+        let (homeVC, coordinator) = loginFactory.make(navigationController: navigationController)
         
         // Mantém uma referência forte ao Coordinatorpod inst
         self.loginCoordinator = coordinator

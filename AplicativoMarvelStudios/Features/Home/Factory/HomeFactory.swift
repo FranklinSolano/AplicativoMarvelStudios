@@ -7,19 +7,20 @@
 
 import UIKit
 
-class HomeFactory {
+final class HomeFactory {
     
-    func make(navigationController: UINavigationController) -> (viewController: HomeViewController, coordinator: HomeCoordinator) {
+    func make(navigationController: UINavigationController) -> HomeViewController {
         
-        let HomeVC = HomeViewController()
+        let homeVC = HomeViewController()
         let coordinator = HomeCoordinator()
         coordinator.navigationController = navigationController
-        let presenter = HomePresenter(view: HomeVC, coordinator: coordinator)
+        let presenter = HomePresenter(view: homeVC, coordinator: coordinator)
         coordinator.presenter = presenter
         let service = HomeService()
         let interactor = HomeInteractor(presenter: presenter, service: service)
-        HomeVC.interactor = interactor
-        return (HomeVC, coordinator)
+        homeVC.interactor = interactor
+        return homeVC
     }
+
     
 }

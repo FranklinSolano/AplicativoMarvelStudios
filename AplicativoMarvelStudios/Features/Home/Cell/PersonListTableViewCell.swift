@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 
 class PersonListTableViewCell: UITableViewCell {
-
+    
     static let identifier: String = "PersonListTableViewCell"
     
     private lazy var imagePerson: UIImageView = {
@@ -38,7 +38,7 @@ class PersonListTableViewCell: UITableViewCell {
     
     private lazy var fullName: UILabel = {
         let label = UILabel()
-        label.text = "Peter Park"
+        label.text = "Real nome: Peter Park"
         label.textColor = .white
         return label
     }()
@@ -52,7 +52,7 @@ class PersonListTableViewCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
 }
 
 extension PersonListTableViewCell: ViewCodeProtocol {
@@ -63,17 +63,17 @@ extension PersonListTableViewCell: ViewCodeProtocol {
     
     func setupConstraints() {
         imagePerson.snp.makeConstraints { make in
-            make.leading.equalToSuperview().inset(15)
+            make.leading.equalToSuperview().offset(15)
             make.centerY.equalToSuperview()
             make.height.equalTo(95)
             make.width.equalTo(85)
         }
         
- infoStackView.snp.makeConstraints { make in
-        make.leading.equalTo(imagePerson.snp.trailing).offset(16)
-        make.centerY.equalToSuperview()
-        make.trailing.equalToSuperview().inset(15)
-    }
+        infoStackView.snp.makeConstraints { make in
+            make.leading.equalTo(imagePerson.snp.trailing).offset(16)
+            make.centerY.equalToSuperview()
+            make.trailing.equalToSuperview().inset(15)
+        }
         
     }
     
@@ -82,5 +82,5 @@ extension PersonListTableViewCell: ViewCodeProtocol {
         selectionStyle = .none
     }
     
-     
+    
 }

@@ -7,9 +7,13 @@
 
 import Foundation
 
+// MARK: - Protocol
+
 protocol HomeServicing {
     
 }
+
+// MARK: - Service
 
 final class HomeService: HomeServicing {
     

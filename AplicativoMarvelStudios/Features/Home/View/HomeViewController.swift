@@ -7,15 +7,22 @@
 
 import UIKit
 
+// MARK: - Protocol
+
 protocol HomeViewDisplay: AnyObject{
     
 }
 
+// MARK: - HomeViewController
 
 final class HomeViewController: UIViewController {
     
+    // MARK: - Properties
+    
     private var screen: HomeScreen?
     var interactor: HomeInteracting?
+    
+    // MARK: - Lifecycle
     
     override func loadView() {
         screen = HomeScreen()
@@ -26,13 +33,15 @@ final class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     }
-
-
 }
+
+// MARK: - HomeViewDisplay
 
 extension HomeViewController: HomeViewDisplay {
     
 }
+
+// MARK: - UITableViewDelegate,UITableViewDataSource
 
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
