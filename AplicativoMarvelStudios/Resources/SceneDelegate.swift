@@ -21,7 +21,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let window = UIWindow(windowScene: windowScene)
         
         // Cria o UINavigationController
-        let navigationController = UINavigationController()
+        let navigationController = UINavigationController(rootViewController: HomeViewController())
+        navigationController.setNavigationBarHidden(true, animated: false)
         
         // Cria o LoginViewController e o LoginCoordinator usando a LoginFactory
         let homeFactory = HomeFactory()

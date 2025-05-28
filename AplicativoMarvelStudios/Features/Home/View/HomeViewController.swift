@@ -19,17 +19,29 @@ final class HomeViewController: UIViewController {
     
     override func loadView() {
         screen = HomeScreen()
+        screen?.configTableView(delegate: self, dataSource: self)
         view = screen
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
     }
 
 
 }
 
 extension HomeViewController: HomeViewDisplay {
+    
+}
+
+extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        0
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        UITableViewCell()
+    }
+    
     
 }
