@@ -8,6 +8,7 @@
 import Foundation
 
 struct HomeModel {
+    var id: Int?
     var heroName: String?
     var fullname: String?
     var imagePerson: String?
