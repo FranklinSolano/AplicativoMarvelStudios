@@ -1,0 +1,42 @@
+# Xcode
+.DS_Store
+build/
+DerivedData/
+xcuserdata/
+
+# SwiftPM
+.swiftpm/
+.build/
+
+# CocoaPods
+Pods/
+Podfile.lock
+
+# Carthage
+Carthage/
+
+# Fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/**/*.png
+
+# Xcode automatically generated files
+*.xcuserstate
+*.xcscmblueprint
+
+# IDE workspaces
+*.xcworkspace
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+
+# Crashlytics
+crashlytics-build.properties
+
+# Firebase
+GoogleService-Info.plist
+
+
