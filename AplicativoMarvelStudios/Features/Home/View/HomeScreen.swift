@@ -21,34 +21,17 @@ final class HomeScreen: UIView {
     // MARK: - UI Elements
     
     private lazy var userName: UILabel = {
-        let label = UILabel()
-        label.text = "Hi, Solas"
-        label.textColor = .white
-        label.textAlignment = .center
+        let label = DSLabel(text: "Hi, Solas", textColor: DSColors.titleTextColor, font: DSFonts.titleBold18, numberOfLines: 0, textAlignment: .center)
         return label
     }()
     
     private lazy var searchPerson: UISearchBar = {
-        let searchBar = UISearchBar()
-        searchBar.clipsToBounds = true
-        searchBar.layer.cornerRadius = 10
-        searchBar.searchTextField.backgroundColor = UIColor(red: 38/255, green: 48/255, blue: 59/255, alpha: 1)
-        searchBar.searchBarStyle = .minimal
-        searchBar.searchTextField.attributedPlaceholder = NSAttributedString(
-            string: "Search Person",
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray]
-        )
-        let textField = searchBar.searchTextField
-        if let leftIconView = textField.leftView as? UIImageView {
-            leftIconView.tintColor = .lightGray
-        }
+        let searchBar = DSSearchBar()
         return searchBar
     }()
     
     private lazy var descriptionName: UILabel = {
-        let label = UILabel()
-        label.text = "Marvel Characters"
-        label.textColor = .white
+        let label = DSLabel(text: "Marvel Characters", textColor: DSColors.titleTextColor, font: DSFonts.titleBold22, numberOfLines: 0, textAlignment: .left)
         return label
     }()
     
@@ -116,6 +99,6 @@ extension HomeScreen: ViewCodeProtocol {
     }
     
     func setupAdditionalConfiguration() {
-        backgroundColor = UIColor(red: 20/255, green: 20/255, blue: 20/255, alpha: 1)
+        backgroundColor = DSColors.primaryColor
     }
 }

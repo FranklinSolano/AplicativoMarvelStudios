@@ -30,16 +30,12 @@ class PersonListTableViewCell: UITableViewCell {
     }()
     
     private lazy var heroName: UILabel = {
-        let label = UILabel()
-        label.text = "Homem-Aranha"
-        label.textColor = .white
+        let label = DSLabel(text: "Homem-Aranha", textColor: DSColors.titleTextColor, font: DSFonts.subtitleSemibold16, numberOfLines: 0, textAlignment: .left)
         return label
     }()
     
     private lazy var fullName: UILabel = {
-        let label = UILabel()
-        label.text = "Real nome: Peter Park"
-        label.textColor = .white
+        let label = DSLabel(text: "Nome real: Peter Parker", textColor: DSColors.descriptionTextColor, font: DSFonts.captionLight14, numberOfLines: 0, textAlignment: .left)
         return label
     }()
     
@@ -78,9 +74,7 @@ extension PersonListTableViewCell: ViewCodeProtocol {
     }
     
     func setupAdditionalConfiguration() {
-        backgroundColor = UIColor(red: 20/255, green: 20/255, blue: 20/255, alpha: 1)
+        backgroundColor = DSColors.primaryColor
         selectionStyle = .none
     }
-    
-    
 }
