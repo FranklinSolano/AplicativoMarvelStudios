@@ -43,6 +43,14 @@ final class LoginViewController: UIViewController {
 // MARK: - LoginScreenProtocol
 
 extension LoginViewController: LoginScreenProtocol {
+    func ActionRegisterButton() {
+        
+    }
+    
+    func ActionForgotPasswordButton() {
+        
+    }
+    
     func ActionLoginButton() {
         interactor?.navigateToHome()
     }
