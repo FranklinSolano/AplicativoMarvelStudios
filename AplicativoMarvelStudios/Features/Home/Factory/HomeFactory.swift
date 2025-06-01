@@ -9,7 +9,7 @@ import UIKit
 
 final class HomeFactory {
     
-    func make(navigationController: UINavigationController) -> HomeViewController {
+    func make(navigationController: UINavigationController?) -> HomeViewController {
         
         let homeVC = HomeViewController()
         let coordinator = HomeCoordinator()

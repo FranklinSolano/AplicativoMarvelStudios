@@ -49,6 +49,12 @@ class PersonListTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func setupCell(data: HomeModel?){
+        heroName.text = data?.heroName
+        fullName.text = data?.fullName
+        imagePerson.image = UIImage(named: data?.imageURL ?? "")
+    }
+    
 }
 
 extension PersonListTableViewCell: ViewCodeProtocol {

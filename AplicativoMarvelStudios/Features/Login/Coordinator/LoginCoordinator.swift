@@ -13,19 +13,15 @@ protocol LoginCoordinating {
     func navigateToHome()
 }
 
-final class LoginCoordinator: LoginCoordinating{
-    
-    // MARK: - Properties
+final class LoginCoordinator: LoginCoordinating {
     
     weak var navigationController: UINavigationController?
     var presenter: LoginPresenting?
-    
-    // MARK: - Navigation Methods
+    let homeFactory = HomeFactory()
     
     func navigateToHome() {
         guard let navigationController else { return }
-        let homeVC = TabbarViewController()
-        navigationController.pushViewController(homeVC, animated: true)
-
+        let tabBarController = TabbarViewController(homeFactory: homeFactory)
+        navigationController.setViewControllers([tabBarController], animated: true)
     }
 }

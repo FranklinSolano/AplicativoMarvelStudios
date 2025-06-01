@@ -11,12 +11,12 @@ import UIKit
 // MARK: - Protocol
 
 protocol HomePresenting: AnyObject {
-    
+    func presentHeroes(heroes: [HomeModel])
 }
 
 // MARK: - Presenter
 
-final class HomePresenter: HomePresenting {
+final class HomePresenter {
     
     // MARK: - Properties
     
@@ -31,5 +31,13 @@ final class HomePresenter: HomePresenting {
     }
     
     //MARK: - Outher Methods
+    
+}
+
+extension HomePresenter: HomePresenting {
+    func presentHeroes(heroes: [HomeModel]) {
+        view?.displayHeroes(heroes: heroes)
+    }
+    
     
 }
