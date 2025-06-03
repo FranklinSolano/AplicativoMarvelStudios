@@ -98,7 +98,7 @@ final class LoginScreen: UIView {
         endEditing(true)  // Fecha o teclado ao tocar fora dos campos de texto
     }
     
-    // MARK: - LoginScreen Methods
+    // MARK: - Outher Methods
     
     private func setupTapGesture() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))

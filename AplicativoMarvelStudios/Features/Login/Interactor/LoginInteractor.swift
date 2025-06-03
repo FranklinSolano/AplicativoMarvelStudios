@@ -11,11 +11,14 @@ import Foundation
 
 protocol LoginInteracting: AnyObject{
     func navigateToHome()
+    func navigateToForgotPassword()
+    func navigateToRegister()
+    func callServiceLogin(email: String, password: String)
 }
 
 // MARK: - Interactor
 
-class LoginInteractor: LoginInteracting {
+class LoginInteractor {
     
     // MARK: - Properties
     
@@ -30,8 +33,29 @@ class LoginInteractor: LoginInteracting {
     }
     
     //MARK: - Outher Methods
+}
+
+//MARK: - LoginInteracting
+
+extension LoginInteractor: LoginInteracting {
+    
+    func callServiceLogin(email: String, password: String) {
+        service?.callServiceLogin(email: email, password: password, completion: { [weak self] success in
+            DispatchQueue.main.async {
+                self?.presenter?.presentShowAlertLogin(success: success)
+            }
+        })
+    }
     
     func navigateToHome() {
-        presenter?.presentNavigationToHome()
+        presenter?.presentNavigateToHome()
+    }
+    
+    func navigateToForgotPassword() {
+        presenter?.presentNavigateToForgotPassword()
+    }
+    
+    func navigateToRegister() {
+        presenter?.presentNavigateToRegister()
     }
 }

@@ -31,12 +31,18 @@ class TabbarViewController: UITabBarController {
 
         let homeVC = homeFactory.make(navigationController: nil)
         let homeNav = UINavigationController(rootViewController: homeVC)
+        homeNav.setNavigationBarHidden(true, animated: false)
 
+        
         let favoritosVC = FavoritosViewController()
         let favoritosNav = UINavigationController(rootViewController: favoritosVC)
+        favoritosNav.setNavigationBarHidden(true, animated: false)
+
 
         let profileVC = ProfileViewController()
         let profileNav = UINavigationController(rootViewController: profileVC)
+        profileNav.setNavigationBarHidden(true, animated: false)
+
 
         setViewControllers([homeNav, favoritosNav, profileNav], animated: false)
 

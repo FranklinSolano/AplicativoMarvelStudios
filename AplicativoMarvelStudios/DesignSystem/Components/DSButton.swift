@@ -13,11 +13,9 @@ final class DSButton: UIButton {
         super.init(frame: .zero)
         self.setTitle(title, for: .normal)
         self.setTitleColor(DSColors.titleTextColor, for: .normal)
-        self.backgroundColor = .clear
+        self.backgroundColor = DSColors.secundaryColor
         self.clipsToBounds = true
         self.layer.cornerRadius = 15
-        self.layer.borderWidth = 3
-        self.layer.borderColor = DSColors.secundaryColor.cgColor
         self.isEnabled = true
         self.alpha = 05
     }

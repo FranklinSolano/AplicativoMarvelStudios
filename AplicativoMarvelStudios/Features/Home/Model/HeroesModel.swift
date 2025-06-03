@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct HomeModel {
+struct HeroesModel {
     var id: Int
     var heroName: String
     var fullName: String

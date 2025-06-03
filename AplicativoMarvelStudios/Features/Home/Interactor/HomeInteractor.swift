@@ -21,7 +21,7 @@ final class HomeInteractor{
     
     weak var presenter: HomePresenting?
     private var service: HomeService?
-    
+    var teste: [HeroesModel] = [] 
     
     // MARK: - Init
     
@@ -31,16 +31,14 @@ final class HomeInteractor{
     }
     
     //MARK: - Outher Methods
-    
- 
 }
+
+//MARK: - HomeInteracting
 
 extension HomeInteractor: HomeInteracting {
     func fetchHeroes() {
-        let mockHeroes: [HomeModel] = [HomeModel(id: 1, heroName: "Homem Aranha", fullName: "Peter Parker", imageURL: "Spiderman"),
-                                       HomeModel(id: 1, heroName: "Capitao America", fullName: "Steve Rogers", imageURL: "Spiderman")]
+        let mockHeroes: [HeroesModel] = [HeroesModel(id: 1, heroName: "Homem Aranha", fullName: "Nome real: Peter Parker", imageURL: "Spiderman"),
+                                       HeroesModel(id: 1, heroName: "Capitão América", fullName: "Nome real: Steve Rogers", imageURL: "capitaoAmerica")]
         presenter?.presentHeroes(heroes: mockHeroes)
     }
-    
-    
 }

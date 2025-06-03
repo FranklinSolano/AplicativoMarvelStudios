@@ -10,7 +10,7 @@ import UIKit
 // MARK: - Protocols
 
 protocol LoginViewControllerDisplay: AnyObject {
-    
+    func showAlertLogin(title: String, message: String)
 }
 
 // MARK: - LoginViewController
@@ -34,31 +34,44 @@ final class LoginViewController: UIViewController {
         super.viewDidLoad()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.navigationController?.setNavigationBarHidden(true, animated: animated)
-    }
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//        self.navigationController?.setNavigationBarHidden(true, animated: animated)
+//    }
 }
 
 // MARK: - LoginScreenProtocol
 
 extension LoginViewController: LoginScreenProtocol {
+    
     func ActionRegisterButton() {
-        
+        interactor?.navigateToRegister()
     }
     
     func ActionForgotPasswordButton() {
-        
+        interactor?.navigateToForgotPassword()
     }
     
     func ActionLoginButton() {
-        interactor?.navigateToHome()
+        guard let email = screen?.emailTextField.text,
+              let passwpord = screen?.passwordTextField.text else { return }
+        interactor?.callServiceLogin(email: email, password: passwpord)
     }
 }
 
 // MARK: - LoginViewControllerDisplay
 
 extension LoginViewController: LoginViewControllerDisplay {
+    func showAlertLogin(title: String, message: String) {
+        self.getAlertController(title: title, message: message) {
+            if title != "Deu Ruim" {
+                self.interactor?.navigateToHome()
+            } else {
+                
+            }
+        }
+    }
+    
     
 }
 

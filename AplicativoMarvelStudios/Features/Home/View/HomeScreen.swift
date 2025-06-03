@@ -59,7 +59,6 @@ final class HomeScreen: UIView {
         tableView.delegate = delegate
         tableView.dataSource = dataSource
     }
-    
 }
 
 

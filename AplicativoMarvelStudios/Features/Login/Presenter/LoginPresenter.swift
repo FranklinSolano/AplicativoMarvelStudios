@@ -11,12 +11,15 @@ import Foundation
 // MARK: - Protocol
 
 protocol LoginPresenting: AnyObject {
-    func presentNavigationToHome()
+    func presentNavigateToHome()
+    func presentNavigateToRegister()
+    func presentNavigateToForgotPassword()
+    func presentShowAlertLogin(success: Bool)
 }
 
 // MARK: - Presenter
 
-final class LoginPresenter: LoginPresenting {
+final class LoginPresenter {
     
     // MARK: - Properties
     
@@ -31,8 +34,30 @@ final class LoginPresenter: LoginPresenting {
     }
     
     //MARK: - Outher Methods
+}
+
+//MARK: - LoginPresenting
+
+extension LoginPresenter: LoginPresenting {
+    func presentShowAlertLogin(success: Bool) {
+        if success {
+            view?.showAlertLogin(title: "Deu certo", message: "Login feito com sucesso")
+            coordinator?.navigateToHome()
+        } else {
+            view?.showAlertLogin(title: "Deu Ruim", message: "Preencha todos os campos")
+        }
+    }
     
-    func presentNavigationToHome() {
+    
+    func presentNavigateToHome() {
         coordinator?.navigateToHome()
+    }
+    
+    func presentNavigateToRegister() {
+        
+    }
+    
+    func presentNavigateToForgotPassword() {
+        
     }
 }

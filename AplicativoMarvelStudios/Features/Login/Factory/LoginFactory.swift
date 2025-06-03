@@ -21,7 +21,6 @@ final class LoginFactory {
         loginVC.interactor = interactor
         return (loginVC, coordinator)
     }
-    
 }
 
 

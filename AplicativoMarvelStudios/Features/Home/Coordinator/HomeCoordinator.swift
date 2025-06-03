@@ -21,5 +21,4 @@ final class HomeCoordinator: HomeCoordinating {
     var presenter: HomePresenting?
     
     // MARK: - Navigation Methods
-    
 }
