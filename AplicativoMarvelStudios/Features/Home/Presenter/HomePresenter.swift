@@ -8,10 +8,11 @@
 
 import UIKit
 
+
 // MARK: - Protocol
 
 protocol HomePresenting: AnyObject {
-    func presentHeroes(heroes: [HeroesModel])
+    func presentCharacters(_ characters: [HeroesModel])
 }
 
 // MARK: - Presenter
@@ -36,7 +37,7 @@ final class HomePresenter {
 //MARK: - HomePresenting
 
 extension HomePresenter: HomePresenting {
-    func presentHeroes(heroes: [HeroesModel]) {
-        view?.displayHeroes(heroes: heroes)
+    func presentCharacters(_ characters: [HeroesModel]) {
+        view?.displayCharacters(characters)
     }
 }

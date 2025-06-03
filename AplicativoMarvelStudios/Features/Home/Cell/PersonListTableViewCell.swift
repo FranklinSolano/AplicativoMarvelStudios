@@ -21,24 +21,10 @@ class PersonListTableViewCell: UITableViewCell {
         return imageView
     }()
     
-    private lazy var infoStackView: UIStackView = {
-        let stack = UIStackView(arrangedSubviews: [heroName, fullName])
-        stack.axis = .vertical
-        stack.spacing = 4
-        stack.alignment = .leading
-        return stack
-    }()
-    
     private lazy var heroName: UILabel = {
         let label = DSLabel(text: "Homem-Aranha", textColor: DSColors.titleTextColor, font: DSFonts.subtitleSemibold16, numberOfLines: 0, textAlignment: .left)
         return label
     }()
-    
-    private lazy var fullName: UILabel = {
-        let label = DSLabel(text: "Nome real: Peter Parker", textColor: DSColors.descriptionTextColor, font: DSFonts.captionLight14, numberOfLines: 0, textAlignment: .left)
-        return label
-    }()
-    
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -51,7 +37,6 @@ class PersonListTableViewCell: UITableViewCell {
     
     func setupCell(data: HeroesModel?){
         heroName.text = data?.heroName
-        fullName.text = data?.fullName
         imagePerson.image = UIImage(named: data?.imageURL ?? "")
     }
     
@@ -60,7 +45,7 @@ class PersonListTableViewCell: UITableViewCell {
 extension PersonListTableViewCell: ViewCodeProtocol {
     func setupElements() {
         addSubview(imagePerson)
-        addSubview(infoStackView)
+        addSubview(heroName)
     }
     
     func setupConstraints() {
@@ -71,10 +56,9 @@ extension PersonListTableViewCell: ViewCodeProtocol {
             make.width.equalTo(85)
         }
         
-        infoStackView.snp.makeConstraints { make in
-            make.leading.equalTo(imagePerson.snp.trailing).offset(16)
-            make.centerY.equalToSuperview()
-            make.trailing.equalToSuperview().inset(15)
+        heroName.snp.makeConstraints { make in
+            make.leading.equalTo(imagePerson.snp.trailing).offset(15)
+            make.centerY.equalTo(imagePerson.snp.centerY)
         }
         
     }

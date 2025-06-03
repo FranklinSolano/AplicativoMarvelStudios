@@ -10,7 +10,7 @@ import UIKit
 // MARK: - Protocol
 
 protocol HomeViewDisplay: AnyObject{
-    func displayHeroes(heroes: [HeroesModel])
+    func displayCharacters(_ characters: [HeroesModel])
 }
 
 // MARK: - HomeViewController
@@ -20,8 +20,8 @@ final class HomeViewController: UIViewController {
     // MARK: - Properties
     
     private var screen: HomeScreen?
-    private var heroes: [HeroesModel] = []
     var interactor: HomeInteracting?
+    private var characters: [HeroesModel] = []
     
     // MARK: - Lifecycle
     
@@ -40,22 +40,25 @@ final class HomeViewController: UIViewController {
 // MARK: - HomeViewDisplay
 
 extension HomeViewController: HomeViewDisplay {
-    func displayHeroes(heroes: [HeroesModel]) {
-        self.heroes = heroes
-        screen?.tableView.reloadData()
-    }
+    func displayCharacters(_ characters: [HeroesModel]) {
+        self.characters = characters
+        print(characters)
+         DispatchQueue.main.async {
+             self.screen?.tableView.reloadData()
+         }
+     }
 }
 
 // MARK: - UITableViewDelegate,UITableViewDataSource
 
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return heroes.count
+        return characters.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: PersonListTableViewCell? = tableView.dequeueReusableCell(withIdentifier: PersonListTableViewCell.identifier, for: indexPath) as? PersonListTableViewCell
-        let hero = heroes[indexPath.row]
+        let hero = characters[indexPath.row]
         cell?.setupCell(data: hero)
         return cell ?? UITableViewCell()
     }

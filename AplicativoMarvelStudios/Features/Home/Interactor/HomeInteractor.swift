@@ -37,8 +37,8 @@ final class HomeInteractor{
 
 extension HomeInteractor: HomeInteracting {
     func fetchHeroes() {
-        let mockHeroes: [HeroesModel] = [HeroesModel(id: 1, heroName: "Homem Aranha", fullName: "Nome real: Peter Parker", imageURL: "Spiderman"),
-                                       HeroesModel(id: 1, heroName: "Capitão América", fullName: "Nome real: Steve Rogers", imageURL: "capitaoAmerica")]
-        presenter?.presentHeroes(heroes: mockHeroes)
+        service?.fetchCharacters(completion: { [weak self] characters in
+            self?.presenter?.presentCharacters(characters)
+        })
     }
 }

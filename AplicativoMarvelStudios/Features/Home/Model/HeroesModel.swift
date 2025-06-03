@@ -7,9 +7,31 @@
 
 import Foundation
 
-struct HeroesModel {
+struct HeroesModel: Codable {
     var id: Int
     var heroName: String
-    var fullName: String
     var imageURL: String
+}
+
+struct CharacterResponse: Codable {
+    let data: CharacterData
+}
+
+struct CharacterData: Codable {
+    let results: [Character]
+}
+
+struct Character: Codable {
+    let id: Int?
+    let name: String
+    let thumbnail: Thumbnail
+}
+
+struct Thumbnail: Codable {
+    let path: String
+    let `extension`: String
+
+    var fullPath: String {
+        return "\(path).\(`extension`)"
+    }
 }
