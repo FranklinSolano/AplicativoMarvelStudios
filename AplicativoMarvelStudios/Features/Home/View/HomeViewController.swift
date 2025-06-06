@@ -11,6 +11,8 @@ import UIKit
 
 protocol HomeViewDisplay: AnyObject{
     func displayCharacters(_ characters: [HeroesModel])
+    func showLoading()
+    func hideLoading()
 }
 
 // MARK: - HomeViewController
@@ -30,9 +32,10 @@ final class HomeViewController: UIViewController {
         screen?.configTableView(delegate: self, dataSource: self)
         view = screen
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        screen?.showLoading()
         interactor?.fetchHeroes()
     }
 }
@@ -40,13 +43,26 @@ final class HomeViewController: UIViewController {
 // MARK: - HomeViewDisplay
 
 extension HomeViewController: HomeViewDisplay {
+    
     func displayCharacters(_ characters: [HeroesModel]) {
         self.characters = characters
-        print(characters)
-         DispatchQueue.main.async {
-             self.screen?.tableView.reloadData()
-         }
-     }
+        DispatchQueue.main.async {
+            self.screen?.hideLoading()
+            self.screen?.tableView.reloadData()
+        }
+    }
+    
+    func showLoading() {
+        DispatchQueue.main.async {
+            self.screen?.showLoading()
+        }
+    }
+    
+    func hideLoading() {
+        DispatchQueue.main.async {
+            self.screen?.hideLoading()
+        }
+    }
 }
 
 // MARK: - UITableViewDelegate,UITableViewDataSource
@@ -64,6 +80,6 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-       return 150
+        return 150
     }
 }

@@ -14,7 +14,6 @@ class PersonListTableViewCell: UITableViewCell {
     
     private lazy var imagePerson: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "Spiderman")
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 15
@@ -22,7 +21,7 @@ class PersonListTableViewCell: UITableViewCell {
     }()
     
     private lazy var heroName: UILabel = {
-        let label = DSLabel(text: "Homem-Aranha", textColor: DSColors.titleTextColor, font: DSFonts.subtitleSemibold16, numberOfLines: 0, textAlignment: .left)
+        let label = DSLabel(text: "", textColor: DSColors.titleTextColor, font: DSFonts.subtitleSemibold16, numberOfLines: 0, textAlignment: .left)
         return label
     }()
     
@@ -37,7 +36,9 @@ class PersonListTableViewCell: UITableViewCell {
     
     func setupCell(data: HeroesModel?){
         heroName.text = data?.heroName
-        imagePerson.image = UIImage(named: data?.imageURL ?? "")
+        if let url = data?.imageURL {
+            imagePerson.loadImage(from: url)
+        }
     }
     
 }

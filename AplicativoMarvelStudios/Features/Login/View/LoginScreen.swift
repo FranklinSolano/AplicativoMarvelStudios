@@ -34,6 +34,7 @@ final class LoginScreen: UIView {
     
     lazy var emailTextField: UITextField = {
         let textField = DSTextField(placeholder: "Digite seu email", isSecureTextEntry: false)
+        textField.text = "ss"
         return textField
     }()
     
@@ -44,6 +45,7 @@ final class LoginScreen: UIView {
     
     lazy var passwordTextField: UITextField = {
         let textField = DSTextField(placeholder: "Digete sua senha", isSecureTextEntry: true)
+        textField.text = "ss"
         return textField
     }()
     

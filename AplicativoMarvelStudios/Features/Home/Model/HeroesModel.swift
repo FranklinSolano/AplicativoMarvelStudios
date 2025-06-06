@@ -32,6 +32,6 @@ struct Thumbnail: Codable {
     let `extension`: String
 
     var fullPath: String {
-        return "\(path).\(`extension`)"
+        return "\(path).\(self.extension)".replacingOccurrences(of: "http://", with: "https://")
     }
 }

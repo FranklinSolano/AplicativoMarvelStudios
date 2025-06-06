@@ -13,6 +13,8 @@ import UIKit
 
 protocol HomePresenting: AnyObject {
     func presentCharacters(_ characters: [HeroesModel])
+    func showLoading()
+    func hideLoading()
 }
 
 // MARK: - Presenter
@@ -39,5 +41,12 @@ final class HomePresenter {
 extension HomePresenter: HomePresenting {
     func presentCharacters(_ characters: [HeroesModel]) {
         view?.displayCharacters(characters)
+    }
+    
+    func showLoading() {
+        view?.showLoading()
+    }
+    func hideLoading() {
+        view?.hideLoading()
     }
 }

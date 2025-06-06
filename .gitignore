@@ -39,4 +39,6 @@ crashlytics-build.properties
 # Firebase
 GoogleService-Info.plist
 
+#Keys
+Keys.plist
 

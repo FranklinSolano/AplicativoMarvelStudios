@@ -37,7 +37,9 @@ final class HomeInteractor{
 
 extension HomeInteractor: HomeInteracting {
     func fetchHeroes() {
+        presenter?.showLoading()
         service?.fetchCharacters(completion: { [weak self] characters in
+            self?.presenter?.hideLoading() //
             self?.presenter?.presentCharacters(characters)
         })
     }

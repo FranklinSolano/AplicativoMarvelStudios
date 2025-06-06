@@ -35,11 +35,18 @@ final class HomeScreen: UIView {
         return label
     }()
     
-     lazy var tableView: UITableView = {
+    lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.backgroundColor = .clear
         tableView.register(PersonListTableViewCell.self, forCellReuseIdentifier: PersonListTableViewCell.identifier)
         return tableView
+    }()
+    
+    private lazy var activityIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(style: .large)
+        indicator.hidesWhenStopped = true
+        indicator.color = DSColors.titleTextColor // Ou qualquer cor que combine com seu tema
+        return indicator
     }()
     
     // MARK: - Init
@@ -59,6 +66,16 @@ final class HomeScreen: UIView {
         tableView.delegate = delegate
         tableView.dataSource = dataSource
     }
+    
+    func showLoading() {
+        activityIndicator.startAnimating()
+        tableView.isHidden = true
+    }
+    
+    func hideLoading() {
+        activityIndicator.stopAnimating()
+        tableView.isHidden = false
+    }
 }
 
 
@@ -70,6 +87,7 @@ extension HomeScreen: ViewCodeProtocol {
         addSubview(searchPerson)
         addSubview(descriptionName)
         addSubview(tableView)
+        addSubview(activityIndicator)
     }
     
     func setupConstraints() {
@@ -95,6 +113,11 @@ extension HomeScreen: ViewCodeProtocol {
             make.top.equalTo(descriptionName.snp.bottom).offset(20)
             make.leading.trailing.bottom.equalToSuperview()
         }
+        
+        activityIndicator.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+        }
+        
     }
     
     func setupAdditionalConfiguration() {
