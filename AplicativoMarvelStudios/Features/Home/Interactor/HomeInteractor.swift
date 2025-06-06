@@ -21,7 +21,6 @@ final class HomeInteractor{
     
     weak var presenter: HomePresenting?
     private var service: HomeService?
-    var teste: [HeroesModel] = [] 
     
     // MARK: - Init
     
@@ -42,7 +41,7 @@ extension HomeInteractor: HomeInteracting {
             switch result{
             case .success(let characters):
                 self?.presenter?.presentCharacters(characters)
-            case .failure(let error):
+            case .failure(_):
                 self?.presenter?.showAlertError()
             }
         })
