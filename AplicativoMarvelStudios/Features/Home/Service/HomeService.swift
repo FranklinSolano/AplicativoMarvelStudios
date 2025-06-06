@@ -4,6 +4,7 @@
 //
 //  Created by Franklin  Stilhano Solano on 28/05/25.
 //
+
 import Foundation
 import CryptoKit
 
@@ -11,11 +12,11 @@ import CryptoKit
 
 // MARK: - Protocol
 protocol HomeServiceProtocol {
-    func fetchCharacters(completion: @escaping ([HeroesModel]) -> Void)
+    func fetchCharacters(completion: @escaping (Result<[HeroesModel], ServiceError>) -> Void)
 }
 
 final class HomeService: HomeServiceProtocol {
-    func fetchCharacters(completion: @escaping ([HeroesModel]) -> Void) {
+    func fetchCharacters(completion: @escaping (Result<[HeroesModel], ServiceError>) -> Void) {
         
         let ts = String(Date().timeIntervalSince1970)
         let hash = (ts + Keys.marvelPrivateKey + Keys.marvelPublicKey).md5
@@ -23,16 +24,20 @@ final class HomeService: HomeServiceProtocol {
 
         guard let url = URL(string: urlString) else {
             print("URL inválida")
-            completion([])
+            completion(.failure(.invalidURL))
             return
         }
 
         let task = URLSession.shared.dataTask(with: url) { data, _, error in
-            guard let data = data, error == nil else {
-                print("Erro na requisição: \(error?.localizedDescription ?? "desconhecido")")
-                completion([])
-                return
-            }
+                  if let error = error {
+                      completion(.failure(.requestFailed(error)))
+                      return
+                  }
+            
+            guard let data = data else {
+                        completion(.failure(.noData))
+                        return
+                    }
 
             do {
                 let decoded = try JSONDecoder().decode(CharacterResponse.self, from: data)
@@ -44,10 +49,10 @@ final class HomeService: HomeServiceProtocol {
                         imageURL: character.thumbnail.fullPath
                     )
                 }
-                completion(viewModels)
+                completion(.success(viewModels))
             } catch {
                 print("Erro ao decodificar JSON: \(error)")
-                completion([])
+                completion(.failure(.decodingFailed(error)))
             }
         }
 

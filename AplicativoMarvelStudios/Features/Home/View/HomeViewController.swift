@@ -11,6 +11,7 @@ import UIKit
 
 protocol HomeViewDisplay: AnyObject{
     func displayCharacters(_ characters: [HeroesModel])
+    func showAlertError(title: String, message: String)
     func showLoading()
     func hideLoading()
 }
@@ -43,6 +44,7 @@ final class HomeViewController: UIViewController {
 // MARK: - HomeViewDisplay
 
 extension HomeViewController: HomeViewDisplay {
+ 
     
     func displayCharacters(_ characters: [HeroesModel]) {
         self.characters = characters
@@ -51,6 +53,11 @@ extension HomeViewController: HomeViewDisplay {
             self.screen?.tableView.reloadData()
         }
     }
+    
+    func showAlertError(title: String, message: String) {
+        getAlertController(title: title, message: message)
+    }
+    
     
     func showLoading() {
         DispatchQueue.main.async {

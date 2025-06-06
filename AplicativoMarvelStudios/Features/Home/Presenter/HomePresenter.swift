@@ -13,6 +13,7 @@ import UIKit
 
 protocol HomePresenting: AnyObject {
     func presentCharacters(_ characters: [HeroesModel])
+    func showAlertError()
     func showLoading()
     func hideLoading()
 }
@@ -41,6 +42,10 @@ final class HomePresenter {
 extension HomePresenter: HomePresenting {
     func presentCharacters(_ characters: [HeroesModel]) {
         view?.displayCharacters(characters)
+    }
+    
+    func showAlertError(){
+        view?.showAlertError(title: "Atenção", message: "Error ao buscar personagens, Tente novamente!")
     }
     
     func showLoading() {
