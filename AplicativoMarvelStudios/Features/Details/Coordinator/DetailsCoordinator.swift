@@ -9,10 +9,14 @@
 import UIKit
 
 protocol DetailsCoordinating {
-    
+    func navigateBack()
 }
 
 final class DetailsCoordinator: DetailsCoordinating {
+    func navigateBack() {
+        navigationController?.popViewController(animated: true)
+    }
+    
     
     // MARK: - Properties
     

@@ -10,16 +10,53 @@ import SnapKit
 
 // MARK: - Protocol
 
-protocol DetailsViewProtocol {
-    
+protocol DetailsViewProtocol: AnyObject {
+    func actionBack()
 }
 
 // MARK: - DetailsView
 
 final class DetailsView: UIView {
     
+    weak var delegate: DetailsViewProtocol?
+    
     // MARK: - UI Elements
     
+    lazy var backButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("<- Voltar", for: .normal)
+        button.setTitleColor(DSColors.titleTextColor, for: .normal)
+        button.addTarget(self, action: #selector(tappedBackButton), for: .touchUpInside)
+        return button
+    }()
+    
+    private lazy var imagePerson: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(systemName: "person.circle")
+        imageView.contentMode = .scaleAspectFit
+        return imageView
+    }()
+    
+    private lazy var personName: UILabel = {
+        let label = DSLabel(text: "Teste", textColor: DSColors.titleTextColor, font: DSFonts.subtitleSemibold16, numberOfLines: 0, textAlignment: .center)
+        return label
+    }()
+    
+    private lazy var descriptionPerson: UILabel = {
+        let label = DSLabel(text: "tefagafgsdgsdfgsdgfsdgsdfgfsgsfgsdgsfdjklnadwljksfnadjskfnadsjkfnakjdsnfakjsdnfasdjknfajskdnvjaskdnvajdsknva;jdLKjncJDFK;BNADVJ;LKZGNVADSJK;ZVNASDJLZCNVAOMIFL'KGJAFIMOZLKGVNAMFOLKZ;NVA;DFJLCKZVNM", textColor: DSColors.titleTextColor, font: DSFonts.subtitleSemibold16, numberOfLines: 0, textAlignment: .center)
+        return label
+    }()
+    
+    private lazy var personRelated: UILabel = {
+        let label = DSLabel(text: "Personagens relacionados", textColor: DSColors.titleTextColor, font: DSFonts.subtitleSemibold16, numberOfLines: 0, textAlignment: .left)
+        return label
+    }()
+    
+    private var collectionView: UICollectionView = {
+       let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        collectionView.backgroundColor = .red
+        return collectionView
+    }()
     
     // MARK: - Init
     
@@ -32,6 +69,10 @@ final class DetailsView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    
+    @objc private func tappedBackButton(){
+        delegate?.actionBack()
+    }
     // MARK: - Outher Methods
 }
 
@@ -39,15 +80,54 @@ final class DetailsView: UIView {
 
 extension DetailsView: ViewCodeProtocol {
     func setupElements() {
-        
+        addSubview(backButton)
+        addSubview(personName)
+        addSubview(imagePerson)
+        addSubview(descriptionPerson)
+        addSubview(personRelated)
+        addSubview(collectionView)
     }
     
     func setupConstraints() {
         
+        backButton.snp.makeConstraints { make in
+            make.top.equalTo(safeAreaLayoutGuide.snp.top)
+            make.leading.equalToSuperview().offset(25)
+        }
+
+        
+        personName.snp.makeConstraints { make in
+            make.top.equalTo(self.safeAreaLayoutGuide.snp.top).offset(25)
+               make.leading.equalToSuperview().offset(16)
+               make.trailing.equalToSuperview().inset(16)
+           }
+           
+           imagePerson.snp.makeConstraints { make in
+               make.top.equalTo(personName.snp.bottom).offset(20)
+               make.leading.trailing.equalToSuperview()
+               make.height.equalTo(self.snp.width).multipliedBy(0.6) // altura proporcional à largura (aspect ratio 3:5 por exemplo)
+           }
+           
+           descriptionPerson.snp.makeConstraints { make in
+               make.top.equalTo(imagePerson.snp.bottom).offset(12)
+               make.leading.equalToSuperview().offset(16)
+               make.trailing.equalToSuperview().inset(16)
+           }
+           
+           personRelated.snp.makeConstraints { make in
+               make.top.equalTo(descriptionPerson.snp.bottom).offset(20)
+               make.leading.equalToSuperview().offset(16)
+               make.trailing.equalToSuperview().inset(16)
+           }
+           
+           collectionView.snp.makeConstraints { make in
+               make.top.equalTo(personRelated.snp.bottom).offset(12)
+               make.leading.trailing.bottom.equalToSuperview()
+           }
     }
     
     func setupAdditionalConfiguration() {
-        
+        backgroundColor = DSColors.primaryColor
     }
     
     
@@ -56,5 +136,9 @@ extension DetailsView: ViewCodeProtocol {
 //MARK: - DetailsViewProtocol
 
 extension DetailsView: DetailsViewProtocol {
+    func actionBack() {
+        delegate?.actionBack()
+    }
+    
     
 }

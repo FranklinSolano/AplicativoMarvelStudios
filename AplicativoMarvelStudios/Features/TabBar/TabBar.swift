@@ -29,9 +29,12 @@ class TabbarViewController: UITabBarController {
     private func setupTabbarController() {
         // Criar os view controllers via factory e colocar cada um dentro de um UINavigationController
 
-        let homeVC = homeFactory.make(navigationController: nil)
-        let homeNav = UINavigationController(rootViewController: homeVC)
+     
+        let homeNav = UINavigationController()
         homeNav.setNavigationBarHidden(true, animated: false)
+        let homeVC = homeFactory.make(navigationController: homeNav )
+        homeNav.viewControllers = [homeVC]
+        
 
         
         let favoritosVC = FavoritosViewController()
@@ -46,7 +49,7 @@ class TabbarViewController: UITabBarController {
 
         setViewControllers([homeNav, favoritosNav, profileNav], animated: false)
 
-        tabBar.backgroundColor = UIColor(red: 38/255, green: 48/255, blue: 59/255, alpha: 1)
+        tabBar.backgroundColor = DSColors.secundaryColor
         tabBar.isTranslucent = false
         tabBar.barTintColor = .white
         UITabBar.appearance().tintColor = .white

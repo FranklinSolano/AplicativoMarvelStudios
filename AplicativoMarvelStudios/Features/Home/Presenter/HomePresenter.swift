@@ -16,6 +16,7 @@ protocol HomePresenting: AnyObject {
     func showAlertError()
     func showLoading()
     func hideLoading()
+    func navigateToDetail()
 }
 
 // MARK: - Presenter
@@ -40,6 +41,10 @@ final class HomePresenter {
 //MARK: - HomePresenting
 
 extension HomePresenter: HomePresenting {
+    func navigateToDetail() {
+        coordinator?.navigateToDetail()
+    }
+    
     func presentCharacters(_ characters: [HeroesModel]) {
         view?.displayCharacters(characters)
     }

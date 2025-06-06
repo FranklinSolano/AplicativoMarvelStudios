@@ -8,7 +8,7 @@
 import UIKit
 
 protocol DetailsPresenting: AnyObject {
-    
+    func navigateBack()
 }
 
 final class DetailsPresenter {
@@ -23,5 +23,9 @@ final class DetailsPresenter {
 }
 
 extension DetailsPresenter: DetailsPresenting {
+    func navigateBack() {
+        coordinator?.navigateBack()
+    }
+    
   
 }

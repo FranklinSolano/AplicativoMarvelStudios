@@ -8,7 +8,7 @@
 import UIKit
 
 protocol DetailsInteracting: AnyObject {
-    
+    func navigateBack()
 }
 
 final class DetailsInteractor {
@@ -23,5 +23,9 @@ final class DetailsInteractor {
 }
 
 extension DetailsInteractor: DetailsInteracting {
+    func navigateBack() {
+        presenter?.navigateBack()
+    }
+    
     
 }

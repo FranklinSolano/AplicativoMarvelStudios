@@ -37,7 +37,7 @@ final class HomeScreen: UIView {
     
     lazy var tableView: UITableView = {
         let tableView = UITableView()
-        tableView.backgroundColor = .clear
+        tableView.backgroundColor = DSColors.secundaryColor
         tableView.register(PersonListTableViewCell.self, forCellReuseIdentifier: PersonListTableViewCell.identifier)
         return tableView
     }()

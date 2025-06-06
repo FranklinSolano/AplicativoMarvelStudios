@@ -15,6 +15,8 @@ protocol DetailsViewControllerDisplay: AnyObject {
 // MARK: - DetailsViewController
 
 final class DetailsViewController: UIViewController {
+
+    
     
     // MARK: - Properties
     
@@ -26,6 +28,7 @@ final class DetailsViewController: UIViewController {
     
     override func loadView() {
         screen = DetailsView()
+        screen?.delegate = self
         view = screen
     }
     
@@ -39,4 +42,10 @@ final class DetailsViewController: UIViewController {
 
 extension DetailsViewController: DetailsViewControllerDisplay {
     
+}
+
+extension DetailsViewController: DetailsViewProtocol{
+    func actionBack() {
+        interactor?.navigateBack()
+    }
 }

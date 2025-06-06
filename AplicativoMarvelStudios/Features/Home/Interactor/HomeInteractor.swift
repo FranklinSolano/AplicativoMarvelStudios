@@ -11,6 +11,7 @@ import UIKit
 
 protocol HomeInteracting: AnyObject {
     func fetchHeroes()
+    func navigateToDetail()
 }
 
 // MARK: - Interactor
@@ -35,6 +36,10 @@ final class HomeInteractor{
 //MARK: - HomeInteracting
 
 extension HomeInteractor: HomeInteracting {
+    func navigateToDetail() {
+        presenter?.navigateToDetail()
+    }
+    
     func fetchHeroes() {
         presenter?.showLoading()
         service?.fetchCharacters(completion: { [weak self] result in
