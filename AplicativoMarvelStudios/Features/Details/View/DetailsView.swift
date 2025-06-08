@@ -95,7 +95,6 @@ extension DetailsView: ViewCodeProtocol {
             make.leading.equalToSuperview().offset(25)
         }
 
-        
         personName.snp.makeConstraints { make in
             make.top.equalTo(self.safeAreaLayoutGuide.snp.top).offset(25)
                make.leading.equalToSuperview().offset(16)
@@ -129,7 +128,6 @@ extension DetailsView: ViewCodeProtocol {
     func setupAdditionalConfiguration() {
         backgroundColor = DSColors.primaryColor
     }
-    
     
 }
 

@@ -22,7 +22,7 @@ final class DetailsViewController: UIViewController {
     
     private var screen: DetailsView?
     var interactor: DetailsInteracting?
-    
+    var teste: [HeroesModel] = []
     
     // MARK: - Lifecycle
     
@@ -34,6 +34,7 @@ final class DetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print(teste)
     }
 }
 

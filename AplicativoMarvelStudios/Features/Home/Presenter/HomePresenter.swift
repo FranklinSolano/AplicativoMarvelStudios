@@ -16,7 +16,7 @@ protocol HomePresenting: AnyObject {
     func showAlertError()
     func showLoading()
     func hideLoading()
-    func navigateToDetail()
+    func navigateToDetail(data: [HeroesModel])
 }
 
 // MARK: - Presenter
@@ -41,8 +41,8 @@ final class HomePresenter {
 //MARK: - HomePresenting
 
 extension HomePresenter: HomePresenting {
-    func navigateToDetail() {
-        coordinator?.navigateToDetail()
+    func navigateToDetail(data: [HeroesModel]) {
+        coordinator?.navigateToDetail(data: data)
     }
     
     func presentCharacters(_ characters: [HeroesModel]) {

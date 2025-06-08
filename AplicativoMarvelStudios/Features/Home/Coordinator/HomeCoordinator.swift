@@ -10,10 +10,18 @@ import UIKit
 // MARK: - Protocol
 
 protocol HomeCoordinating{
-    func navigateToDetail()
+    func navigateToDetail(data: [HeroesModel])
 }
 
 final class HomeCoordinator: HomeCoordinating {
+    func navigateToDetail(data: [HeroesModel]) {
+        guard let navigationController else { return }
+        let detailsFactory = DetailsFactory()
+        let detailsVC = detailsFactory.make(navigationController: navigationController)
+        detailsVC.teste = data
+        navigationController.pushViewController(detailsVC, animated: true)
+    }
+    
     func navigateToDetail() {
         guard let navigationController else { return }
         let detailsFactory = DetailsFactory()
