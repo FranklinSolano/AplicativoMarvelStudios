@@ -45,7 +45,6 @@ final class HomeViewController: UIViewController {
 
 extension HomeViewController: HomeViewDisplay {
  
-    
     func displayCharacters(_ characters: [HeroesModel]) {
         self.characters = characters
         DispatchQueue.main.async {
@@ -57,7 +56,6 @@ extension HomeViewController: HomeViewDisplay {
     func showAlertError(title: String, message: String) {
         getAlertController(title: title, message: message)
     }
-    
     
     func showLoading() {
         DispatchQueue.main.async {

@@ -52,9 +52,14 @@ final class DetailsView: UIView {
         return label
     }()
     
-    private var collectionView: UICollectionView = {
-       let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-        collectionView.backgroundColor = .red
+    lazy var collectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.minimumLineSpacing = 10
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = .clear
+        collectionView.register(PersonListCollectionViewCell.self, forCellWithReuseIdentifier:  PersonListCollectionViewCell.identifier)
+        collectionView.showsHorizontalScrollIndicator = false
         return collectionView
     }()
     
@@ -69,11 +74,18 @@ final class DetailsView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Actions
     
     @objc private func tappedBackButton(){
         delegate?.actionBack()
     }
+    
     // MARK: - Outher Methods
+    
+    func configCollectoinView(delegate: UICollectionViewDelegate, dataSource: UICollectionViewDataSource){
+        collectionView.delegate = delegate
+        collectionView.dataSource = dataSource
+    }
 }
 
 //MARK: - ViewCodeProtocol
@@ -94,35 +106,35 @@ extension DetailsView: ViewCodeProtocol {
             make.top.equalTo(safeAreaLayoutGuide.snp.top)
             make.leading.equalToSuperview().offset(25)
         }
-
+        
         personName.snp.makeConstraints { make in
             make.top.equalTo(self.safeAreaLayoutGuide.snp.top).offset(25)
-               make.leading.equalToSuperview().offset(16)
-               make.trailing.equalToSuperview().inset(16)
-           }
-           
-           imagePerson.snp.makeConstraints { make in
-               make.top.equalTo(personName.snp.bottom).offset(20)
-               make.leading.trailing.equalToSuperview()
-               make.height.equalTo(self.snp.width).multipliedBy(0.6) // altura proporcional à largura (aspect ratio 3:5 por exemplo)
-           }
-           
-           descriptionPerson.snp.makeConstraints { make in
-               make.top.equalTo(imagePerson.snp.bottom).offset(12)
-               make.leading.equalToSuperview().offset(16)
-               make.trailing.equalToSuperview().inset(16)
-           }
-           
-           personRelated.snp.makeConstraints { make in
-               make.top.equalTo(descriptionPerson.snp.bottom).offset(20)
-               make.leading.equalToSuperview().offset(16)
-               make.trailing.equalToSuperview().inset(16)
-           }
-           
-           collectionView.snp.makeConstraints { make in
-               make.top.equalTo(personRelated.snp.bottom).offset(12)
-               make.leading.trailing.bottom.equalToSuperview()
-           }
+            make.leading.equalToSuperview().offset(16)
+            make.trailing.equalToSuperview().inset(16)
+        }
+        
+        imagePerson.snp.makeConstraints { make in
+            make.top.equalTo(personName.snp.bottom).offset(20)
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(self.snp.width).multipliedBy(0.6) // altura proporcional à largura (aspect ratio 3:5 por exemplo)
+        }
+        
+        descriptionPerson.snp.makeConstraints { make in
+            make.top.equalTo(imagePerson.snp.bottom).offset(12)
+            make.leading.equalToSuperview().offset(16)
+            make.trailing.equalToSuperview().inset(16)
+        }
+        
+        personRelated.snp.makeConstraints { make in
+            make.top.equalTo(descriptionPerson.snp.bottom).offset(20)
+            make.leading.equalToSuperview().offset(16)
+            make.trailing.equalToSuperview().inset(16)
+        }
+        
+        collectionView.snp.makeConstraints { make in
+            make.top.equalTo(personRelated.snp.bottom).offset(10)
+            make.leading.trailing.bottom.equalToSuperview().inset(10)
+        }
     }
     
     func setupAdditionalConfiguration() {
@@ -137,6 +149,4 @@ extension DetailsView: DetailsViewProtocol {
     func actionBack() {
         delegate?.actionBack()
     }
-    
-    
 }

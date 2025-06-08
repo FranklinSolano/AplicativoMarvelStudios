@@ -18,7 +18,7 @@ final class HomeCoordinator: HomeCoordinating {
         guard let navigationController else { return }
         let detailsFactory = DetailsFactory()
         let detailsVC = detailsFactory.make(navigationController: navigationController)
-        detailsVC.teste = data
+        detailsVC.personListImage = data
         navigationController.pushViewController(detailsVC, animated: true)
     }
     
@@ -33,6 +33,4 @@ final class HomeCoordinator: HomeCoordinating {
     
     weak var navigationController: UINavigationController?
     var presenter: HomePresenting?
-    
-    // MARK: - Navigation Methods
 }

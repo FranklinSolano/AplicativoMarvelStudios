@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 // MARK: - Protocol
 
 protocol HomePresenting: AnyObject {

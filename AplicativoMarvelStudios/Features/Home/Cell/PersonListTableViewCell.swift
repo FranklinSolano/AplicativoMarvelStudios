@@ -8,9 +8,13 @@
 import UIKit
 import SnapKit
 
-class PersonListTableViewCell: UITableViewCell {
+// MARK: - PersonListTableViewCell
+
+final class PersonListTableViewCell: UITableViewCell {
     
     static let identifier: String = "PersonListTableViewCell"
+    
+    // MARK: - UI Elements
     
     private lazy var imagePerson: UIImageView = {
         let imageView = UIImageView()
@@ -25,6 +29,8 @@ class PersonListTableViewCell: UITableViewCell {
         return label
     }()
     
+    // MARK: - Init
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupView()
@@ -34,14 +40,17 @@ class PersonListTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Outher Methods
+    
     func setupCell(data: HeroesModel?){
         heroName.text = data?.heroName
         if let url = data?.imageURL {
             imagePerson.loadImage(from: url)
         }
     }
-    
 }
+
+// MARK: - ViewCodeProtocol
 
 extension PersonListTableViewCell: ViewCodeProtocol {
     func setupElements() {
