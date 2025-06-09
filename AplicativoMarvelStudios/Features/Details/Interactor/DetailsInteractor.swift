@@ -25,6 +25,7 @@ final class DetailsInteractor {
 
 extension DetailsInteractor: DetailsInteracting {
     func fetchDetailsPerson(idPerson: Int) {
+        presenter?.showLoading()
         service?.fetchCharacterDetail(id: idPerson, completion: { result in
             switch result {
             case .success(let hero):

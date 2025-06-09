@@ -43,7 +43,7 @@ final class DetailsView: UIView {
         return label
     }()
     
-    private lazy var descriptionPerson: UILabel = {
+     lazy var descriptionPerson: UILabel = {
         let label = DSLabel(text: "", textColor: DSColors.titleTextColor, font: DSFonts.captionLight14, numberOfLines: 0, textAlignment: .left)
         return label
     }()
@@ -62,6 +62,13 @@ final class DetailsView: UIView {
         collectionView.register(PersonListCollectionViewCell.self, forCellWithReuseIdentifier:  PersonListCollectionViewCell.identifier)
         collectionView.showsHorizontalScrollIndicator = false
         return collectionView
+    }()
+    
+    private lazy var activityIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(style: .large)
+        indicator.hidesWhenStopped = true
+        indicator.color = DSColors.titleTextColor // Ou qualquer cor que combine com seu tema
+        return indicator
     }()
     
     // MARK: - Init
@@ -90,10 +97,26 @@ final class DetailsView: UIView {
     
     func setupView(data: HeroesModel?) {
         personName.text = data?.heroName
-         descriptionPerson.text = "Descricao do personagem: \(data?.descrepitionPerson ?? "Esse personagem nao tem descricao")"
+        if ((data?.descrepitionPerson.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty) != nil) {
+                descriptionPerson.text = "Descrição do personagem não encontrada"
+            } else {
+                descriptionPerson.text = data?.descrepitionPerson
+            }
         if let url = data?.imageURL {
             imagePerson.loadImage(from: url)
         }
+    }
+    
+    func showLoading() {
+        activityIndicator.startAnimating()
+        collectionView.isHidden = true
+        personRelated.isHidden = true
+    }
+    
+    func hideLoading() {
+        activityIndicator.stopAnimating()
+        collectionView.isHidden = false
+        personRelated.isHidden = false
     }
 }
 
@@ -107,6 +130,7 @@ extension DetailsView: ViewCodeProtocol {
         addSubview(descriptionPerson)
         addSubview(personRelated)
         addSubview(collectionView)
+        addSubview(activityIndicator)
     }
     
     func setupConstraints() {
@@ -144,6 +168,11 @@ extension DetailsView: ViewCodeProtocol {
             make.top.equalTo(personRelated.snp.bottom).offset(10)
             make.leading.trailing.bottom.equalToSuperview().inset(10)
         }
+        
+        activityIndicator.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+        }
+        
     }
     
     func setupAdditionalConfiguration() {

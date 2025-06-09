@@ -11,7 +11,7 @@ struct HeroesModel: Codable {
     var id: Int
     var heroName: String
     var imageURL: String
-    var descrepitionPerson: String?
+    var descrepitionPerson: String
 }
 
 struct CharacterResponse: Codable {

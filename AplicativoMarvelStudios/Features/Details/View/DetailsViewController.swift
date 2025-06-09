@@ -10,7 +10,8 @@ import UIKit
 // MARK: - Protocol
 protocol DetailsViewControllerDisplay: AnyObject {
     func getResutDataPerson(data: HeroesModel)
-    
+    func showLoading()
+    func hideLoading()
 }
 
 // MARK: - DetailsViewController
@@ -37,6 +38,7 @@ final class DetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         guard let idPerson = idPerson else { return }
+        screen?.showLoading()
         interactor?.fetchDetailsPerson(idPerson: idPerson)
         shuffleImage()
     }
@@ -51,10 +53,23 @@ final class DetailsViewController: UIViewController {
 // MARK: - DisplayDetailsViewController
 
 extension DetailsViewController: DetailsViewControllerDisplay {
+    func showLoading() {
+        DispatchQueue.main.async {
+            self.screen?.showLoading()
+        }
+    }
+    
+    func hideLoading() {
+        DispatchQueue.main.async {
+            self.screen?.hideLoading()
+        }
+    }
+    
     func getResutDataPerson(data: HeroesModel) {
         
         DispatchQueue.main.async {
             self.screen?.setupView(data: data)
+            self.screen?.hideLoading()
             self.screen?.collectionView.reloadData()
         }
     }

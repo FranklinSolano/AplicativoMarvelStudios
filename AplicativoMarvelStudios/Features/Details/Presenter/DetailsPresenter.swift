@@ -11,6 +11,8 @@ protocol DetailsPresenting: AnyObject {
     func navigateBack()
     func getDetailsPerson(result: HeroesModel)
     func showResultAlertError(title: String, message: String)
+    func showLoading()
+    func hideLoading()
 }
 
 final class DetailsPresenter {
@@ -25,6 +27,14 @@ final class DetailsPresenter {
 }
 
 extension DetailsPresenter: DetailsPresenting {
+    func showLoading() {
+        view?.showLoading()
+    }
+    
+    func hideLoading() {
+        view?.hideLoading()
+    }
+    
     func showResultAlertError(title: String, message: String) {
         
     }
