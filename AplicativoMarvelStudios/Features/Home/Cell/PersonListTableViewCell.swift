@@ -13,6 +13,8 @@ import SDWebImage
 
 final class PersonListTableViewCell: UITableViewCell {
     
+    // MARK: - Properties
+    
     static let identifier: String = "PersonListTableViewCell"
     
     // MARK: - UI Elements

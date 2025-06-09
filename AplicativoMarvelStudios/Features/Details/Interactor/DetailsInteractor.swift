@@ -7,22 +7,31 @@
 
 import UIKit
 
+//MARK: - DetailsInteracting
+
 protocol DetailsInteracting: AnyObject {
     func navigateBack()
     func fetchDetailsPerson(idPerson: Int)
     func updateDetails(id: HeroesModel, data: [HeroesModel])
 }
 
+//MARK: - DetailsInteractor
+
 final class DetailsInteractor {
     
+    //MARK: - Properties
     weak var presenter: DetailsPresenting?
     private var  service: DetailsServicing?
+    
+    //MARK: - Init
     
     init(presenter: DetailsPresenting, service: DetailsServicing) {
         self.presenter = presenter
         self.service = service
     }
 }
+
+//MARK: - DetailsInteracting
 
 extension DetailsInteractor: DetailsInteracting {
     func updateDetails(id: HeroesModel, data: [HeroesModel]) {
@@ -37,8 +46,7 @@ extension DetailsInteractor: DetailsInteracting {
                 self.presenter?.getDetailsPerson(result: hero)
                 print(hero)
             case.failure:
-//                self.presenter?.navigateBack()
-                print("deu ruim")
+                self.presenter?.showResultAlertError(title: "Atencao", message: "Erro ao buscar personagens. Tente Novamente mais tarde!")
             }
         })
     }
@@ -46,6 +54,4 @@ extension DetailsInteractor: DetailsInteracting {
     func navigateBack() {
         presenter?.navigateBack()
     }
-    
-    
 }

@@ -7,6 +7,8 @@
 
 import UIKit
 
+//MARK: - Protocol
+
 protocol DetailsPresenting: AnyObject {
     func navigateBack()
     func getDetailsPerson(result: HeroesModel)
@@ -16,16 +18,24 @@ protocol DetailsPresenting: AnyObject {
     func updateDetails(id: HeroesModel, data: [HeroesModel])
 }
 
+//MARK: - DetailsPresenter
+
 final class DetailsPresenter {
     
+    // MARK: - Properties
+    
     weak  var view: DetailsViewControllerDisplay?
-     private var coordinator: DetailsCoordinating?
-     
-     init(view: DetailsViewControllerDisplay, coordinator: DetailsCoordinating) {
-         self.view = view
-         self.coordinator = coordinator
-     }
+    private var coordinator: DetailsCoordinating?
+    
+    // MARK: - Init
+    
+    init(view: DetailsViewControllerDisplay, coordinator: DetailsCoordinating) {
+        self.view = view
+        self.coordinator = coordinator
+    }
 }
+
+// MARK: - DetailsPresenting
 
 extension DetailsPresenter: DetailsPresenting {
     func updateDetails(id: HeroesModel, data: [HeroesModel]) {
@@ -41,7 +51,7 @@ extension DetailsPresenter: DetailsPresenting {
     }
     
     func showResultAlertError(title: String, message: String) {
-        
+        view?.showResultAlertError(title: title, message: message)
     }
     
     func getDetailsPerson(result: HeroesModel) {
@@ -51,6 +61,4 @@ extension DetailsPresenter: DetailsPresenting {
     func navigateBack() {
         coordinator?.navigateBack()
     }
-    
-  
 }

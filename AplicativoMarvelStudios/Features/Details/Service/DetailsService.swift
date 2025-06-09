@@ -9,11 +9,13 @@ import Foundation
 import CryptoKit
 
 // MARK: - Protocol
+
 protocol DetailsServicing {
     func fetchCharacterDetail(id: Int, completion: @escaping (Result<HeroesModel, ServiceError>) -> Void)
 }
 
 // MARK: - Service
+
 final class DetailsService: DetailsServicing {
     func fetchCharacterDetail(id: Int, completion: @escaping (Result<HeroesModel, ServiceError>) -> Void) {
         let ts = String(Date().timeIntervalSince1970)
@@ -50,7 +52,6 @@ final class DetailsService: DetailsServicing {
                        imageURL: character.thumbnail.fullPath,
                        descrepitionPerson: character.description
                    )
-                   
                    completion(.success(hero))
                    
                } catch {

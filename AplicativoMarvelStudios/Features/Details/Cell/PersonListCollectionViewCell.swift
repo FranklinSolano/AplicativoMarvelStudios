@@ -11,6 +11,8 @@ import UIKit
 
 final class PersonListCollectionViewCell: UICollectionViewCell {
     
+    // MARK: - Properties
+    
     static let identifier: String = "PersonListCollectionViewCell"
     
     // MARK: - UI Elements

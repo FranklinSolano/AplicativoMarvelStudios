@@ -8,12 +8,24 @@
 
 import UIKit
 
+//MARK: - DetailsCoordinating
+
 protocol DetailsCoordinating {
     func navigateBack()
     func updateDetails(id: HeroesModel, data: [HeroesModel])
 }
 
+// MARK: - DetailsCoordinating
+
 final class DetailsCoordinator: DetailsCoordinating {
+    
+    // MARK: - Properties
+    
+    weak var navigationController: UINavigationController?
+    var presenter: DetailsPresenting?
+    
+    // MARK: - Navigation Methods
+    
     func updateDetails(id: HeroesModel, data: [HeroesModel]) {
         guard let navigationController else { return }
         let detailsFactory = DetailsFactory()
@@ -26,12 +38,4 @@ final class DetailsCoordinator: DetailsCoordinating {
     func navigateBack() {
         navigationController?.popToRootViewController(animated: true)
     }
-    
-    
-    // MARK: - Properties
-    
-    weak var navigationController: UINavigationController?
-    var presenter: DetailsPresenting?
-    
-    // MARK: - Navigation Methods
 }

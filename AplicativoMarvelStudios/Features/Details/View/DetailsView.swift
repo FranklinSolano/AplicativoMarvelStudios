@@ -172,13 +172,11 @@ extension DetailsView: ViewCodeProtocol {
         activityIndicator.snp.makeConstraints { make in
             make.center.equalToSuperview()
         }
-        
     }
     
     func setupAdditionalConfiguration() {
         backgroundColor = DSColors.primaryColor
     }
-    
 }
 
 //MARK: - DetailsViewProtocol

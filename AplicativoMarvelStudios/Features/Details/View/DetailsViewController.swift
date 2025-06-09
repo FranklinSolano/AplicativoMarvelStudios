@@ -12,6 +12,7 @@ protocol DetailsViewControllerDisplay: AnyObject {
     func getResutDataPerson(data: HeroesModel)
     func showLoading()
     func hideLoading()
+    func showResultAlertError(title: String, message: String)
 }
 
 // MARK: - DetailsViewController
@@ -42,6 +43,7 @@ final class DetailsViewController: UIViewController {
         interactor?.fetchDetailsPerson(idPerson: idPerson)
         shuffleImage()
     }
+    
     //MARK: - Outhe Methods
     
     func shuffleImage(){
@@ -53,6 +55,10 @@ final class DetailsViewController: UIViewController {
 // MARK: - DisplayDetailsViewController
 
 extension DetailsViewController: DetailsViewControllerDisplay {
+    func showResultAlertError(title: String, message: String) {
+        self.getAlertController(title: title, message: message)
+    }
+    
     func showLoading() {
         DispatchQueue.main.async {
             self.screen?.showLoading()
@@ -75,10 +81,11 @@ extension DetailsViewController: DetailsViewControllerDisplay {
     }
 }
 
+//MARK: - DetailsViewProtocol
+
 extension DetailsViewController: DetailsViewProtocol{
     func actionBack() {
         interactor?.navigateBack()
-      
     }
 }
 
@@ -105,7 +112,6 @@ extension DetailsViewController: UICollectionViewDelegate, UICollectionViewDataS
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let largura: CGFloat = 120
         let altura = collectionView.bounds.height - 10
-        
         return CGSize(width: largura, height: altura)
     }
     
