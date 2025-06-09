@@ -9,6 +9,7 @@ import UIKit
 
 protocol DetailsInteracting: AnyObject {
     func navigateBack()
+    func fetchDetailsPerson(idPerson: Int)
 }
 
 final class DetailsInteractor {
@@ -23,6 +24,19 @@ final class DetailsInteractor {
 }
 
 extension DetailsInteractor: DetailsInteracting {
+    func fetchDetailsPerson(idPerson: Int) {
+        service?.fetchCharacterDetail(id: idPerson, completion: { result in
+            switch result {
+            case .success(let hero):
+                self.presenter?.getDetailsPerson(result: hero)
+                print(hero)
+            case.failure:
+//                self.presenter?.navigateBack()
+                print("deu ruim")
+            }
+        })
+    }
+    
     func navigateBack() {
         presenter?.navigateBack()
     }

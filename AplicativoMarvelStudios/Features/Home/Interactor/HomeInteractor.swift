@@ -11,7 +11,7 @@ import UIKit
 
 protocol HomeInteracting: AnyObject {
     func fetchHeroes()
-    func navigateToDetail(data: [HeroesModel])
+    func navigateToDetail(data: [HeroesModel], idPerson: HeroesModel)
 }
 
 // MARK: - Interactor
@@ -36,8 +36,8 @@ final class HomeInteractor{
 //MARK: - HomeInteracting
 
 extension HomeInteractor: HomeInteracting {
-    func navigateToDetail(data: [HeroesModel]) {
-        presenter?.navigateToDetail(data: data)
+    func navigateToDetail(data: [HeroesModel], idPerson: HeroesModel) {
+        presenter?.navigateToDetail(data: data, idPerson: idPerson)
     }
     
     func fetchHeroes() {

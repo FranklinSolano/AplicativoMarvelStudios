@@ -11,6 +11,7 @@ struct HeroesModel: Codable {
     var id: Int
     var heroName: String
     var imageURL: String
+    var descrepitionPerson: String?
 }
 
 struct CharacterResponse: Codable {
@@ -24,6 +25,7 @@ struct CharacterData: Codable {
 struct Character: Codable {
     let id: Int?
     let name: String
+    let description: String
     let thumbnail: Thumbnail
 }
 

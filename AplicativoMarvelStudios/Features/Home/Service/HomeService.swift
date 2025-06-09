@@ -23,7 +23,6 @@ final class HomeService: HomeServiceProtocol {
         let urlString = "https://gateway.marvel.com/v1/public/characters?limit=100&ts=\(ts)&apikey=\(Keys.marvelPublicKey)&hash=\(hash)"
 
         guard let url = URL(string: urlString) else {
-            print("URL inválida")
             completion(.failure(.invalidURL))
             return
         }
@@ -46,7 +45,8 @@ final class HomeService: HomeServiceProtocol {
                     return HeroesModel(
                         id: id,
                         heroName: character.name,
-                        imageURL: character.thumbnail.fullPath
+                        imageURL: character.thumbnail.fullPath,
+                        descrepitionPerson: character.description
                     )
                 }
                 completion(.success(viewModels))

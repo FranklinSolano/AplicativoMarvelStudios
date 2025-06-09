@@ -9,6 +9,8 @@ import UIKit
 
 protocol DetailsPresenting: AnyObject {
     func navigateBack()
+    func getDetailsPerson(result: HeroesModel)
+    func showResultAlertError(title: String, message: String)
 }
 
 final class DetailsPresenter {
@@ -23,6 +25,14 @@ final class DetailsPresenter {
 }
 
 extension DetailsPresenter: DetailsPresenting {
+    func showResultAlertError(title: String, message: String) {
+        
+    }
+    
+    func getDetailsPerson(result: HeroesModel) {
+        view?.getResutDataPerson(data: result)
+    }
+    
     func navigateBack() {
         coordinator?.navigateBack()
     }

@@ -15,7 +15,7 @@ protocol HomePresenting: AnyObject {
     func showAlertError()
     func showLoading()
     func hideLoading()
-    func navigateToDetail(data: [HeroesModel])
+    func navigateToDetail(data: [HeroesModel], idPerson: HeroesModel)
 }
 
 // MARK: - Presenter
@@ -33,15 +33,13 @@ final class HomePresenter {
         self.view = view
         self.coordinator = coordinator
     }
-    
-    //MARK: - Outher Methods
 }
 
 //MARK: - HomePresenting
 
 extension HomePresenter: HomePresenting {
-    func navigateToDetail(data: [HeroesModel]) {
-        coordinator?.navigateToDetail(data: data)
+    func navigateToDetail(data: [HeroesModel], idPerson: HeroesModel) {
+        coordinator?.navigateToDetail(data: data, idPerson: idPerson)
     }
     
     func presentCharacters(_ characters: [HeroesModel]) {

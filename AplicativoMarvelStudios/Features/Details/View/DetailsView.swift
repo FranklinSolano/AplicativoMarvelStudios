@@ -32,23 +32,24 @@ final class DetailsView: UIView {
     
     private lazy var imagePerson: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(systemName: "person.circle")
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        imageView.layer.cornerRadius = 17
         return imageView
     }()
     
     private lazy var personName: UILabel = {
-        let label = DSLabel(text: "Teste", textColor: DSColors.titleTextColor, font: DSFonts.subtitleSemibold16, numberOfLines: 0, textAlignment: .center)
+        let label = DSLabel(text: "", textColor: DSColors.titleTextColor, font: DSFonts.subtitleSemibold16, numberOfLines: 0, textAlignment: .center)
         return label
     }()
     
     private lazy var descriptionPerson: UILabel = {
-        let label = DSLabel(text: "tefagafgsdgsdfgsdgfsdgsdfgfsgsfgsdgsfdjklnadwljksfnadjskfnadsjkfnakjdsnfakjsdnfasdjknfajskdnvjaskdnvajdsknva;jdLKjncJDFK;BNADVJ;LKZGNVADSJK;ZVNASDJLZCNVAOMIFL'KGJAFIMOZLKGVNAMFOLKZ;NVA;DFJLCKZVNM", textColor: DSColors.titleTextColor, font: DSFonts.subtitleSemibold16, numberOfLines: 0, textAlignment: .center)
+        let label = DSLabel(text: "", textColor: DSColors.titleTextColor, font: DSFonts.captionLight14, numberOfLines: 0, textAlignment: .left)
         return label
     }()
     
     private lazy var personRelated: UILabel = {
-        let label = DSLabel(text: "Personagens relacionados", textColor: DSColors.titleTextColor, font: DSFonts.subtitleSemibold16, numberOfLines: 0, textAlignment: .left)
+        let label = DSLabel(text: "Mais Personagens", textColor: DSColors.titleTextColor, font: DSFonts.subtitleSemibold16, numberOfLines: 0, textAlignment: .left)
         return label
     }()
     
@@ -85,6 +86,14 @@ final class DetailsView: UIView {
     func configCollectoinView(delegate: UICollectionViewDelegate, dataSource: UICollectionViewDataSource){
         collectionView.delegate = delegate
         collectionView.dataSource = dataSource
+    }
+    
+    func setupView(data: HeroesModel?) {
+        personName.text = data?.heroName
+         descriptionPerson.text = "Descricao do personagem: \(data?.descrepitionPerson ?? "Esse personagem nao tem descricao")"
+        if let url = data?.imageURL {
+            imagePerson.loadImage(from: url)
+        }
     }
 }
 

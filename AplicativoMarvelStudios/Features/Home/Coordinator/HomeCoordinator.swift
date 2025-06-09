@@ -10,14 +10,15 @@ import UIKit
 // MARK: - Protocol
 
 protocol HomeCoordinating{
-    func navigateToDetail(data: [HeroesModel])
+    func navigateToDetail(data: [HeroesModel], idPerson: HeroesModel)
 }
 
 final class HomeCoordinator: HomeCoordinating {
-    func navigateToDetail(data: [HeroesModel]) {
+    func navigateToDetail(data: [HeroesModel], idPerson: HeroesModel) {
         guard let navigationController else { return }
         let detailsFactory = DetailsFactory()
         let detailsVC = detailsFactory.make(navigationController: navigationController)
+        detailsVC.idPerson = idPerson.id
         detailsVC.personListImage = data
         navigationController.pushViewController(detailsVC, animated: true)
     }

@@ -9,6 +9,7 @@ import UIKit
 
 // MARK: - Protocol
 protocol DetailsViewControllerDisplay: AnyObject {
+    func getResutDataPerson(data: HeroesModel)
     
 }
 
@@ -22,6 +23,7 @@ final class DetailsViewController: UIViewController {
     var interactor: DetailsInteracting?
     var personListImage: [HeroesModel] = []
     private var personListImageShuffle: [HeroesModel] = []
+    var idPerson: Int?
     
     // MARK: - Lifecycle
     
@@ -34,8 +36,11 @@ final class DetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        guard let idPerson = idPerson else { return }
+        interactor?.fetchDetailsPerson(idPerson: idPerson)
         shuffleImage()
     }
+    //MARK: - Outhe Methods
     
     func shuffleImage(){
         personListImageShuffle = personListImage
@@ -43,16 +48,22 @@ final class DetailsViewController: UIViewController {
     }
 }
 
-
 // MARK: - DisplayDetailsViewController
 
 extension DetailsViewController: DetailsViewControllerDisplay {
-    
+    func getResutDataPerson(data: HeroesModel) {
+        
+        DispatchQueue.main.async {
+            self.screen?.setupView(data: data)
+            self.screen?.collectionView.reloadData()
+        }
+    }
 }
 
 extension DetailsViewController: DetailsViewProtocol{
     func actionBack() {
         interactor?.navigateBack()
+      
     }
 }
 
