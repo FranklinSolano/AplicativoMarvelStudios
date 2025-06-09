@@ -6,22 +6,11 @@
 //
 import UIKit
 
-extension UIImageView {
-    func loadImage(from urlString: String) {
-        guard let url = URL(string: urlString) else {
-            print("URL inválida: \(urlString)")
-            return
-        }
+import SDWebImage
 
-        DispatchQueue.global().async {
-            if let data = try? Data(contentsOf: url),
-               let image = UIImage(data: data) {
-                DispatchQueue.main.async {
-                    self.image = image
-                }
-            } else {
-                print("Erro ao carregar imagem da URL: \(urlString)")
-            }
-        }
+extension UIImageView {
+    func loadImage(from url: String?) {
+        guard let urlString = url, let imageURL = URL(string: urlString) else { return }
+        self.sd_setImage(with: imageURL, placeholderImage: UIImage(named: "placeholder"))
     }
 }

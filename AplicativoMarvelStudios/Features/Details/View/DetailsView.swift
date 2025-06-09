@@ -97,11 +97,11 @@ final class DetailsView: UIView {
     
     func setupView(data: HeroesModel?) {
         personName.text = data?.heroName
-        if ((data?.descrepitionPerson.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty) != nil) {
-                descriptionPerson.text = "Descrição do personagem não encontrada"
-            } else {
-                descriptionPerson.text = data?.descrepitionPerson
-            }
+        if let description = data?.descrepitionPerson, !description.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            descriptionPerson.text = description
+        } else {
+            descriptionPerson.text = "Descrição do personagem não encontrada"
+        }
         if let url = data?.imageURL {
             imagePerson.loadImage(from: url)
         }
