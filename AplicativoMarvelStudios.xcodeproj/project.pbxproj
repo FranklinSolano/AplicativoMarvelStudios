@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7D52628F2DF66A7A004DFA10 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 7D52628E2DF66A7A004DFA10 /* SDWebImage */; };
 		7DAD35C52DE77D650037B250 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7DAD35C42DE77D650037B250 /* SnapKit */; };
 /* End PBXBuildFile section */
 
@@ -40,6 +41,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7D52628F2DF66A7A004DFA10 /* SDWebImage in Frameworks */,
 				7DAD35C52DE77D650037B250 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -84,6 +86,7 @@
 			name = AplicativoMarvelStudios;
 			packageProductDependencies = (
 				7DAD35C42DE77D650037B250 /* SnapKit */,
+				7D52628E2DF66A7A004DFA10 /* SDWebImage */,
 			);
 			productName = AplicativoMarvelStudios;
 			productReference = 7DAD35282DE773700037B250 /* AplicativoMarvelStudios.app */;
@@ -115,6 +118,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				7DAD35C32DE77D650037B250 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				7D52628D2DF66A7A004DFA10 /* XCRemoteSwiftPackageReference "SDWebImage" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 7DAD35292DE773700037B250 /* Products */;
@@ -360,6 +364,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		7D52628D2DF66A7A004DFA10 /* XCRemoteSwiftPackageReference "SDWebImage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImage";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.21.0;
+			};
+		};
 		7DAD35C32DE77D650037B250 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit";
@@ -371,6 +383,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		7D52628E2DF66A7A004DFA10 /* SDWebImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7D52628D2DF66A7A004DFA10 /* XCRemoteSwiftPackageReference "SDWebImage" */;
+			productName = SDWebImage;
+		};
 		7DAD35C42DE77D650037B250 /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 7DAD35C32DE77D650037B250 /* XCRemoteSwiftPackageReference "SnapKit" */;

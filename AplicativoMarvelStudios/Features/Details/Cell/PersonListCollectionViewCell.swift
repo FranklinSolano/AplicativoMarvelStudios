@@ -37,8 +37,10 @@ final class PersonListCollectionViewCell: UICollectionViewCell {
     // MARK: - Outher Methods
     
     func SetupCell(data: HeroesModel?){
-        if let url = data?.imageURL {
-            imagePerson.loadImage(from: url)
+        if let urlString = data?.imageURL, let url = URL(string: urlString) {
+            imagePerson.sd_setImage(with: url, placeholderImage: UIImage(named: "placeholder"))
+        } else {
+            imagePerson.image = UIImage(named: "placeholder")
         }
     }
 }

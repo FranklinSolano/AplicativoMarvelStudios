@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import SDWebImage
 
 // MARK: - PersonListTableViewCell
 
@@ -42,13 +43,15 @@ final class PersonListTableViewCell: UITableViewCell {
     
     // MARK: - Outher Methods
     
-    func setupCell(data: HeroesModel?){
+    func setupCell(data: HeroesModel?) {
         heroName.text = data?.heroName
-        if let url = data?.imageURL {
-            imagePerson.loadImage(from: url)
+        
+        if let urlString = data?.imageURL, let url = URL(string: urlString) {
+            imagePerson.sd_setImage(with: url, placeholderImage: UIImage(named: "placeholder"))
+        } else {
+            imagePerson.image = UIImage(named: "placeholder")
         }
-    }
-}
+    }}
 
 // MARK: - ViewCodeProtocol
 
