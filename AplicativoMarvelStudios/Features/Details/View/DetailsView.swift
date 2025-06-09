@@ -98,7 +98,7 @@ final class DetailsView: UIView {
     func setupView(data: HeroesModel?) {
         personName.text = data?.heroName
         if let description = data?.descrepitionPerson, !description.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            descriptionPerson.text = description
+            descriptionPerson.text = "Descricao do personagem: \(description)"
         } else {
             descriptionPerson.text = "Descrição do personagem não encontrada"
         }

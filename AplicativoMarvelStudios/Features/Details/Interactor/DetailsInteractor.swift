@@ -10,6 +10,7 @@ import UIKit
 protocol DetailsInteracting: AnyObject {
     func navigateBack()
     func fetchDetailsPerson(idPerson: Int)
+    func updateDetails(id: HeroesModel, data: [HeroesModel])
 }
 
 final class DetailsInteractor {
@@ -24,6 +25,10 @@ final class DetailsInteractor {
 }
 
 extension DetailsInteractor: DetailsInteracting {
+    func updateDetails(id: HeroesModel, data: [HeroesModel]) {
+        presenter?.updateDetails(id: id, data: data)
+    }
+    
     func fetchDetailsPerson(idPerson: Int) {
         presenter?.showLoading()
         service?.fetchCharacterDetail(id: idPerson, completion: { result in

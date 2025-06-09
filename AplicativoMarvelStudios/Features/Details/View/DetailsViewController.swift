@@ -108,4 +108,9 @@ extension DetailsViewController: UICollectionViewDelegate, UICollectionViewDataS
         
         return CGSize(width: largura, height: altura)
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let idPerson = personListImageShuffle[indexPath.row]
+        interactor?.updateDetails(id: idPerson, data: self.personListImageShuffle)
+    }
 }

@@ -13,6 +13,7 @@ protocol DetailsPresenting: AnyObject {
     func showResultAlertError(title: String, message: String)
     func showLoading()
     func hideLoading()
+    func updateDetails(id: HeroesModel, data: [HeroesModel])
 }
 
 final class DetailsPresenter {
@@ -27,6 +28,10 @@ final class DetailsPresenter {
 }
 
 extension DetailsPresenter: DetailsPresenting {
+    func updateDetails(id: HeroesModel, data: [HeroesModel]) {
+        coordinator?.updateDetails(id: id, data: data)
+    }
+    
     func showLoading() {
         view?.showLoading()
     }

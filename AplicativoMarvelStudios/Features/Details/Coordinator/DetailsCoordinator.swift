@@ -10,11 +10,21 @@ import UIKit
 
 protocol DetailsCoordinating {
     func navigateBack()
+    func updateDetails(id: HeroesModel, data: [HeroesModel])
 }
 
 final class DetailsCoordinator: DetailsCoordinating {
+    func updateDetails(id: HeroesModel, data: [HeroesModel]) {
+        guard let navigationController else { return }
+        let detailsFactory = DetailsFactory()
+        let detailsVC = detailsFactory.make(navigationController: navigationController)
+        detailsVC.idPerson = id.id
+        detailsVC.personListImage = data
+        navigationController.pushViewController(detailsVC, animated: true)
+    }
+    
     func navigateBack() {
-        navigationController?.popViewController(animated: true)
+        navigationController?.popToRootViewController(animated: true)
     }
     
     
