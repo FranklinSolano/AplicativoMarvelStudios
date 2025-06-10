@@ -50,9 +50,7 @@ final class LoginScreen: UIView {
     }()
     
     lazy var forgotPasswordButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("Esquceu a senha?", for: .normal)
-        button.setTitleColor(DSColors.titleTextColor, for: .normal)
+        let button = DSButtonTitles(title: "Forgot Password?", font: DSFonts.subtitleSemibold16)
         button.addTarget(self, action: #selector(tappedForgotPassword), for: .touchUpInside)
         return button
     }()
@@ -64,9 +62,7 @@ final class LoginScreen: UIView {
     }()
     
     lazy var registerButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("Nao tem conta? Cadastre-se", for: .normal)
-        button.setTitleColor(DSColors.titleTextColor, for: .normal)
+        let button = DSButtonTitles(title: "Nao tem conta? Cadastre-se", font: DSFonts.subtitleSemibold16)
         button.addTarget(self, action: #selector(tappedRegister), for: .touchUpInside)
         return button
     }()
@@ -126,11 +122,7 @@ extension LoginScreen: ViewCodeProtocol {
     }
     
     func setupConstraints() {
-        setupLoginFormConstraints()
-        setupButtonsConstraints()
-    }
-    
-    func setupLoginFormConstraints() {
+        
         emailLabel.snp.makeConstraints { make in
             make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(60)
             make.leading.equalToSuperview().offset(25)
@@ -152,9 +144,7 @@ extension LoginScreen: ViewCodeProtocol {
             make.leading.trailing.equalToSuperview().inset(25)
             make.height.equalTo(50)
         }
-    }
-    
-    func setupButtonsConstraints() {
+        
         forgotPasswordButton.snp.makeConstraints { make in
             make.top.equalTo(passwordTextField.snp.bottom).offset(12)
             make.trailing.equalToSuperview().inset(25)

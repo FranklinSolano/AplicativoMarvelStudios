@@ -10,14 +10,14 @@ import UIKit
 final class DSSearchBar: UISearchBar {
     override init(frame: CGRect) {
         super.init(frame: frame)
-        configure()
+        setupSearch()
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func configure() {
+    private func setupSearch() {
         clipsToBounds = true
         layer.cornerRadius = 10
         searchBarStyle = .minimal

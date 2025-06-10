@@ -18,10 +18,7 @@ final class PersonListCollectionViewCell: UICollectionViewCell {
     // MARK: - UI Elements
     
     private lazy var imagePerson: UIImageView = {
-        let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFill
-        imageView.clipsToBounds = true
-        imageView.layer.cornerRadius = 12
+        let imageView = DSImageView(image: .placeholder)
         return imageView
     }()
     

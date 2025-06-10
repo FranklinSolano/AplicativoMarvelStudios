@@ -45,7 +45,7 @@ final class HomeScreen: UIView {
     private lazy var activityIndicator: UIActivityIndicatorView = {
         let indicator = UIActivityIndicatorView(style: .large)
         indicator.hidesWhenStopped = true
-        indicator.color = DSColors.titleTextColor // Ou qualquer cor que combine com seu tema
+        indicator.color = DSColors.titleTextColor
         return indicator
     }()
     
@@ -77,7 +77,6 @@ final class HomeScreen: UIView {
         tableView.isHidden = false
     }
 }
-
 
 // MARK: - ViewCodeProtocol
 

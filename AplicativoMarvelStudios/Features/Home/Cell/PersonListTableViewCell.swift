@@ -20,10 +20,7 @@ final class PersonListTableViewCell: UITableViewCell {
     // MARK: - UI Elements
     
     private lazy var imagePerson: UIImageView = {
-        let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit
-        imageView.clipsToBounds = true
-        imageView.layer.cornerRadius = 15
+        let imageView = DSImageView(image: .placeholder)
         return imageView
     }()
     

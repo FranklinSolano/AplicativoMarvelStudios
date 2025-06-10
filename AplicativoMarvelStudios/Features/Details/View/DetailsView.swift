@@ -23,18 +23,13 @@ final class DetailsView: UIView {
     // MARK: - UI Elements
     
     lazy var backButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("<- Voltar", for: .normal)
-        button.setTitleColor(DSColors.titleTextColor, for: .normal)
+        let button = DSButtonTitles(title: "<- Back", font: DSFonts.subtitleSemibold16)
         button.addTarget(self, action: #selector(tappedBackButton), for: .touchUpInside)
         return button
     }()
     
     private lazy var imagePerson: UIImageView = {
-        let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFill
-        imageView.clipsToBounds = true
-        imageView.layer.cornerRadius = 17
+        let imageView = DSImageView(image: .placeholder)
         return imageView
     }()
     
@@ -49,18 +44,13 @@ final class DetailsView: UIView {
     }()
     
     private lazy var personRelated: UILabel = {
-        let label = DSLabel(text: "Mais Personagens", textColor: DSColors.titleTextColor, font: DSFonts.subtitleSemibold16, numberOfLines: 0, textAlignment: .left)
+        let label = DSLabel(text: "More characters", textColor: DSColors.titleTextColor, font: DSFonts.subtitleSemibold16, numberOfLines: 0, textAlignment: .left)
         return label
     }()
     
     lazy var collectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        layout.minimumLineSpacing = 10
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.backgroundColor = .clear
+        let collectionView = DSCollectionView(scroll: .horizontal, spacing: 10)
         collectionView.register(PersonListCollectionViewCell.self, forCellWithReuseIdentifier:  PersonListCollectionViewCell.identifier)
-        collectionView.showsHorizontalScrollIndicator = false
         return collectionView
     }()
     
@@ -98,9 +88,9 @@ final class DetailsView: UIView {
     func setupView(data: HeroesModel?) {
         personName.text = data?.heroName
         if let description = data?.descrepitionPerson, !description.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            descriptionPerson.text = "Descricao do personagem: \(description)"
+            descriptionPerson.text = "Character description: \(description)"
         } else {
-            descriptionPerson.text = "Descrição do personagem não encontrada"
+            descriptionPerson.text = "Character description not found"
         }
         if let url = data?.imageURL {
             imagePerson.loadImage(from: url)
@@ -111,12 +101,14 @@ final class DetailsView: UIView {
         activityIndicator.startAnimating()
         collectionView.isHidden = true
         personRelated.isHidden = true
+        imagePerson.isHidden = true
     }
     
     func hideLoading() {
         activityIndicator.stopAnimating()
         collectionView.isHidden = false
         personRelated.isHidden = false
+        imagePerson.isHidden = false
     }
 }
 
