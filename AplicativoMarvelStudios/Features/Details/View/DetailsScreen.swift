@@ -16,7 +16,7 @@ protocol DetailsViewProtocol: AnyObject {
 
 // MARK: - DetailsView
 
-final class DetailsView: UIView {
+final class DetailsScreen: UIView {
     
     weak var delegate: DetailsViewProtocol?
     
@@ -114,7 +114,7 @@ final class DetailsView: UIView {
 
 //MARK: - ViewCodeProtocol
 
-extension DetailsView: ViewCodeProtocol {
+extension DetailsScreen: ViewCodeProtocol {
     func setupElements() {
         addSubview(backButton)
         addSubview(personName)
@@ -173,7 +173,7 @@ extension DetailsView: ViewCodeProtocol {
 
 //MARK: - DetailsViewProtocol
 
-extension DetailsView: DetailsViewProtocol {
+extension DetailsScreen: DetailsViewProtocol {
     func actionBack() {
         delegate?.actionBack()
     }

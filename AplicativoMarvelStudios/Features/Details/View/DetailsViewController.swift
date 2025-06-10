@@ -21,7 +21,7 @@ final class DetailsViewController: UIViewController {
     
     // MARK: - Properties
     
-    private var screen: DetailsView?
+    private var screen: DetailsScreen?
     var interactor: DetailsInteracting?
     var personListImage: [HeroesModel] = []
     private var personListImageShuffle: [HeroesModel] = []
@@ -30,7 +30,7 @@ final class DetailsViewController: UIViewController {
     // MARK: - Lifecycle
     
     override func loadView() {
-        screen = DetailsView()
+        screen = DetailsScreen()
         screen?.delegate = self
         screen?.configCollectoinView(delegate: self, dataSource: self)
         view = screen
