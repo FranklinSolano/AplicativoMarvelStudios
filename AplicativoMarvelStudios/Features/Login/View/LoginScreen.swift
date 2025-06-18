@@ -33,18 +33,18 @@ final class LoginScreen: UIView {
     }()
     
     lazy var emailTextField: UITextField = {
-        let textField = DSTextField(placeholder: "Digite seu email", isSecureTextEntry: false)
-        textField.text = "ss"
+        let textField = DSTextField(placeholder: "Enter your email", isSecureTextEntry: false)
+        textField.text = "franklin@gmail.com"
         return textField
     }()
     
     lazy var passwordLabel: UILabel = {
-        let label = DSLabel(text: "Senha:")
+        let label = DSLabel(text: "Password:")
         return label
     }()
     
     lazy var passwordTextField: UITextField = {
-        let textField = DSTextField(placeholder: "Digete sua senha", isSecureTextEntry: true)
+        let textField = DSTextField(placeholder: "Enter your password", isSecureTextEntry: true)
         textField.text = "ss"
         return textField
     }()
@@ -56,13 +56,13 @@ final class LoginScreen: UIView {
     }()
     
     lazy var loginButton: UIButton = {
-        let button = DSButton(title: "Entrar")
+        let button = DSButton(title: "Login")
         button.addTarget(self, action: #selector(tappedLogin), for: .touchUpInside)
         return button
     }()
     
     lazy var registerButton: UIButton = {
-        let button = DSButtonTitles(title: "Nao tem conta? Cadastre-se", font: DSFonts.subtitleSemibold16)
+        let button = DSButtonTitles(title: "Don't have an account? Sign up", font: DSFonts.subtitleSemibold16)
         button.addTarget(self, action: #selector(tappedRegister), for: .touchUpInside)
         return button
     }()

@@ -41,7 +41,7 @@ final class LoginPresenter {
 extension LoginPresenter: LoginPresenting {
     func presentShowAlertLogin(success: Bool) {
         if success {
-            view?.showAlertLogin(title: "Deu certo", message: "Login feito com sucesso")
+            view?.showAlertLogin(title: "Success", message: "Login successfully")
             coordinator?.navigateToHome()
         } else {
             view?.showAlertLogin(title: "Deu Ruim", message: "Preencha todos os campos")
