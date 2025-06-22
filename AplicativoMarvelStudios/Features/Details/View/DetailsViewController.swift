@@ -84,6 +84,10 @@ extension DetailsViewController: DetailsViewControllerDisplay {
 //MARK: - DetailsViewProtocol
 
 extension DetailsViewController: DetailsViewProtocol{
+    func actionFavoritesSave() {
+
+    }
+    
     func actionBack() {
         interactor?.navigateBack()
     }
