@@ -13,6 +13,7 @@ protocol DetailsViewControllerDisplay: AnyObject {
     func showLoading()
     func hideLoading()
     func showResultAlertError(title: String, message: String)
+
 }
 
 // MARK: - DetailsViewController
@@ -85,7 +86,6 @@ extension DetailsViewController: DetailsViewControllerDisplay {
 
 extension DetailsViewController: DetailsViewProtocol{
     func actionFavoritesSave() {
-
     }
     
     func actionBack() {
