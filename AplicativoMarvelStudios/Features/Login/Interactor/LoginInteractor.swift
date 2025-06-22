@@ -40,9 +40,9 @@ class LoginInteractor {
 extension LoginInteractor: LoginInteracting {
     
     func callServiceLogin(email: String, password: String) {
-        service?.callServiceLogin(email: email, password: password, completion: { [weak self] success in
+        service?.callServiceLogin(email: email, password: password, completion: { [weak self] success, errorMessage in
             DispatchQueue.main.async {
-                self?.presenter?.presentShowAlertLogin(success: success)
+                self?.presenter?.presentShowAlertLogin(success: success, errorMessage: errorMessage)
             }
         })
     }

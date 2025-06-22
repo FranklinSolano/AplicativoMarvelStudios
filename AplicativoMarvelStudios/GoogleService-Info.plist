@@ -3,17 +3,17 @@
 <plist version="1.0">
 <dict>
 	<key>API_KEY</key>
-	<string>AIzaSyB9_Xigl-EGWkoxwZhsT4ognwYNxOYnarw</string>
+	<string>AIzaSyCx4T4eAiK5nt7-i6CQ08M4RnBG1hIEgbY</string>
 	<key>GCM_SENDER_ID</key>
-	<string>142177093158</string>
+	<string>238695456290</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>AppMarvelStudios.AplicativoMarvelStudios</string>
 	<key>PROJECT_ID</key>
-	<string>marvelapp-63f48</string>
+	<string>marvelapp-86430</string>
 	<key>STORAGE_BUCKET</key>
-	<string>marvelapp-63f48.firebasestorage.app</string>
+	<string>marvelapp-86430.firebasestorage.app</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -25,6 +25,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:142177093158:ios:ba39844b6a207c5f4388e7</string>
+	<string>1:238695456290:ios:6102e0c21ff63b35ad347b</string>
 </dict>
 </plist>

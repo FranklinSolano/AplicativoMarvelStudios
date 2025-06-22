@@ -45,7 +45,7 @@ final class LoginScreen: UIView {
     
     lazy var passwordTextField: UITextField = {
         let textField = DSTextField(placeholder: "Enter your password", isSecureTextEntry: true)
-        textField.text = "ss"
+        textField.text = "12345678"
         return textField
     }()
     
