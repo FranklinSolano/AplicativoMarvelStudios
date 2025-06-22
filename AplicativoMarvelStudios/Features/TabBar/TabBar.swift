@@ -37,7 +37,7 @@ class TabbarViewController: UITabBarController {
         
 
         
-        let favoritosVC = FavoritosViewController()
+        let favoritosVC = FavoritesViewController()
         let favoritosNav = UINavigationController(rootViewController: favoritosVC)
         favoritosNav.setNavigationBarHidden(true, animated: false)
 

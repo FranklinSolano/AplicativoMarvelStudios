@@ -13,13 +13,14 @@ protocol FavoritesViewControllerDisplay: AnyObject {
     
 }
 
-final class FavoritosViewController: UIViewController {
+final class FavoritesViewController: UIViewController {
     
     var screen: FavoritesScreen?
-//    var interactor: FavoritesInteracting?
+    var interactor: FavoritesInteracting?
     
     override func loadView() {
         screen = FavoritesScreen()
+        screen?.configCollectoinView(delegate: self, dataSource: self)
         view = screen
     }
     
@@ -30,6 +31,21 @@ final class FavoritosViewController: UIViewController {
 
 //MARK: - FavoritesViewControllerDisplay
 
-extension FavoritosViewController: FavoritesViewControllerDisplay {
+extension FavoritesViewController: FavoritesViewControllerDisplay {
     
+}
+
+extension FavoritesViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FavoritesEmptyCell.identifier, for: indexPath) as? FavoritesEmptyCell
+        return cell ?? UICollectionViewCell()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: collectionView.bounds.width, height: collectionView.bounds.height)
+    }
 }

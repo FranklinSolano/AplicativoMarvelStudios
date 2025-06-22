@@ -16,7 +16,7 @@ protocol FavoritesCoordinating {
 
 // MARK: - FavoritesCoordinating
 
-final class FvoritesCoordinator: FavoritesCoordinating {
+final class FavoritesCoordinator: FavoritesCoordinating {
     
     // MARK: - Properties
     
