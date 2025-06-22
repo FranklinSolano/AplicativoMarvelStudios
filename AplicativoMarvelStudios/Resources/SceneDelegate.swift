@@ -16,59 +16,59 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                willConnectTo session: UISceneSession,
                options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
-        
-        // Cria a janela principal
+
         let window = UIWindow(windowScene: windowScene)
-        
-        // Cria o UINavigationController
-        let navigationController = UINavigationController(rootViewController: LoginViewController())
-        navigationController.setNavigationBarHidden(true, animated: false)
-        
-        // Cria o LoginViewController e o LoginCoordinator usando a LoginFactory
-        let loginFactory = LoginFactory()
-        let (homeVC, coordinator) = loginFactory.make(navigationController: navigationController)
-        
-        // Mantém uma referência forte ao Coordinatorpod inst
-        self.loginCoordinator = coordinator
-        
-        // Define o LoginViewController como root do UINavigationController
-        navigationController.viewControllers = [homeVC]
-        
-        // Define o UINavigationController como rootViewController da janela
-        window.rootViewController = navigationController
-        window.makeKeyAndVisible()
         self.window = window
+
+        // Usa a função para iniciar o fluxo de login
+        let loginNav = startLoginFlow()
+        window.rootViewController = loginNav
+        window.makeKeyAndVisible()
     }
 
+    func startLoginFlow() -> UINavigationController {
+        let navigationController = UINavigationController()
+        navigationController.setNavigationBarHidden(true, animated: false)
 
-    func sceneDidDisconnect(_ scene: UIScene) {
-        // Called as the scene is being released by the system.
-        // This occurs shortly after the scene enters the background, or when its session is discarded.
-        // Release any resources associated with this scene that can be re-created the next time the scene connects.
-        // The scene may re-connect later, as its session was not necessarily discarded (see `application:didDiscardSceneSessions` instead).
+        let loginFactory = LoginFactory()
+        let (loginVC, coordinator) = loginFactory.make(navigationController: navigationController)
+        self.loginCoordinator = coordinator
+        navigationController.viewControllers = [loginVC]
+
+        return navigationController
     }
 
-    func sceneDidBecomeActive(_ scene: UIScene) {
-        // Called when the scene has moved from an inactive state to an active state.
-        // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
+        
+        
+        func sceneDidDisconnect(_ scene: UIScene) {
+            // Called as the scene is being released by the system.
+            // This occurs shortly after the scene enters the background, or when its session is discarded.
+            // Release any resources associated with this scene that can be re-created the next time the scene connects.
+            // The scene may re-connect later, as its session was not necessarily discarded (see `application:didDiscardSceneSessions` instead).
+        }
+        
+        func sceneDidBecomeActive(_ scene: UIScene) {
+            // Called when the scene has moved from an inactive state to an active state.
+            // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
+        }
+        
+        func sceneWillResignActive(_ scene: UIScene) {
+            // Called when the scene will move from an active state to an inactive state.
+            // This may occur due to temporary interruptions (ex. an incoming phone call).
+        }
+        
+        func sceneWillEnterForeground(_ scene: UIScene) {
+            // Called as the scene transitions from the background to the foreground.
+            // Use this method to undo the changes made on entering the background.
+        }
+        
+        func sceneDidEnterBackground(_ scene: UIScene) {
+            // Called as the scene transitions from the foreground to the background.
+            // Use this method to save data, release shared resources, and store enough scene-specific state information
+            // to restore the scene back to its current state.
+        }
+        
+        
     }
-
-    func sceneWillResignActive(_ scene: UIScene) {
-        // Called when the scene will move from an active state to an inactive state.
-        // This may occur due to temporary interruptions (ex. an incoming phone call).
-    }
-
-    func sceneWillEnterForeground(_ scene: UIScene) {
-        // Called as the scene transitions from the background to the foreground.
-        // Use this method to undo the changes made on entering the background.
-    }
-
-    func sceneDidEnterBackground(_ scene: UIScene) {
-        // Called as the scene transitions from the foreground to the background.
-        // Use this method to save data, release shared resources, and store enough scene-specific state information
-        // to restore the scene back to its current state.
-    }
-
-
-}
+    
 
