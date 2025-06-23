@@ -17,6 +17,7 @@ final class FavoritesViewController: UIViewController {
     
     var screen: FavoritesScreen?
     var interactor: FavoritesInteracting?
+    private var favorites: [HeroesModel] = []
     
     override func loadView() {
         screen = FavoritesScreen()
@@ -31,21 +32,55 @@ final class FavoritesViewController: UIViewController {
 
 //MARK: - FavoritesViewControllerDisplay
 
-extension FavoritesViewController: FavoritesViewControllerDisplay {
-    
-}
+extension FavoritesViewController: FavoritesViewControllerDisplay {}
+
+//MARK: - UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
 
 extension FavoritesViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        1
+        if favorites.isEmpty {
+            return 1
+        } else {
+            return favorites.count
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FavoritesEmptyCell.identifier, for: indexPath) as? FavoritesEmptyCell
-        return cell ?? UICollectionViewCell()
+        if favorites.isEmpty {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FavoritesEmptyCell.identifier, for: indexPath) as? FavoritesEmptyCell
+            return cell ?? UICollectionViewCell()
+        } else {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ListCharactersCollectionViewCell.identifier, for: indexPath) as? ListCharactersCollectionViewCell
+            return cell ?? UICollectionViewCell()
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.bounds.width, height: collectionView.bounds.height)
+        if favorites.isEmpty {
+            return CGSize(width: collectionView.bounds.width, height: collectionView.bounds.height)
+        } else { // ✅ Define tamanho da célula (2 por linha)
+            let spacing: CGFloat = 10
+            let horizontalInset: CGFloat = 16
+            let totalSpacing = (2 * horizontalInset) + spacing
+            let width = (collectionView.bounds.width - totalSpacing) / 2
+            return CGSize(width: width, height: width * 1.3)
+        }
+    }
+ 
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        if favorites.isEmpty {
+            return 1
+        } else {    // ✅ Espaço entre as linhas (vertical)
+            return 15
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        if favorites.isEmpty {
+            return UIEdgeInsets()
+        } else {    // ✅ Padding nas laterais e topo/baixo
+            return UIEdgeInsets(top: 10, left: 12, bottom: 10, right: 12)
+        }
     }
 }

@@ -1,8 +1,8 @@
 //
-//  HomeModel.swift
+//  GenericModel.swift
 //  AplicativoMarvelStudios
 //
-//  Created by Franklin  Stilhano Solano on 28/05/25.
+//  Created by Franklin  Stilhano Solano on 22/06/25.
 //
 
 import Foundation

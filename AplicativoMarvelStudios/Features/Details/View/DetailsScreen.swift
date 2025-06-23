@@ -60,7 +60,7 @@ final class DetailsScreen: UIView {
     
     lazy var collectionView: UICollectionView = {
         let collectionView = DSCollectionView(scroll: .horizontal, spacing: 10)
-        collectionView.register(PersonListCollectionViewCell.self, forCellWithReuseIdentifier:  PersonListCollectionViewCell.identifier)
+        collectionView.register(ListCharactersCollectionViewCell.self, forCellWithReuseIdentifier:  ListCharactersCollectionViewCell.identifier)
         return collectionView
     }()
     

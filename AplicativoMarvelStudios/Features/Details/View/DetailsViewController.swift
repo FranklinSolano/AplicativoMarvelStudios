@@ -101,7 +101,7 @@ extension DetailsViewController: UICollectionViewDelegate, UICollectionViewDataS
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PersonListCollectionViewCell.identifier, for: indexPath) as? PersonListCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ListCharactersCollectionViewCell.identifier, for: indexPath) as? ListCharactersCollectionViewCell
         let hero = personListImageShuffle[indexPath.row]
         cell?.SetupCell(data: hero)
         return cell ?? UICollectionViewCell()

@@ -18,9 +18,9 @@ final class FavoritesScreen: UIView {
     }()
     
     lazy var collectionViewFavorites: UICollectionView = {
-        let collectionView = DSCollectionView(scroll: .vertical, spacing: 30)
+        let collectionView = DSCollectionView(scroll: .vertical, spacing: 10)
         collectionView.register(FavoritesEmptyCell.self, forCellWithReuseIdentifier:  FavoritesEmptyCell.identifier)
-        collectionView.register(FavoritesListCharactersCell.self, forCellWithReuseIdentifier:  FavoritesListCharactersCell.identifier)
+        collectionView.register(ListCharactersCollectionViewCell.self, forCellWithReuseIdentifier:  ListCharactersCollectionViewCell.identifier)
         return collectionView
     }()
     
