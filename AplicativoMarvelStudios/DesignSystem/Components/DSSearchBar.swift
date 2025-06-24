@@ -21,7 +21,7 @@ final class DSSearchBar: UISearchBar {
         clipsToBounds = true
         layer.cornerRadius = 10
         searchBarStyle = .minimal
-        searchTextField.backgroundColor = DSColors.secundaryColor
+        searchTextField.backgroundColor = DSColors.secondaryColor
         searchTextField.attributedPlaceholder = NSAttributedString(
             string: "Search Person",
             attributes: [.foregroundColor: DSColors.titleTextColor]

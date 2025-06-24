@@ -13,7 +13,7 @@ final class DSButton: UIButton {
         super.init(frame: .zero)
         self.setTitle(title, for: .normal)
         self.setTitleColor(DSColors.titleTextColor, for: .normal)
-        self.backgroundColor = DSColors.secundaryColor
+        self.backgroundColor = DSColors.secondaryColor
         self.clipsToBounds = true
         self.layer.cornerRadius = 15
         self.isEnabled = true

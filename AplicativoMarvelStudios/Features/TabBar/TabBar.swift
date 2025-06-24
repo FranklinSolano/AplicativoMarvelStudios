@@ -54,7 +54,7 @@ class TabbarViewController: UITabBarController {
         
         setViewControllers([homeNav, favoritosNav, profileNav], animated: false)
         
-        tabBar.backgroundColor = DSColors.secundaryColor
+        tabBar.backgroundColor = DSColors.secondaryColor
         tabBar.isTranslucent = false
         tabBar.barTintColor = .white
         UITabBar.appearance().tintColor = .white

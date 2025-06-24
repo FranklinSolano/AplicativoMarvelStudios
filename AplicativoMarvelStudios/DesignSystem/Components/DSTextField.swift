@@ -16,7 +16,7 @@ final class DSTextField: UITextField {
         self.clipsToBounds = true
         self.layer.cornerRadius = 15
         self.layer.borderWidth = 3
-        self.layer.borderColor = DSColors.secundaryColor.cgColor
+        self.layer.borderColor = DSColors.secondaryColor.cgColor
         self.autocapitalizationType = .none
         self.textColor = DSColors.titleTextColor
         self.isSecureTextEntry = isSecureTextEntry
@@ -29,6 +29,15 @@ final class DSTextField: UITextField {
             string: placeholder,
             attributes: [NSAttributedString.Key.foregroundColor: DSColors.titleTextColor]
         )
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        updateBorderColor()
+    }
+
+    private func updateBorderColor() {
+        self.layer.borderColor = DSColors.secondaryColor.cgColor
     }
     
     required init?(coder: NSCoder) {

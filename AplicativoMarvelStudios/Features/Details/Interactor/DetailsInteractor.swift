@@ -44,7 +44,6 @@ extension DetailsInteractor: DetailsInteracting {
             switch result {
             case .success(let hero):
                 self.presenter?.getDetailsPerson(result: hero)
-                print(hero)
             case.failure:
                 self.presenter?.showResultAlertError(title: "Atencao", message: "Erro ao buscar personagens. Tente Novamente mais tarde!")
             }
