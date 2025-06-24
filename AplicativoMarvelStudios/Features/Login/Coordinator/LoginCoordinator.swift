@@ -20,6 +20,8 @@ final class LoginCoordinator {
     weak var navigationController: UINavigationController?
     var presenter: LoginPresenting?
     let homeFactory = HomeFactory()
+    let favoritesFactory = FavoritesFactory()
+    let profileFactory = ProfileFactory()
 }
 
 // MARK: - LoginCoordinating
@@ -27,7 +29,7 @@ final class LoginCoordinator {
 extension LoginCoordinator: LoginCoordinating {
     func navigateToHome() {
         guard let navigationController else { return }
-        let tabBarController = TabbarViewController(homeFactory: homeFactory)
+        let tabBarController = TabbarViewController(homeFactory: homeFactory, favoritesFactory: favoritesFactory, profileFactory: profileFactory)
         navigationController.setViewControllers([tabBarController], animated: true)
     }
     
