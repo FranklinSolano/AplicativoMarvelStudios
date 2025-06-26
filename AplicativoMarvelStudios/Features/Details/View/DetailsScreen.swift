@@ -9,22 +9,32 @@ import UIKit
 import SnapKit
 
 // MARK: - Protocol
-
+@MainActor
 protocol DetailsViewProtocol: AnyObject {
     func actionBack()
+    func actionFavoritesSave()
 }
 
 // MARK: - DetailsView
 
 final class DetailsScreen: UIView {
     
-    weak var delegate: DetailsViewProtocol?
+    var delegate: DetailsViewProtocol? //weak
+    var isFavorited: Bool = false
     
     // MARK: - UI Elements
     
     lazy var backButton: UIButton = {
         let button = DSButtonTitles(title: "<- Back", font: DSFonts.subtitleSemibold16)
         button.addTarget(self, action: #selector(tappedBackButton), for: .touchUpInside)
+        return button
+    }()
+    
+    lazy var favoritesButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(systemName: "heart"), for: .normal)
+        button.tintColor = .red
+        button.addTarget(self, action: #selector(tappedFavoritesButton), for: .touchUpInside)
         return button
     }()
     
@@ -38,7 +48,7 @@ final class DetailsScreen: UIView {
         return label
     }()
     
-     lazy var descriptionPerson: UILabel = {
+    lazy var descriptionPerson: UILabel = {
         let label = DSLabel(text: "", textColor: DSColors.titleTextColor, font: DSFonts.captionLight14, numberOfLines: 0, textAlignment: .left)
         return label
     }()
@@ -50,7 +60,7 @@ final class DetailsScreen: UIView {
     
     lazy var collectionView: UICollectionView = {
         let collectionView = DSCollectionView(scroll: .horizontal, spacing: 10)
-        collectionView.register(PersonListCollectionViewCell.self, forCellWithReuseIdentifier:  PersonListCollectionViewCell.identifier)
+        collectionView.register(ListCharactersCollectionViewCell.self, forCellWithReuseIdentifier:  ListCharactersCollectionViewCell.identifier)
         return collectionView
     }()
     
@@ -78,9 +88,16 @@ final class DetailsScreen: UIView {
         delegate?.actionBack()
     }
     
+    @objc private func tappedFavoritesButton(){
+        isFavorited.toggle()
+        let imageName = isFavorited ? "heart.fill" : "heart"
+        favoritesButton.setImage(UIImage(systemName: imageName), for: .normal)
+        delegate?.actionFavoritesSave()
+    }
+    
     // MARK: - Outher Methods
     
-    func configCollectoinView(delegate: UICollectionViewDelegate, dataSource: UICollectionViewDataSource){
+    func configCollectionView(delegate: UICollectionViewDelegate, dataSource: UICollectionViewDataSource){
         collectionView.delegate = delegate
         collectionView.dataSource = dataSource
     }
@@ -102,6 +119,7 @@ final class DetailsScreen: UIView {
         collectionView.isHidden = true
         personRelated.isHidden = true
         imagePerson.isHidden = true
+        favoritesButton.isHidden = true
     }
     
     func hideLoading() {
@@ -109,6 +127,7 @@ final class DetailsScreen: UIView {
         collectionView.isHidden = false
         personRelated.isHidden = false
         imagePerson.isHidden = false
+        favoritesButton.isHidden = false
     }
 }
 
@@ -117,6 +136,7 @@ final class DetailsScreen: UIView {
 extension DetailsScreen: ViewCodeProtocol {
     func setupElements() {
         addSubview(backButton)
+        addSubview(favoritesButton)
         addSubview(personName)
         addSubview(imagePerson)
         addSubview(descriptionPerson)
@@ -136,6 +156,12 @@ extension DetailsScreen: ViewCodeProtocol {
             make.top.equalTo(self.safeAreaLayoutGuide.snp.top).offset(25)
             make.leading.equalToSuperview().offset(16)
             make.trailing.equalToSuperview().inset(16)
+        }
+        
+        favoritesButton.snp.makeConstraints { make in
+            make.centerY.equalTo(personName.snp.centerY)
+            make.trailing.equalToSuperview().inset(20)
+            make.width.height.equalTo(24)
         }
         
         imagePerson.snp.makeConstraints { make in
@@ -171,10 +197,4 @@ extension DetailsScreen: ViewCodeProtocol {
     }
 }
 
-//MARK: - DetailsViewProtocol
 
-extension DetailsScreen: DetailsViewProtocol {
-    func actionBack() {
-        delegate?.actionBack()
-    }
-}

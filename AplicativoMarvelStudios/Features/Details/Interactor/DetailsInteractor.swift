@@ -20,7 +20,7 @@ protocol DetailsInteracting: AnyObject {
 final class DetailsInteractor {
     
     //MARK: - Properties
-    weak var presenter: DetailsPresenting?
+    var presenter: DetailsPresenting? //weak
     private var  service: DetailsServicing?
     
     //MARK: - Init
@@ -35,23 +35,34 @@ final class DetailsInteractor {
 
 extension DetailsInteractor: DetailsInteracting {
     func updateDetails(id: HeroesModel, data: [HeroesModel]) {
-        presenter?.updateDetails(id: id, data: data)
+        Task { @MainActor in
+            presenter?.updateDetails(id: id, data: data)
+        }
+        
     }
     
     func fetchDetailsPerson(idPerson: Int) {
-        presenter?.showLoading()
-        service?.fetchCharacterDetail(id: idPerson, completion: { result in
-            switch result {
-            case .success(let hero):
-                self.presenter?.getDetailsPerson(result: hero)
-                print(hero)
-            case.failure:
-                self.presenter?.showResultAlertError(title: "Atencao", message: "Erro ao buscar personagens. Tente Novamente mais tarde!")
+        Task { @MainActor in
+            presenter?.showLoading()
+        }
+        
+        service?.fetchCharacterDetail(id: idPerson, completion: { [weak self] result in
+                    guard let self else { return }
+            Task { @MainActor in
+                switch result {
+                case .success(let hero):
+                    self.presenter?.getDetailsPerson(result: hero)
+                case.failure:
+                    self.presenter?.showResultAlertError(title: "Atencao", message: "Erro ao buscar personagens. Tente Novamente mais tarde!")
+                }
             }
+            
         })
     }
     
     func navigateBack() {
-        presenter?.navigateBack()
+        Task { @MainActor in
+            presenter?.navigateBack()
+        }
     }
 }

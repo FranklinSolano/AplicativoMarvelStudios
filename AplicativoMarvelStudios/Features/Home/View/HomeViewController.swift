@@ -8,7 +8,7 @@
 import UIKit
 
 // MARK: - Protocol
-
+@MainActor //Garantir que os metodos rode na Thread Principal
 protocol HomeViewDisplay: AnyObject{
     func displayCharacters(_ characters: [HeroesModel])
     func showAlertError(title: String, message: String)
@@ -17,14 +17,20 @@ protocol HomeViewDisplay: AnyObject{
 }
 
 // MARK: - HomeViewController
-
+@MainActor //Garantir que os metodos rode na Thread Principal
 final class HomeViewController: UIViewController {
     
     // MARK: - Properties
     
     private var screen: HomeScreen?
     var interactor: HomeInteracting?
-    private var characters: [HeroesModel] = []
+    private var characters: [HeroesModel] = [] {
+        didSet {
+            screen?.hideLoading()
+            screen?.tableView.reloadData()
+        }
+    }
+    var presenter: LeakedPresenter? = LeakedPresenter() // metodo para da Leaks forcado e aprender usar o instruments
     
     // MARK: - Lifecycle
     
@@ -38,19 +44,16 @@ final class HomeViewController: UIViewController {
         super.viewDidLoad()
         screen?.showLoading()
         interactor?.fetchHeroes()
+        presenter = nil // metodo para da Leaks forcado e aprender usar o instruments
     }
 }
 
 // MARK: - HomeViewDisplay
-
+@MainActor //Garantir que os metodos rode na Thread Principal
 extension HomeViewController: HomeViewDisplay {
- 
+    
     func displayCharacters(_ characters: [HeroesModel]) {
         self.characters = characters
-        DispatchQueue.main.async {
-            self.screen?.hideLoading()
-            self.screen?.tableView.reloadData()
-        }
     }
     
     func showAlertError(title: String, message: String) {
@@ -58,15 +61,11 @@ extension HomeViewController: HomeViewDisplay {
     }
     
     func showLoading() {
-        DispatchQueue.main.async {
-            self.screen?.showLoading()
-        }
+        screen?.showLoading()
     }
     
     func hideLoading() {
-        DispatchQueue.main.async {
-            self.screen?.hideLoading()
-        }
+        screen?.hideLoading()
     }
 }
 

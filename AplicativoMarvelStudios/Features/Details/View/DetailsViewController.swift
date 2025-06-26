@@ -8,23 +8,28 @@
 import UIKit
 
 // MARK: - Protocol
+@MainActor
 protocol DetailsViewControllerDisplay: AnyObject {
-    func getResutDataPerson(data: HeroesModel)
+    func getResultDataPerson(data: HeroesModel)
     func showLoading()
     func hideLoading()
     func showResultAlertError(title: String, message: String)
 }
 
 // MARK: - DetailsViewController
-
+@MainActor
 final class DetailsViewController: UIViewController {
     
     // MARK: - Properties
     
     private var screen: DetailsScreen?
     var interactor: DetailsInteracting?
-    var personListImage: [HeroesModel] = []
-    private var personListImageShuffle: [HeroesModel] = []
+    var personListImage: [HeroesModel] = [] {
+        didSet {
+            screen?.collectionView.reloadData()
+            screen?.hideLoading()
+        }
+    }
     var idPerson: Int?
     
     // MARK: - Lifecycle
@@ -32,7 +37,7 @@ final class DetailsViewController: UIViewController {
     override func loadView() {
         screen = DetailsScreen()
         screen?.delegate = self
-        screen?.configCollectoinView(delegate: self, dataSource: self)
+        screen?.configCollectionView(delegate: self, dataSource: self)
         view = screen
     }
     
@@ -41,49 +46,43 @@ final class DetailsViewController: UIViewController {
         guard let idPerson = idPerson else { return }
         screen?.showLoading()
         interactor?.fetchDetailsPerson(idPerson: idPerson)
-        shuffleImage()
     }
     
     //MARK: - Outhe Methods
     
-    func shuffleImage(){
-        personListImageShuffle = personListImage
-        personListImageShuffle.shuffle()
+    func shufflePersonImages(){
+        personListImage = personListImage.shuffled()
     }
 }
 
 // MARK: - DisplayDetailsViewController
 
 extension DetailsViewController: DetailsViewControllerDisplay {
+    
+    func getResultDataPerson(data: HeroesModel) {
+        screen?.setupView(data: data)
+        shufflePersonImages()
+    }
+    
     func showResultAlertError(title: String, message: String) {
-        self.getAlertController(title: title, message: message)
+        getAlertController(title: title, message: message)
     }
     
     func showLoading() {
-        DispatchQueue.main.async {
-            self.screen?.showLoading()
-        }
+        screen?.showLoading()
     }
     
     func hideLoading() {
-        DispatchQueue.main.async {
-            self.screen?.hideLoading()
-        }
-    }
-    
-    func getResutDataPerson(data: HeroesModel) {
-        
-        DispatchQueue.main.async {
-            self.screen?.setupView(data: data)
-            self.screen?.hideLoading()
-            self.screen?.collectionView.reloadData()
-        }
+        screen?.hideLoading()
     }
 }
 
 //MARK: - DetailsViewProtocol
-
+@MainActor
 extension DetailsViewController: DetailsViewProtocol{
+    func actionFavoritesSave() {
+    }
+    
     func actionBack() {
         interactor?.navigateBack()
     }
@@ -93,12 +92,12 @@ extension DetailsViewController: DetailsViewProtocol{
 
 extension DetailsViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        personListImageShuffle.count
+        personListImage.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PersonListCollectionViewCell.identifier, for: indexPath) as? PersonListCollectionViewCell
-        let hero = personListImageShuffle[indexPath.row]
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ListCharactersCollectionViewCell.identifier, for: indexPath) as? ListCharactersCollectionViewCell
+        let hero = personListImage[indexPath.row]
         cell?.SetupCell(data: hero)
         return cell ?? UICollectionViewCell()
     }
@@ -116,7 +115,7 @@ extension DetailsViewController: UICollectionViewDelegate, UICollectionViewDataS
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let idPerson = personListImageShuffle[indexPath.row]
-        interactor?.updateDetails(id: idPerson, data: self.personListImageShuffle)
+        let idPerson = personListImage[indexPath.row]
+        interactor?.updateDetails(id: idPerson, data: self.personListImage)
     }
 }

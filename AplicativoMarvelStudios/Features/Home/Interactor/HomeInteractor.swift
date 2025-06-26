@@ -20,7 +20,7 @@ final class HomeInteractor{
     
     // MARK: - Properties
     
-    weak var presenter: HomePresenting?
+    var presenter: HomePresenting? //weak
     private var service: HomeService?
     
     // MARK: - Init
@@ -37,18 +37,29 @@ final class HomeInteractor{
 
 extension HomeInteractor: HomeInteracting {
     func navigateToDetail(data: [HeroesModel], idPerson: HeroesModel) {
-        presenter?.navigateToDetail(data: data, idPerson: idPerson)
+        Task { @MainActor in
+            presenter?.navigateToDetail(data: data, idPerson: idPerson)
+        }
     }
     
     func fetchHeroes() {
-        presenter?.showLoading()
-        service?.fetchCharacters(completion: { [weak self] result in
-            switch result{
-            case .success(let characters):
-                self?.presenter?.presentCharacters(characters)
-            case .failure(_):
-                self?.presenter?.showAlertError()
+        Task {
+            await MainActor.run {
+                presenter?.showLoading()
             }
-        })
+            
+            service?.fetchCharacters { [ weak self] result in
+                guard let self = self else { return }
+                
+                Task { @MainActor in
+                    switch result {
+                    case .success(let characters):
+                        self.presenter?.presentCharacters(characters)
+                    case .failure:
+                        self.presenter?.showAlertError()
+                    }
+                }
+            }
+        }
     }
 }

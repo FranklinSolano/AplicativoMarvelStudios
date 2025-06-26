@@ -7,7 +7,7 @@
 
 import UIKit
 
-//MARK: - Protocol
+//MARK: - FavoritesPresenting
 
 protocol FavoritesPresenting: AnyObject{
     
@@ -17,7 +17,7 @@ protocol FavoritesPresenting: AnyObject{
 
 final class FavoritesPresenter {
     
-    weak var view: FavoritesViewControllerDisplay?
+    var view: FavoritesViewControllerDisplay? //weak
     private var coordinator: FavoritesCoordinating?
     
     init(view: FavoritesViewControllerDisplay, coordinator: FavoritesCoordinating) {
@@ -28,6 +28,4 @@ final class FavoritesPresenter {
 
 //MARK: - FavoritesPresenting
 
-extension FavoritesPresenter: FavoritesPresenting {
-    
-}
+extension FavoritesPresenter: FavoritesPresenting {}

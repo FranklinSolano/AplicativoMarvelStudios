@@ -8,7 +8,7 @@
 import UIKit
 
 final class HomeFactory {
-    
+    @MainActor
     func make(navigationController: UINavigationController?) -> HomeViewController {
         
         let homeVC = HomeViewController()
@@ -21,6 +21,4 @@ final class HomeFactory {
         homeVC.interactor = interactor
         return homeVC
     }
-
-    
 }
