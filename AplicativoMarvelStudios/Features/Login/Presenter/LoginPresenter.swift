@@ -14,7 +14,7 @@ protocol LoginPresenting: AnyObject {
     func presentNavigateToHome()
     func presentNavigateToRegister()
     func presentNavigateToForgotPassword()
-    func presentShowAlertLogin(success: Bool)
+    func presentShowAlertLogin(success: Bool, errorMessage: String?)
 }
 
 // MARK: - Presenter
@@ -23,7 +23,7 @@ final class LoginPresenter {
     
     // MARK: - Properties
     
-    weak var view: LoginViewControllerDisplay?
+    var view: LoginViewControllerDisplay? //weak
     private var coordinator: LoginCoordinating?
     
     // MARK: - Init
@@ -39,12 +39,12 @@ final class LoginPresenter {
 //MARK: - LoginPresenting
 
 extension LoginPresenter: LoginPresenting {
-    func presentShowAlertLogin(success: Bool) {
+    func presentShowAlertLogin(success: Bool, errorMessage: String?) {
         if success {
-            view?.showAlertLogin(title: "Success", message: "Login successfully")
-            coordinator?.navigateToHome()
+            view?.showAlertLogin(title: "Sucesso", message: "Login feito com sucesso ✅", success: true)
         } else {
-            view?.showAlertLogin(title: "Deu Ruim", message: "Preencha todos os campos")
+            let message = errorMessage ?? "Ocorreu um erro desconhecido no login."
+            view?.showAlertLogin(title: "Erro no Login", message: message, success: false)
         }
     }
     

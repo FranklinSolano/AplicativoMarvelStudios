@@ -7,10 +7,11 @@
 
 import UIKit
 
+
 // MARK: - Protocols
 
 protocol LoginViewControllerDisplay: AnyObject {
-    func showAlertLogin(title: String, message: String)
+    func showAlertLogin(title: String, message: String, success: Bool)
 }
 
 // MARK: - LoginViewController
@@ -33,11 +34,6 @@ final class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     }
-    
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//        self.navigationController?.setNavigationBarHidden(true, animated: animated)
-//    }
 }
 
 // MARK: - LoginScreenProtocol
@@ -62,16 +58,13 @@ extension LoginViewController: LoginScreenProtocol {
 // MARK: - LoginViewControllerDisplay
 
 extension LoginViewController: LoginViewControllerDisplay {
-    func showAlertLogin(title: String, message: String) {
-        self.getAlertController(title: title, message: message) {
-            if title != "Deu Ruim" {
+    func showAlertLogin(title: String, message: String, success: Bool) {
+        self.getAlertController(title: title, message: message) { [ self] in //weak
+            if success {
                 self.interactor?.navigateToHome()
-            } else {
-                
             }
+            // Se não for sucesso, não faz nada após o alerta
         }
     }
-    
-    
 }
 

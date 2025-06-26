@@ -9,23 +9,23 @@ import UIKit
 
 
 //MARK: - FAvoritesCoordinating
-
+@MainActor 
 protocol FavoritesCoordinating {
     func navigateDetails(id: HeroesModel, data: [HeroesModel])
 }
 
 // MARK: - FavoritesCoordinating
 
-final class FvoritesCoordinator: FavoritesCoordinating {
+final class FavoritesCoordinator: FavoritesCoordinating {
     
     // MARK: - Properties
     
-    weak var navigationController: UINavigationController?
+    var navigationController: UINavigationController? //weak
     var presenter: FavoritesPresenting?
     
     // MARK: - Navigation Methods
     
-    func navigateDetails(id: HeroesModel, data: [HeroesModel]) {
+   func navigateDetails(id: HeroesModel, data: [HeroesModel]) {
         guard let navigationController else { return }
         let detailsFactory = DetailsFactory()
         let detailsVC = detailsFactory.make(navigationController: navigationController)

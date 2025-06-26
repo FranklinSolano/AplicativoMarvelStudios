@@ -55,7 +55,6 @@ final class HomeService: HomeServiceProtocol {
                 completion(.failure(.decodingFailed(error)))
             }
         }
-
         task.resume()
     }
 }

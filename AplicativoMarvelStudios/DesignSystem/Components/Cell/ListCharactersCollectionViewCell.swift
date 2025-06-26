@@ -1,19 +1,19 @@
 //
-//  PersonListCollectionViewCell.swift
+//  ListCharactersCollectionViewCell.swift
 //  AplicativoMarvelStudios
 //
-//  Created by Franklin  Stilhano Solano on 07/06/25.
+//  Created by Franklin  Stilhano Solano on 22/06/25.
 //
 
 import UIKit
 
-// MARK: - PersonListCollectionViewCell
+// MARK: - FavoritesListCharactersCell
 
-final class PersonListCollectionViewCell: UICollectionViewCell {
+final class ListCharactersCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Properties
     
-    static let identifier: String = "PersonListCollectionViewCell"
+    static let identifier: String = "ListCharactersCollectionViewCell"
     
     // MARK: - UI Elements
     
@@ -46,7 +46,7 @@ final class PersonListCollectionViewCell: UICollectionViewCell {
 
 // MARK: - ViewCodeProtocol
 
-extension PersonListCollectionViewCell: ViewCodeProtocol {
+extension ListCharactersCollectionViewCell: ViewCodeProtocol {
     func setupElements() {
         contentView.addSubview(imagePerson)
     }

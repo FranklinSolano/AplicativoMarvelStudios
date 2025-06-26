@@ -8,12 +8,6 @@
 import UIKit
 import SnapKit
 
-// MARK: - Protocol
-
-protocol HomeScreenProtocol: AnyObject {
-    
-}
-
 // MARK: - HomeScreen
 
 final class HomeScreen: UIView {
@@ -37,7 +31,7 @@ final class HomeScreen: UIView {
     
     lazy var tableView: UITableView = {
         let tableView = UITableView()
-        tableView.backgroundColor = DSColors.secundaryColor
+        tableView.backgroundColor = DSColors.secondaryColor
         tableView.register(PersonListTableViewCell.self, forCellReuseIdentifier: PersonListTableViewCell.identifier)
         return tableView
     }()

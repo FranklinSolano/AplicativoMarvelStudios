@@ -13,22 +13,19 @@ protocol FavoritesInteracting: AnyObject {
     
 }
 
-//MARK: -
+//MARK: - FavoritesInteractor
 
 final class FavoritesInteractor {
     
-    weak var presenter: FavoritesPresenting?
+    var presenter: FavoritesPresenting? //weak
     private var service: FavoritesServicing?
     
     init(presenter: FavoritesPresenting?, service: FavoritesServicing?) {
         self.presenter = presenter
         self.service = service
     }
-    
 }
 
 //MARK: - FavoritesInteracting
 
-extension FavoritesInteractor: FavoritesInteracting {
-    
-}
+extension FavoritesInteractor: FavoritesInteracting {}
