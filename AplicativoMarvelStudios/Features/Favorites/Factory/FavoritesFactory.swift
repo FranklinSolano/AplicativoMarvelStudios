@@ -8,7 +8,7 @@
 import UIKit
 
 final class FavoritesFactory {
-    
+    @MainActor
     func make(navigationController: UINavigationController?) -> FavoritesViewController {
         
         let favoritesVC = FavoritesViewController()

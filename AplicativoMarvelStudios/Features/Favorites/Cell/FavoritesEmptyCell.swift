@@ -44,7 +44,4 @@ extension FavoritesEmptyCell: ViewCodeProtocol {
     func setupAdditionalConfiguration() {
         backgroundColor = .clear
     }
-    
-    
-    
 }

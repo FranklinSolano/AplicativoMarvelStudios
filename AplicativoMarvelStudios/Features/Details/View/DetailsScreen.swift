@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 
 // MARK: - Protocol
-
+@MainActor
 protocol DetailsViewProtocol: AnyObject {
     func actionBack()
     func actionFavoritesSave()
@@ -19,7 +19,7 @@ protocol DetailsViewProtocol: AnyObject {
 
 final class DetailsScreen: UIView {
     
-    weak var delegate: DetailsViewProtocol?
+    var delegate: DetailsViewProtocol? //weak
     var isFavorited: Bool = false
     
     // MARK: - UI Elements
@@ -48,7 +48,7 @@ final class DetailsScreen: UIView {
         return label
     }()
     
-     lazy var descriptionPerson: UILabel = {
+    lazy var descriptionPerson: UILabel = {
         let label = DSLabel(text: "", textColor: DSColors.titleTextColor, font: DSFonts.captionLight14, numberOfLines: 0, textAlignment: .left)
         return label
     }()
@@ -97,7 +97,7 @@ final class DetailsScreen: UIView {
     
     // MARK: - Outher Methods
     
-    func configCollectoinView(delegate: UICollectionViewDelegate, dataSource: UICollectionViewDataSource){
+    func configCollectionView(delegate: UICollectionViewDelegate, dataSource: UICollectionViewDataSource){
         collectionView.delegate = delegate
         collectionView.dataSource = dataSource
     }

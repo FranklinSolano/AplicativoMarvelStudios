@@ -7,17 +7,23 @@
 
 import UIKit
 
-//MARK: Protocol
+// MARK: - Protocol
 
 protocol FavoritesViewControllerDisplay: AnyObject {
     
 }
 
+// MARK: - FavoritesViewController
+
 final class FavoritesViewController: UIViewController {
+    
+    // MARK: - Properties
     
     var screen: FavoritesScreen?
     var interactor: FavoritesInteracting?
     private var favorites: [HeroesModel] = []
+    
+    // MARK: - Lifecycle
     
     override func loadView() {
         screen = FavoritesScreen()
@@ -30,11 +36,11 @@ final class FavoritesViewController: UIViewController {
     }
 }
 
-//MARK: - FavoritesViewControllerDisplay
+// MARK: - FavoritesViewControllerDisplay
 
 extension FavoritesViewController: FavoritesViewControllerDisplay {}
 
-//MARK: - UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
+// MARK: - UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
 
 extension FavoritesViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
@@ -59,7 +65,7 @@ extension FavoritesViewController: UICollectionViewDelegate, UICollectionViewDat
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if favorites.isEmpty {
             return CGSize(width: collectionView.bounds.width, height: collectionView.bounds.height)
-        } else { // ✅ Define tamanho da célula (2 por linha)
+        } else {
             let spacing: CGFloat = 10
             let horizontalInset: CGFloat = 16
             let totalSpacing = (2 * horizontalInset) + spacing
@@ -71,7 +77,7 @@ extension FavoritesViewController: UICollectionViewDelegate, UICollectionViewDat
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         if favorites.isEmpty {
             return 1
-        } else {    // ✅ Espaço entre as linhas (vertical)
+        } else {
             return 15
         }
     }
@@ -79,7 +85,7 @@ extension FavoritesViewController: UICollectionViewDelegate, UICollectionViewDat
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         if favorites.isEmpty {
             return UIEdgeInsets()
-        } else {    // ✅ Padding nas laterais e topo/baixo
+        } else {
             return UIEdgeInsets(top: 10, left: 12, bottom: 10, right: 12)
         }
     }

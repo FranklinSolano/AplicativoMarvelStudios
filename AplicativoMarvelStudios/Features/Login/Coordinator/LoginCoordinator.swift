@@ -17,7 +17,7 @@ protocol LoginCoordinating {
 
 final class LoginCoordinator {
     
-    weak var navigationController: UINavigationController?
+    var navigationController: UINavigationController? //weak
     var presenter: LoginPresenting?
     let homeFactory = HomeFactory()
     let favoritesFactory = FavoritesFactory()
@@ -34,15 +34,15 @@ extension LoginCoordinator: LoginCoordinating {
     }
     
     func navigateToForgotPassword() {
-//        guard let navigationController else { return }
-//        let forgotPassword = TabbarViewController(homeFactory: homeFactory)
-//        navigationController.setViewControllers([tabBarController], animated: true)
+        //        guard let navigationController else { return }
+        //        let forgotPassword = TabbarViewController(homeFactory: homeFactory)
+        //        navigationController.setViewControllers([tabBarController], animated: true)
     }
     
     func navigateToRegister() {
-//        guard let navigationController else { return }
-//        let register = TabbarViewController(homeFactory: homeFactory)
-//        navigationController.setViewControllers([tabBarController], animated: true)
+        //        guard let navigationController else { return }
+        //        let register = TabbarViewController(homeFactory: homeFactory)
+        //        navigationController.setViewControllers([tabBarController], animated: true)
     }
     
     

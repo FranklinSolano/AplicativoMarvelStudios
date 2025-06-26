@@ -7,22 +7,30 @@
 
 import UIKit
 
+// MARK: - Protocol
+
 protocol ProfilePresenting: AnyObject {
     func logoutSuccess()
-        func logoutFailed(error: Error)
+    func logoutFailed(error: Error)
 }
 
-final class ProfilePresenter: ProfilePresenting {
+// MARK: - ProfilePresenter
 
+final class ProfilePresenter: ProfilePresenting {
     
+    // MARK: - Properties
     
-    weak var view: ProfileViewDisplay?
+    var view: ProfileViewDisplay? //weak
     private var coordinator: ProfileCoordinating?
+    
+    // MARK: - Init
     
     init(view: ProfileViewDisplay, coordinator: ProfileCoordinating) {
         self.view = view
         self.coordinator = coordinator
     }
+    
+    // MARK: - ProfilePresenting Methods
     
     func logoutSuccess() {
         coordinator?.navigateToLogin()

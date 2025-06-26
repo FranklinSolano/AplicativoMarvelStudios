@@ -23,7 +23,7 @@ final class LoginPresenter {
     
     // MARK: - Properties
     
-    weak var view: LoginViewControllerDisplay?
+    var view: LoginViewControllerDisplay? //weak
     private var coordinator: LoginCoordinating?
     
     // MARK: - Init
@@ -38,16 +38,16 @@ final class LoginPresenter {
 
 //MARK: - LoginPresenting
 
-extension LoginPresenter: LoginPresenting {    
+extension LoginPresenter: LoginPresenting {
     func presentShowAlertLogin(success: Bool, errorMessage: String?) {
-         if success {
-             view?.showAlertLogin(title: "Sucesso", message: "Login feito com sucesso ✅", success: true)
-         } else {
-             let message = errorMessage ?? "Ocorreu um erro desconhecido no login."
-             view?.showAlertLogin(title: "Erro no Login", message: message, success: false)
-         }
-     }
-
+        if success {
+            view?.showAlertLogin(title: "Sucesso", message: "Login feito com sucesso ✅", success: true)
+        } else {
+            let message = errorMessage ?? "Ocorreu um erro desconhecido no login."
+            view?.showAlertLogin(title: "Erro no Login", message: message, success: false)
+        }
+    }
+    
     
     func presentNavigateToHome() {
         coordinator?.navigateToHome()

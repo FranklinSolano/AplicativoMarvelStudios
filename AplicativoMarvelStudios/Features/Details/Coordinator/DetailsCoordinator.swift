@@ -9,7 +9,7 @@
 import UIKit
 
 //MARK: - DetailsCoordinating
-
+@MainActor
 protocol DetailsCoordinating {
     func navigateBack()
     func updateDetails(id: HeroesModel, data: [HeroesModel])
@@ -21,7 +21,7 @@ final class DetailsCoordinator: DetailsCoordinating {
     
     // MARK: - Properties
     
-    weak var navigationController: UINavigationController?
+    var navigationController: UINavigationController?
     var presenter: DetailsPresenting?
     
     // MARK: - Navigation Methods

@@ -5,18 +5,26 @@
 //  Created by Franklin  Stilhano Solano on 28/05/25.
 //
 
+
 import UIKit
 import FirebaseAuth
 
+// MARK: - Protocol
 
 protocol ProfileViewDisplay: AnyObject {
     func logoutError(message: String)
 }
 
-class ProfileViewController: UIViewController {
+// MARK: - ProfileViewController
+
+final class ProfileViewController: UIViewController {
+    
+    // MARK: - Properties
     
     var screen: ProfileScreen?
     var interactor: ProfileInteracting?
+    
+    // MARK: - Lifecycle
     
     override func loadView() {
         screen = ProfileScreen()
@@ -29,17 +37,18 @@ class ProfileViewController: UIViewController {
     }
 }
 
+// MARK: - ProfileScreenProtocol
+
 extension ProfileViewController: ProfileScreenProtocol {
     func actionExitApp() {
         interactor?.logoutUser()
     }
-    
-    
 }
+
+// MARK: - ProfileViewDisplay
 
 extension ProfileViewController: ProfileViewDisplay {
     func logoutError(message: String) {
         print(message)
     }
 }
-        

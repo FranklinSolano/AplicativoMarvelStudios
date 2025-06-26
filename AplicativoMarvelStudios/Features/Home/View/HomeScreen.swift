@@ -8,12 +8,6 @@
 import UIKit
 import SnapKit
 
-// MARK: - Protocol
-
-protocol HomeScreenProtocol: AnyObject {
-    
-}
-
 // MARK: - HomeScreen
 
 final class HomeScreen: UIView {

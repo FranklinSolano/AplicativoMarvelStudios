@@ -8,9 +8,11 @@
 import UIKit
 import SnapKit
 
-//MARK: - FavoritesScreen
+// MARK: - FavoritesScreen
 
 final class FavoritesScreen: UIView {
+    
+    // MARK: - UI Elements
     
     private var titleLabel: UILabel = {
         let label = DSLabel(text: "Favorites Characters", textColor: DSColors.titleTextColor, font: DSFonts.titleBold22, numberOfLines: 0, textAlignment: .center)
@@ -24,6 +26,8 @@ final class FavoritesScreen: UIView {
         return collectionView
     }()
     
+    // MARK: - Init
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
@@ -33,14 +37,15 @@ final class FavoritesScreen: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Methods
+    
     func configCollectoinView(delegate: UICollectionViewDelegate, dataSource: UICollectionViewDataSource){
         collectionViewFavorites.delegate = delegate
         collectionViewFavorites.dataSource = dataSource
     }
-    
 }
 
-//MARK: - ViewCodeProtocol
+// MARK: - ViewCodeProtocol
 
 extension FavoritesScreen: ViewCodeProtocol {
     func setupElements() {
@@ -63,6 +68,5 @@ extension FavoritesScreen: ViewCodeProtocol {
     
     func setupAdditionalConfiguration() {
         backgroundColor = DSColors.primaryColor
-        
     }
 }

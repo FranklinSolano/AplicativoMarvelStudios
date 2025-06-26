@@ -7,28 +7,37 @@
 
 import UIKit
 
+// MARK: - ProfileCoordinating
+
 protocol ProfileCoordinating: AnyObject {
     func navigateToLogin()
 }
 
+// MARK: - ProfileCoordinator
+
 final class ProfileCoordinator: ProfileCoordinating {
-    weak var navigationController: UINavigationController?
+    
+    // MARK: - Properties
+    
+    var navigationController: UINavigationController? //weak
     var presenter: ProfilePresenting?
+    
+    // MARK: - Navigation Methods
     
     func navigateToLogin() {
         guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate,
-                  let window = sceneDelegate.window else { return }
-
-            let loginNav = sceneDelegate.startLoginFlow()
-            window.rootViewController = loginNav
-
-            UIView.transition(with: window,
-                              duration: 0.5,
-                              options: [.transitionFlipFromLeft],
-                              animations: nil,
-                              completion: nil)
-        }
+              let window = sceneDelegate.window else { return }
+        
+        let loginNav = sceneDelegate.startLoginFlow()
+        window.rootViewController = loginNav
+        
+        UIView.transition(with: window,
+                          duration: 0.5,
+                          options: [.transitionFlipFromLeft],
+                          animations: nil,
+                          completion: nil)
     }
-    
-    
+}
+
+
 

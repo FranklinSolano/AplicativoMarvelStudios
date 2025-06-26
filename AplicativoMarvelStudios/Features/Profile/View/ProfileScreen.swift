@@ -5,16 +5,24 @@
 //  Created by Franklin  Stilhano Solano on 23/06/25.
 //
 
+
 import UIKit
-import SnapKit
+
+// MARK: - Protocol
 
 protocol ProfileScreenProtocol: AnyObject {
     func actionExitApp()
 }
 
+// MARK: - ProfileScreen
+
 final class ProfileScreen: UIView {
     
-    weak var delegate: ProfileScreenProtocol?
+    // MARK: - Properties
+    
+    var delegate: ProfileScreenProtocol? //weak
+    
+    // MARK: - UI Elements
     
     private lazy var titleLabel: UILabel = {
         let label = DSLabel(text: "Profile", textColor: DSColors.titleTextColor, font: DSFonts.titleBold22, numberOfLines: 0, textAlignment: .center)
@@ -26,7 +34,7 @@ final class ProfileScreen: UIView {
         let image = UIImageView()
         image.image = UIImage(systemName: "person.crop.circle.fill")
         image.tintColor = DSColors.secondaryColor
-        image.layer.cornerRadius = 50 // Metade da largura/altura para ficar redonda
+        image.layer.cornerRadius = 50
         image.layer.masksToBounds = true
         image.translatesAutoresizingMaskIntoConstraints = false
         return image
@@ -44,14 +52,14 @@ final class ProfileScreen: UIView {
         return label
     }()
     
-    private  lazy var emailTextField: UITextField = {
+    private lazy var emailTextField: UITextField = {
         let textField = DSTextField(placeholder: "", isSecureTextEntry: false)
         textField.text = "franklin@gmail.com"
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }()
     
-    lazy var exitButton: UIButton = {
+    private lazy var exitButton: UIButton = {
         let button = DSButton(title: "Exit")
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(tappedExitButton), for: .touchUpInside)
@@ -78,6 +86,8 @@ final class ProfileScreen: UIView {
         return label
     }()
     
+    // MARK: - Init
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
@@ -87,20 +97,27 @@ final class ProfileScreen: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Actions
+    
     @objc private func tappedExitButton() {
         delegate?.actionExitApp()
     }
     
     @objc private func themeChanged() {
+        selectedTheme()
+    }
+    
+    private func selectedTheme() {
         let selectedTheme: ThemeManager.Theme = themeSwitcher.selectedSegmentIndex == 0 ? .light : .dark
         ThemeManager.shared.setTheme(selectedTheme)
         themeSwitcher.selectedSegmentIndex = selectedTheme == .dark ? 1 : 0
     }
-    
-    
 }
 
+// MARK: - ViewCodeProtocol
+
 extension ProfileScreen: ViewCodeProtocol {
+    
     func setupElements() {
         addSubview(titleLabel)
         addSubview(imageUser)
@@ -115,7 +132,6 @@ extension ProfileScreen: ViewCodeProtocol {
     
     func setupConstraints() {
         NSLayoutConstraint.activate([
-            
             titleLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 25),
             titleLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
             

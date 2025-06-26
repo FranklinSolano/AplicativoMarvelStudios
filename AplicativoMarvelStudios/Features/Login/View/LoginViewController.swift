@@ -59,9 +59,9 @@ extension LoginViewController: LoginScreenProtocol {
 
 extension LoginViewController: LoginViewControllerDisplay {
     func showAlertLogin(title: String, message: String, success: Bool) {
-        self.getAlertController(title: title, message: message) { [weak self] in
+        self.getAlertController(title: title, message: message) { [ self] in //weak
             if success {
-                self?.interactor?.navigateToHome()
+                self.interactor?.navigateToHome()
             }
             // Se não for sucesso, não faz nada após o alerta
         }

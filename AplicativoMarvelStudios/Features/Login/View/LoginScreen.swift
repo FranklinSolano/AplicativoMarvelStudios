@@ -23,7 +23,7 @@ final class LoginScreen: UIView {
     
     // MARK: - Properties
     
-    weak var delegate: LoginScreenProtocol?
+    var delegate: LoginScreenProtocol? //weak
     
     // MARK: - UI Elements
     

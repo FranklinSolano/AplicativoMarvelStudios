@@ -13,7 +13,7 @@ enum DSColors {
         return UIColor { traitCollection in
             return traitCollection.userInterfaceStyle == .dark
             ? UIColor(red: 20/255, green: 20/255, blue: 20/255, alpha: 1)  // Dark mode
-            : UIColor.white  // Light mode
+            : UIColor(red: 245/255, green: 247/255, blue: 250/255, alpha: 1) // Light mode
         }
     }()
     
@@ -21,10 +21,8 @@ enum DSColors {
         return UIColor { trait in
             switch trait.userInterfaceStyle {
             case .dark:
-                // Tema escuro: vermelho escuro que você já usava
                 return UIColor(red: 47/255, green: 28/255, blue: 26/255, alpha: 1)
             default:
-                // Tema claro: azul moderno que combina com fundo branco
                 return UIColor(red: 38/255, green: 104/255, blue: 115/255, alpha: 1) // #3A69D7
             }
         }
