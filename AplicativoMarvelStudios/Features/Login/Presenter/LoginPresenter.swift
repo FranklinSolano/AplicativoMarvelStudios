@@ -28,7 +28,7 @@ final class LoginPresenter {
     
     // MARK: - Init
     
-    init(view: LoginViewControllerDisplay, coordinator: LoginCoordinating) {
+    init(view: LoginViewControllerDisplay?, coordinator: LoginCoordinating) {
         self.view = view
         self.coordinator = coordinator
     }

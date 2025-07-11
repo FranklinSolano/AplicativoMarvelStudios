@@ -22,8 +22,8 @@ class LoginInteractor {
     
     // MARK: - Properties
     
-    var presenter: LoginPresenting
-    private var service: LoginServicing?
+    let presenter: LoginPresenting
+    private let service: LoginServicing
     
     // MARK: - Init
     
@@ -40,7 +40,7 @@ class LoginInteractor {
 extension LoginInteractor: LoginInteracting {
     
     func callServiceLogin(email: String, password: String) {
-        service?.callServiceLogin(email: email, password: password, completion: { [ self] success, errorMessage in //weak
+        service.callServiceLogin(email: email, password: password, completion: { [ self] success, errorMessage in //weak
             DispatchQueue.main.async {
                 self.presenter.presentShowAlertLogin(success: success, errorMessage: errorMessage)
             }
