@@ -11,7 +11,7 @@ import SnapKit
 
 // MARK: - Protocols
 
-protocol LoginScreenProtocol: AnyObject {
+protocol LoginScreenProtocol {
     func ActionLoginButton()
     func ActionRegisterButton()
     func ActionForgotPasswordButton()
@@ -23,7 +23,7 @@ final class LoginScreen: UIView {
     
     // MARK: - Properties
     
-    var delegate: LoginScreenProtocol? //weak
+     var delegate: LoginScreenProtocol?
     
     // MARK: - UI Elements
     

@@ -17,7 +17,7 @@ protocol LoginCoordinating {
 
 final class LoginCoordinator {
     
-    var navigationController: UINavigationController? //weak
+    var navigationController: UINavigationController? 
     var presenter: LoginPresenting?
     let homeFactory = HomeFactory()
     let favoritesFactory = FavoritesFactory()
