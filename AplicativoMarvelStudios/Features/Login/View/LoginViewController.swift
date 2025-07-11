@@ -7,7 +7,6 @@
 
 import UIKit
 
-
 // MARK: - Protocols
 
 protocol LoginViewControllerDisplay: AnyObject {

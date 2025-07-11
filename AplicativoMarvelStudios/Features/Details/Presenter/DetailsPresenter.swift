@@ -9,7 +9,7 @@ import UIKit
 
 //MARK: - Protocol
 @MainActor
-protocol DetailsPresenting: AnyObject {
+protocol DetailsPresenting {
     func navigateBack()
     func getDetailsPerson(result: HeroesModel)
     func showResultAlertError(title: String, message: String)
@@ -24,8 +24,8 @@ final class DetailsPresenter {
     
     // MARK: - Properties
     
-    var view: DetailsViewControllerDisplay? //weak
-    private var coordinator: DetailsCoordinating?
+    weak var view: DetailsViewControllerDisplay?
+    private var coordinator: DetailsCoordinating
     
     // MARK: - Init
     
@@ -39,7 +39,7 @@ final class DetailsPresenter {
 @MainActor
 extension DetailsPresenter: DetailsPresenting {
     func updateDetails(id: HeroesModel, data: [HeroesModel]) {
-        coordinator?.updateDetails(id: id, data: data)
+        coordinator.updateDetails(id: id, data: data)
     }
     
     func showLoading() {
@@ -59,6 +59,6 @@ extension DetailsPresenter: DetailsPresenting {
     }
     
     func navigateBack() {
-        coordinator?.navigateBack()
+        coordinator.navigateBack()
     }
 }

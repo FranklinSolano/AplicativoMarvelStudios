@@ -10,7 +10,7 @@ import UIKit
 
 // MARK: - Protocol
 
-protocol ProfileInteracting: AnyObject {
+protocol ProfileInteracting {
     func logoutUser()
 }
 
@@ -20,7 +20,7 @@ final class ProfileInteractor: ProfileInteracting {
     
     // MARK: - Properties
     
-    var presenter: ProfilePresenting? //weak
+    var presenter: ProfilePresenting
     private var service: ProfileServicing?
     
     // MARK: - Init
@@ -35,9 +35,9 @@ final class ProfileInteractor: ProfileInteracting {
     func logoutUser() {
         do {
             try service?.logoutAndShowLogin()
-            presenter?.logoutSuccess()
+            presenter.logoutSuccess()
         } catch {
-            presenter?.logoutFailed(error: error)
+            presenter.logoutFailed(error: error)
         }
     }
 }

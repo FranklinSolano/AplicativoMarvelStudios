@@ -10,7 +10,7 @@ import UIKit
 
 // MARK: - Protocol
 @MainActor //Garantir que os metodos rode na Thread Principal
-protocol HomePresenting: AnyObject {
+protocol HomePresenting {
     func presentCharacters(_ characters: [HeroesModel])
     func showAlertError()
     func showLoading()
@@ -24,8 +24,8 @@ final class HomePresenter {
     
     // MARK: - Properties
     
-    var view: HomeViewDisplay? //weak
-    private var coordinator: HomeCoordinating?
+    weak var view: HomeViewDisplay?
+    private var coordinator: HomeCoordinating
     
     // MARK: - Init
     
@@ -39,7 +39,7 @@ final class HomePresenter {
 @MainActor //Garantir que os metodos rode na Thread Principal
 extension HomePresenter: HomePresenting {
     func navigateToDetail(data: [HeroesModel], idPerson: HeroesModel) {
-        coordinator?.navigateToDetail(data: data, idPerson: idPerson)
+        coordinator.navigateToDetail(data: data, idPerson: idPerson)
     }
     
     func presentCharacters(_ characters: [HeroesModel]) {

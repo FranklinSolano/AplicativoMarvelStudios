@@ -9,7 +9,7 @@ import UIKit
 
 // MARK: - ProfileCoordinating
 
-protocol ProfileCoordinating: AnyObject {
+protocol ProfileCoordinating {
     func navigateToLogin()
 }
 
@@ -19,7 +19,7 @@ final class ProfileCoordinator: ProfileCoordinating {
     
     // MARK: - Properties
     
-    var navigationController: UINavigationController? //weak
+    var navigationController: UINavigationController?
     var presenter: ProfilePresenting?
     
     // MARK: - Navigation Methods

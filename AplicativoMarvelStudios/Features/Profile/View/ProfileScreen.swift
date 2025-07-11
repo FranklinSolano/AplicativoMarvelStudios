@@ -10,7 +10,7 @@ import UIKit
 
 // MARK: - Protocol
 
-protocol ProfileScreenProtocol: AnyObject {
+protocol ProfileScreenProtocol {
     func actionExitApp()
 }
 
@@ -20,7 +20,7 @@ final class ProfileScreen: UIView {
     
     // MARK: - Properties
     
-    var delegate: ProfileScreenProtocol? //weak
+    var delegate: ProfileScreenProtocol? 
     
     // MARK: - UI Elements
     

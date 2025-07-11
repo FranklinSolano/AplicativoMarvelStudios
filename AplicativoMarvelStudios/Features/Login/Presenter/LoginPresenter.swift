@@ -23,7 +23,7 @@ final class LoginPresenter {
     
     // MARK: - Properties
     
-    weak var view: LoginViewControllerDisplay? //weak
+    weak var view: LoginViewControllerDisplay? 
     private var coordinator: LoginCoordinating
     
     // MARK: - Init

@@ -10,7 +10,7 @@ import SnapKit
 
 // MARK: - Protocol
 @MainActor
-protocol DetailsViewProtocol: AnyObject {
+protocol DetailsViewProtocol {
     func actionBack()
     func actionFavoritesSave()
 }
@@ -19,7 +19,7 @@ protocol DetailsViewProtocol: AnyObject {
 
 final class DetailsScreen: UIView {
     
-    var delegate: DetailsViewProtocol? //weak
+    var delegate: DetailsViewProtocol? 
     var isFavorited: Bool = false
     
     // MARK: - UI Elements

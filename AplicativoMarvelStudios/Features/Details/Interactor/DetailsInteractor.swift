@@ -9,7 +9,7 @@ import UIKit
 
 //MARK: - DetailsInteracting
 
-protocol DetailsInteracting: AnyObject {
+protocol DetailsInteracting {
     func navigateBack()
     func fetchDetailsPerson(idPerson: Int)
     func updateDetails(id: HeroesModel, data: [HeroesModel])
@@ -20,7 +20,7 @@ protocol DetailsInteracting: AnyObject {
 final class DetailsInteractor {
     
     //MARK: - Properties
-    var presenter: DetailsPresenting? //weak
+    var presenter: DetailsPresenting
     private var  service: DetailsServicing?
     
     //MARK: - Init
@@ -36,14 +36,14 @@ final class DetailsInteractor {
 extension DetailsInteractor: DetailsInteracting {
     func updateDetails(id: HeroesModel, data: [HeroesModel]) {
         Task { @MainActor in
-            presenter?.updateDetails(id: id, data: data)
+            presenter.updateDetails(id: id, data: data)
         }
         
     }
     
     func fetchDetailsPerson(idPerson: Int) {
         Task { @MainActor in
-            presenter?.showLoading()
+            presenter.showLoading()
         }
         
         service?.fetchCharacterDetail(id: idPerson, completion: { [weak self] result in
@@ -51,9 +51,9 @@ extension DetailsInteractor: DetailsInteracting {
             Task { @MainActor in
                 switch result {
                 case .success(let hero):
-                    self.presenter?.getDetailsPerson(result: hero)
+                    self.presenter.getDetailsPerson(result: hero)
                 case.failure:
-                    self.presenter?.showResultAlertError(title: "Atencao", message: "Erro ao buscar personagens. Tente Novamente mais tarde!")
+                    self.presenter.showResultAlertError(title: "Atencao", message: "Erro ao buscar personagens. Tente Novamente mais tarde!")
                 }
             }
             
@@ -62,7 +62,7 @@ extension DetailsInteractor: DetailsInteracting {
     
     func navigateBack() {
         Task { @MainActor in
-            presenter?.navigateBack()
+            presenter.navigateBack()
         }
     }
 }

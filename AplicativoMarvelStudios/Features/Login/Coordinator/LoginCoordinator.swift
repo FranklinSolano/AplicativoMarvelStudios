@@ -9,7 +9,7 @@ import UIKit
 
 // MARK: - Protocol
 
-protocol LoginCoordinating {
+protocol LoginCoordinating: AnyObject{
     func navigateToHome()
     func navigateToForgotPassword()
     func navigateToRegister()
@@ -17,7 +17,7 @@ protocol LoginCoordinating {
 
 final class LoginCoordinator {
     
-    var navigationController: UINavigationController? 
+    var navigationController: UINavigationController?
     var presenter: LoginPresenting?
     let homeFactory = HomeFactory()
     let favoritesFactory = FavoritesFactory()

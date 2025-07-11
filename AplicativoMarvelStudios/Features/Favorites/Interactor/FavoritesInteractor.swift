@@ -9,7 +9,7 @@ import UIKit
 
 //MARK: - Protocol
 
-protocol FavoritesInteracting: AnyObject {
+protocol FavoritesInteracting {
     
 }
 
@@ -17,10 +17,10 @@ protocol FavoritesInteracting: AnyObject {
 
 final class FavoritesInteractor {
     
-    var presenter: FavoritesPresenting? //weak
+    var presenter: FavoritesPresenting
     private var service: FavoritesServicing?
     
-    init(presenter: FavoritesPresenting?, service: FavoritesServicing?) {
+    init(presenter: FavoritesPresenting, service: FavoritesServicing) {
         self.presenter = presenter
         self.service = service
     }

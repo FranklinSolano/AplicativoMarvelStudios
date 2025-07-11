@@ -17,7 +17,7 @@ final class HomeCoordinator: HomeCoordinating {
     
     // MARK: - Properties
     
-    var navigationController: UINavigationController? //weak
+   weak var navigationController: UINavigationController?
     var presenter: HomePresenting?
 
     
