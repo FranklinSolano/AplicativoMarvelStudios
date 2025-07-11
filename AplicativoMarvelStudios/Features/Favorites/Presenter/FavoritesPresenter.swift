@@ -20,7 +20,7 @@ final class FavoritesPresenter {
     weak var view: FavoritesViewControllerDisplay?
     private var coordinator: FavoritesCoordinating
     
-    init(view: FavoritesViewControllerDisplay, coordinator: FavoritesCoordinating) {
+    init(view: FavoritesViewControllerDisplay? = nil, coordinator: FavoritesCoordinating) {
         self.view = view
         self.coordinator = coordinator
     }

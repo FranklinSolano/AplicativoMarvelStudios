@@ -29,7 +29,7 @@ final class HomePresenter {
     
     // MARK: - Init
     
-    init(view: HomeViewDisplay, coordinator: HomeCoordinating) {
+    init(view: HomeViewDisplay? = nil, coordinator: HomeCoordinating) {
         self.view = view
         self.coordinator = coordinator
     }

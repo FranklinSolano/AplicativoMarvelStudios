@@ -25,7 +25,7 @@ final class ProfilePresenter: ProfilePresenting {
     
     // MARK: - Init
     
-    init(view: ProfileViewDisplay, coordinator: ProfileCoordinating) {
+    init(view: ProfileViewDisplay? = nil, coordinator: ProfileCoordinating) {
         self.view = view
         self.coordinator = coordinator
     }

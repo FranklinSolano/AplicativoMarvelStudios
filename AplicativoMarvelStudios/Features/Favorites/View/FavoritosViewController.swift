@@ -20,8 +20,20 @@ final class FavoritesViewController: UIViewController {
     // MARK: - Properties
     
     var screen: FavoritesScreen?
-    var interactor: FavoritesInteracting?
+    var interactor: FavoritesInteracting
     private var favorites: [HeroesModel] = []
+    
+    //MARK: - Init
+    
+    init(interactor: FavoritesInteracting) {
+        self.interactor = interactor
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     
     // MARK: - Lifecycle
     

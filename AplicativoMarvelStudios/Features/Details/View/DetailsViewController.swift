@@ -23,7 +23,7 @@ final class DetailsViewController: UIViewController {
     // MARK: - Properties
     
     private var screen: DetailsScreen?
-    var interactor: DetailsInteracting?
+    var interactor: DetailsInteracting
     var personListImage: [HeroesModel] = [] {
         didSet {
             screen?.collectionView.reloadData()
@@ -31,6 +31,18 @@ final class DetailsViewController: UIViewController {
         }
     }
     var idPerson: Int?
+    
+    //MARK: - Init
+    
+    init(interactor: DetailsInteracting) {
+        self.interactor = interactor
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     
     // MARK: - Lifecycle
     
@@ -45,7 +57,7 @@ final class DetailsViewController: UIViewController {
         super.viewDidLoad()
         guard let idPerson = idPerson else { return }
         screen?.showLoading()
-        interactor?.fetchDetailsPerson(idPerson: idPerson)
+        interactor.fetchDetailsPerson(idPerson: idPerson)
     }
     
     //MARK: - Outhe Methods
@@ -84,7 +96,7 @@ extension DetailsViewController: DetailsViewProtocol{
     }
     
     func actionBack() {
-        interactor?.navigateBack()
+        interactor.navigateBack()
     }
 }
 
@@ -116,6 +128,6 @@ extension DetailsViewController: UICollectionViewDelegate, UICollectionViewDataS
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let idPerson = personListImage[indexPath.row]
-        interactor?.updateDetails(id: idPerson, data: self.personListImage)
+        interactor.updateDetails(id: idPerson, data: self.personListImage)
     }
 }

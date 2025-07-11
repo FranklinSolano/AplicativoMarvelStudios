@@ -19,14 +19,19 @@ final class ProfileFactory: ProfileFactoryProtocol  {
     
     func make(navigationController: UINavigationController?) -> ProfileViewController {
         
-        let profileVC = ProfileViewController()
         let coordinator = ProfileCoordinator()
         coordinator.navigationController = navigationController
-        let presenter = ProfilePresenter(view: profileVC, coordinator: coordinator)
-        coordinator.presenter = presenter
+        
+        let presenter = ProfilePresenter(coordinator: coordinator)
+        
         let service = ProfileService()
+        
         let interactor = ProfileInteractor(presenter: presenter, service: service)
-        profileVC.interactor = interactor
+        
+        let profileVC = ProfileViewController(interactor: interactor)
+        
+        presenter.view = profileVC
+        coordinator.presenter = presenter
+        
         return profileVC
-    }
-}
+    }}

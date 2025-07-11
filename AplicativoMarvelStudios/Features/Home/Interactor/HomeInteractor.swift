@@ -21,7 +21,7 @@ final class HomeInteractor{
     // MARK: - Properties
     
     var presenter: HomePresenting
-    private var service: HomeService?
+    private var service: HomeService
     
     // MARK: - Init
     
@@ -48,7 +48,7 @@ extension HomeInteractor: HomeInteracting {
                 presenter.showLoading()
             }
             
-            service?.fetchCharacters { [ weak self] result in
+            service.fetchCharacters { [ weak self] result in
                 guard let self = self else { return }
                 
                 Task { @MainActor in

@@ -29,7 +29,7 @@ final class DetailsPresenter {
     
     // MARK: - Init
     
-    init(view: DetailsViewControllerDisplay, coordinator: DetailsCoordinating) {
+    init(view: DetailsViewControllerDisplay? = nil, coordinator: DetailsCoordinating) {
         self.view = view
         self.coordinator = coordinator
     }
