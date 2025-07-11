@@ -6,23 +6,12 @@
 //
 
 import UIKit
+@MainActor
+protocol LoginFactoryProtocol {
+    func make(navigationController: UINavigationController) -> (viewController: LoginViewController, coordinator: LoginCoordinator)
+}
 
-//final class LoginFactory {
-//    
-//    func make(navigationController: UINavigationController) -> (viewController: LoginViewController, coordinator: LoginCoordinator) {
-//        
-//        let loginVC = LoginViewController()
-//        let coordinator = LoginCoordinator()
-//        coordinator.navigationController = navigationController
-//        let presenter = LoginPresenter(view: loginVC, coordinator: coordinator)
-//        coordinator.presenter = presenter
-//        let service = LoginService()
-//        let interactor = LoginInteractor(presenter: presenter, service: service)
-//        loginVC.interactor = interactor
-//        return (loginVC, coordinator)
-//    }
-//}
-final class LoginFactory {
+final class LoginFactory: LoginFactoryProtocol {
 
     func make(navigationController: UINavigationController) -> (viewController: LoginViewController, coordinator: LoginCoordinator) {
 

@@ -7,10 +7,14 @@
 
 import UIKit
 
-final class HomeFactory {
-    @MainActor
+@MainActor
+protocol HomeFactoryProtocol {
+    func make(navigationController: UINavigationController?) -> HomeViewController
+}
+
+final class HomeFactory: HomeFactoryProtocol {
+   
     func make(navigationController: UINavigationController?) -> HomeViewController {
-        
         let homeVC = HomeViewController()
         let coordinator = HomeCoordinator()
         coordinator.navigationController = navigationController

@@ -9,7 +9,7 @@ import Foundation
 
 
 // MARK: - Protocol
-
+@MainActor
 protocol LoginPresenting {
     func presentNavigateToHome()
     func presentNavigateToRegister()
@@ -49,7 +49,7 @@ extension LoginPresenter: LoginPresenting {
     }
     
     
-    func presentNavigateToHome() {
+ func presentNavigateToHome() {
         coordinator.navigateToHome()
     }
     

@@ -7,9 +7,13 @@
 
 import UIKit
 
+protocol ProfileFactoryProtocol {
+    func make(navigationController: UINavigationController?) -> ProfileViewController
+}
+
 // MARK: - ProfileFactory
 
-final class ProfileFactory {
+final class ProfileFactory: ProfileFactoryProtocol  {
     
     // MARK: - Public Methods
     

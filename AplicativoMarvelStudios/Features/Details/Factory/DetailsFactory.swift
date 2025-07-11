@@ -6,11 +6,14 @@
 //
 
 import UIKit
+@MainActor
+protocol DetailsFactoryProtocol{
+    func make(navigationController: UINavigationController?) -> DetailsViewController
+}
 
 //MARK: - DetailsFactory
 
-final class DetailsFactory {
-    @MainActor
+final class DetailsFactory: DetailsFactoryProtocol {
     func make(navigationController: UINavigationController?) -> DetailsViewController {
         
         let detailsVC = DetailsViewController()

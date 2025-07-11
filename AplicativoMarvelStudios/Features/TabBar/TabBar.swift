@@ -8,16 +8,18 @@
 import UIKit
 class TabbarViewController: UITabBarController {
     
-    private let homeFactory: HomeFactory
-    private let favoritesFactory: FavoritesFactory
-    private let profileFactory: ProfileFactory
-    
-    init(homeFactory: HomeFactory, favoritesFactory: FavoritesFactory, profileFactory: ProfileFactory) {
-        self.homeFactory = homeFactory
-        self.favoritesFactory = favoritesFactory
-        self.profileFactory = profileFactory
-        super.init(nibName: nil, bundle: nil)
-    }
+    private let homeFactory: HomeFactoryProtocol
+     private let favoritesFactory: FavoritesFactoryProtocol
+     private let profileFactory: ProfileFactoryProtocol
+     
+     init(homeFactory: HomeFactoryProtocol,
+          favoritesFactory: FavoritesFactoryProtocol,
+          profileFactory: ProfileFactoryProtocol) {
+         self.homeFactory = homeFactory
+         self.favoritesFactory = favoritesFactory
+         self.profileFactory = profileFactory
+         super.init(nibName: nil, bundle: nil)
+     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) não implementado")
