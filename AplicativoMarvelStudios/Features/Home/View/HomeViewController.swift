@@ -59,7 +59,7 @@ final class HomeViewController: UIViewController {
 }
 
 // MARK: - HomeViewDisplay
-@MainActor //Garantir que os metodos rode na Thread Principal
+
 extension HomeViewController: HomeViewDisplay {
     
     func displayCharacters(_ characters: [HeroesModel]) {

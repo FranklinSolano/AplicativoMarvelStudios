@@ -90,7 +90,6 @@ extension DetailsViewController: DetailsViewControllerDisplay {
 }
 
 //MARK: - DetailsViewProtocol
-@MainActor
 extension DetailsViewController: DetailsViewProtocol{
     func actionFavoritesSave() {
     }

@@ -37,8 +37,8 @@ final class HomeInteractor{
 
 extension HomeInteractor: HomeInteracting {
     func navigateToDetail(data: [HeroesModel], idPerson: HeroesModel) {
-        Task { @MainActor in
-            presenter.navigateToDetail(data: data, idPerson: idPerson)
+        Task {
+            await presenter.navigateToDetail(data: data, idPerson: idPerson)
         }
     }
     
