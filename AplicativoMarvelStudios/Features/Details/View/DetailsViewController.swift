@@ -109,7 +109,7 @@ extension DetailsViewController: UICollectionViewDelegate, UICollectionViewDataS
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ListCharactersCollectionViewCell.identifier, for: indexPath) as? ListCharactersCollectionViewCell
         let hero = personListImage[indexPath.row]
-        cell?.SetupCell(data: hero)
+        cell?.setupCell(data: hero)
         return cell ?? UICollectionViewCell()
     }
     
