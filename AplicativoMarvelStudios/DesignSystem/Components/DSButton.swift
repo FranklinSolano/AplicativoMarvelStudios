@@ -24,7 +24,7 @@ class DSButton: UIButton {
         self.clipsToBounds = true
         self.layer.cornerRadius = 15
         self.isEnabled = true
-        self.alpha = 0.5
+        self.alpha = 1
     }
     
     required init?(coder: NSCoder) {
