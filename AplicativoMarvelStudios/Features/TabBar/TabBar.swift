@@ -8,13 +8,13 @@
 import UIKit
 class TabbarViewController: UITabBarController {
     
-    private let homeFactory: HomeFactoryProtocol
-     private let favoritesFactory: FavoritesFactoryProtocol
-     private let profileFactory: ProfileFactoryProtocol
+    private let homeFactory: HomeFactory
+    private let favoritesFactory: FavoritesFactory
+    private let profileFactory: ProfileFactory
      
-     init(homeFactory: HomeFactoryProtocol,
-          favoritesFactory: FavoritesFactoryProtocol,
-          profileFactory: ProfileFactoryProtocol) {
+     init(homeFactory: HomeFactory,
+          favoritesFactory: FavoritesFactory,
+          profileFactory: ProfileFactory) {
          self.homeFactory = homeFactory
          self.favoritesFactory = favoritesFactory
          self.profileFactory = profileFactory

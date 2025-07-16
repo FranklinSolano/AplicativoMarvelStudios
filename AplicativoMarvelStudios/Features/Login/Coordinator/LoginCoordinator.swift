@@ -20,9 +20,9 @@ final class LoginCoordinator {
     var navigationController: UINavigationController?
     var presenter: LoginPresenting?
     
-    private let homeFactory: HomeFactoryProtocol = HomeFactory()
-    private let favoritesFactory: FavoritesFactoryProtocol = FavoritesFactory()
-    private let profileFactory: ProfileFactoryProtocol = ProfileFactory()
+    private let homeFactory = HomeFactory()
+    private let favoritesFactory = FavoritesFactory()
+    private let profileFactory = ProfileFactory()
     
 }
 

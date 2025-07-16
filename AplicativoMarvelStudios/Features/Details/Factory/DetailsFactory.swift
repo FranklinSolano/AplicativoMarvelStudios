@@ -6,14 +6,10 @@
 //
 
 import UIKit
-@MainActor
-protocol DetailsFactoryProtocol{
-    func make(navigationController: UINavigationController?) -> DetailsViewController
-}
 
 //MARK: - DetailsFactory
 
-final class DetailsFactory: DetailsFactoryProtocol {
+final class DetailsFactory: UIViewController {
     func make(navigationController: UINavigationController?) -> DetailsViewController {
         let coordinator = DetailsCoordinator()
         coordinator.navigationController = navigationController

@@ -6,12 +6,8 @@
 //
 
 import UIKit
-@MainActor
-protocol LoginFactoryProtocol {
-    func make(navigationController: UINavigationController) -> (viewController: LoginViewController, coordinator: LoginCoordinator)
-}
 
-final class LoginFactory: LoginFactoryProtocol {
+final class LoginFactory: UIViewController {
 
     func make(navigationController: UINavigationController) -> (viewController: LoginViewController, coordinator: LoginCoordinator) {
 

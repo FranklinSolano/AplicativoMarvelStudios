@@ -6,12 +6,8 @@
 //
 import UIKit
 
-@MainActor
-protocol HomeFactoryProtocol {
-    func make(navigationController: UINavigationController?) -> HomeViewController
-}
-
-final class HomeFactory: HomeFactoryProtocol {
+final class HomeFactory: UIViewController {
+    
     func make(navigationController: UINavigationController?) -> HomeViewController {
 
         // 1. Coordinator
