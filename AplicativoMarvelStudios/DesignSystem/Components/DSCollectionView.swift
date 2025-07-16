@@ -7,7 +7,14 @@
 
 import UIKit
 
-final class DSCollectionView: UICollectionView {
+protocol CollectionViewing: AnyObject {
+    var view: UIView { get }
+    var delegate: UICollectionViewDelegate? { get set }
+    var dataSource: UICollectionViewDataSource? { get set }
+    func register(_ cellClass: AnyClass?, forCellWithReuseIdentifier identifier: String)
+}
+
+class DSCollectionView: UICollectionView {
     
     init(scroll: UICollectionView.ScrollDirection = .vertical, spacing: CGFloat){
         let layout = UICollectionViewFlowLayout()
@@ -28,4 +35,8 @@ final class DSCollectionView: UICollectionView {
         fatalError("init(coder:) has not been implemented")
     }
     
+}
+
+final class DSCollectionViewAdapter: DSCollectionView, CollectionViewing {
+    var view: UIView { return self }
 }

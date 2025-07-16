@@ -55,6 +55,10 @@ final class HomeScreen: UIView {
         tableView.dataSource = dataSource
     }
     
+    private func registerCells() {
+        tableView.register(PersonListTableViewCell.self, forCellReuseIdentifier: PersonListTableViewCell.identifier)
+    }
+    
     func showLoading() {
         activityIndicator.startAnimating()
         tableView.isHidden = true
@@ -108,5 +112,6 @@ extension HomeScreen: ViewCodeProtocol {
     
     func setupAdditionalConfiguration() {
         backgroundColor = DSColors.primaryColor
+        registerCells()
     }
 }
