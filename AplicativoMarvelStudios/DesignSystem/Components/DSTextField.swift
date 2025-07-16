@@ -7,7 +7,15 @@
 
 import UIKit
 
-final class DSTextField: UITextField {
+protocol TextFielding: AnyObject {
+    var view: UIView { get }
+    var text: String? { get set }
+    var placeholder: String? { get set }
+    var isSecureTextEntry: Bool { get set }
+    var delegate: UITextFieldDelegate? { get set }
+}
+
+ class DSTextField: UITextField {
     
     init(placeholder: String, isSecureTextEntry: Bool) {
         super.init(frame: .zero)
@@ -43,4 +51,8 @@ final class DSTextField: UITextField {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+}
+
+final class DSTextFieldAdapter: DSTextField, TextFielding {
+    var view: UIView { return self }
 }

@@ -22,6 +22,8 @@ final class HomeService: HomeServiceProtocol {
         let hash = (ts + Keys.marvelPrivateKey + Keys.marvelPublicKey).md5
         let urlString = "https://gateway.marvel.com/v1/public/characters?limit=100&ts=\(ts)&apikey=\(Keys.marvelPublicKey)&hash=\(hash)"
 
+        print("📡 URL da requisição:\n\(urlString)")
+        
         guard let url = URL(string: urlString) else {
             completion(.failure(.invalidURL))
             return
@@ -46,11 +48,13 @@ final class HomeService: HomeServiceProtocol {
                         id: id,
                         heroName: character.name,
                         imageURL: character.thumbnail.fullPath,
-                        descrepitionPerson: character.description
+                        descrepitionPerson: character.description ?? ""
                     )
                 }
                 completion(.success(viewModels))
             } catch {
+                print("❌ Erro ao decodificar JSON:")
+                               print(error.localizedDescription)
                 print("Erro ao decodificar JSON: \(error)")
                 completion(.failure(.decodingFailed(error)))
             }

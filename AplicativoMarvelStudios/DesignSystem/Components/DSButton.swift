@@ -7,7 +7,14 @@
 
 import UIKit
 
-final class DSButton: UIButton {
+protocol Buttoning: AnyObject {
+    var view: UIView { get }
+    var title: String? { get set }
+    var isEnabled: Bool { get set }
+    func addTarget(_ target: Any?, action: Selector, for controlEvents: UIControl.Event)
+}
+
+ class DSButton: UIButton {
     
     init(title: String) {
         super.init(frame: .zero)
@@ -25,7 +32,16 @@ final class DSButton: UIButton {
     }
 }
 
-final class DSButtonTitles: UIButton {
+final class DSButtonAdapter: DSButton, Buttoning {
+    var view: UIView { return self }
+    
+    var title: String? {
+        get { return self.title(for: .normal) }
+        set { self.setTitle(newValue, for: .normal) }
+    }
+}
+
+ class DSButtonTitles: UIButton {
     
     init(title: String, font: UIFont) {
         super.init(frame: .zero)
@@ -38,4 +54,13 @@ final class DSButtonTitles: UIButton {
         fatalError("init(coder:) has not been implemented")
     }
 
+}
+
+final class DSButtonTitlesAdapter: DSButtonTitles, Buttoning {
+    var view: UIView { return self }
+    
+    var title: String? {
+        get { return self.title(for: .normal) }
+        set { self.setTitle(newValue, for: .normal) }
+    }
 }

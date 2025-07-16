@@ -7,7 +7,16 @@
 
 import UIKit
 
-final class DSLabel: UILabel {
+protocol Labeling: AnyObject {
+    var view: UIView { get }
+    var text: String? { get set }
+    var textColor: UIColor! { get set }
+    var font: UIFont! { get set }
+    var numberOfLines: Int { get set }
+    var textAlignment: NSTextAlignment { get set }
+}
+
+ class DSLabel: UILabel {
 
     init(text: String,textColor: UIColor = DSColors.titleTextColor,font: UIFont = DSFonts.titleBold18 ,numberOfLines: Int = 0,textAlignment: NSTextAlignment = .left) {
         super.init(frame: .zero)
@@ -21,4 +30,8 @@ final class DSLabel: UILabel {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+}
+
+final class DSLabelAdapter: DSLabel, Labeling {
+    var view: UIView { return self }
 }

@@ -36,7 +36,7 @@ final class HomePresenter {
 }
 
 //MARK: - HomePresenting
-@MainActor //Garantir que os metodos rode na Thread Principal
+
 extension HomePresenter: HomePresenting {
     func navigateToDetail(data: [HeroesModel], idPerson: HeroesModel) {
         coordinator.navigateToDetail(data: data, idPerson: idPerson)
