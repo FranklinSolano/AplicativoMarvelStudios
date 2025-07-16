@@ -12,6 +12,7 @@ protocol CollectionViewing: AnyObject {
     var delegate: UICollectionViewDelegate? { get set }
     var dataSource: UICollectionViewDataSource? { get set }
     func register(_ cellClass: AnyClass?, forCellWithReuseIdentifier identifier: String)
+    func reloadData()
 }
 
 class DSCollectionView: UICollectionView {
@@ -39,4 +40,8 @@ class DSCollectionView: UICollectionView {
 
 final class DSCollectionViewAdapter: DSCollectionView, CollectionViewing {
     var view: UIView { return self }
+    
+    override func reloadData() {
+        super.reloadData()  // chama o método original do UICollectionView
+    }
 }
