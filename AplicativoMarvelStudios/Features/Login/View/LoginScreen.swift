@@ -23,8 +23,7 @@ final class LoginScreen: UIView {
     
     // MARK: - Properties
     
-     var delegate: LoginScreenProtocol?
-    
+    var delegate: LoginScreenProtocol?
     
     let emailLabel: Labeling
     let emailTextField: TextFielding
@@ -44,6 +43,7 @@ final class LoginScreen: UIView {
          loginButton: Buttoning = DSButtonAdapter(title: "Login"),
          registerButton: Buttoning = DSButtonTitlesAdapter(title: "Don't have an account? Sign up", font: DSFonts.subtitleSemibold16))
     {
+        
         self.emailLabel = emailLabel
         self.emailTextField = emailTextField
         self.passwordLabel  = passwordLabel
@@ -51,6 +51,7 @@ final class LoginScreen: UIView {
         self.forgotPasswordButton = forgotPasswordButton
         self.loginButton = loginButton
         self.registerButton = registerButton
+        
         super.init(frame: .zero)
         setupView()
         actionsButtons()

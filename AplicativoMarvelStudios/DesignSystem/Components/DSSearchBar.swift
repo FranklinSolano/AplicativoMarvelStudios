@@ -7,29 +7,26 @@
 
 import UIKit
 
-final class DSSearchBar: UISearchBar {
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupSearch()
+protocol SearchBaring: AnyObject {
+    var view: UIView { get }
+    var delegate: UISearchBarDelegate? { get set }
+    var text: String? { get set }
+    func resignFirstResponder()
+}
+
+final class DSSearchBarAdapter: UISearchBar, SearchBaring {
+    func resignFirstResponder() {}
+    
+    var view: UIView { return self }
+
+    init() {
+        super.init(frame: .zero)
+        placeholder = "Search"
+        barTintColor = DSColors.primaryColor
+        searchBarStyle = .minimal
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    private func setupSearch() {
-        clipsToBounds = true
-        layer.cornerRadius = 10
-        searchBarStyle = .minimal
-        searchTextField.backgroundColor = DSColors.secondaryColor
-        searchTextField.attributedPlaceholder = NSAttributedString(
-            string: "Search Person",
-            attributes: [.foregroundColor: DSColors.titleTextColor]
-        )
-
-        if let leftIconView = searchTextField.leftView as? UIImageView {
-            leftIconView.tintColor = DSColors.titleTextColor
-            
-        }
     }
 }
