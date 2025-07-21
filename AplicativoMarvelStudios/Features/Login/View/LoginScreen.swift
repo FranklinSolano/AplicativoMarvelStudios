@@ -37,9 +37,9 @@ final class LoginScreen: UIView {
     
     init(
           emailLabel: Labeling = DSLabelAdapter(),
-          emailTextField: TextFielding = DSTextFieldAdapter(placeholder: "Enter your email", isSecureTextEntry: false),
+          emailTextField: TextFielding = DSTextFieldAdapter(),
           passwordLabel: Labeling = DSLabelAdapter(),
-          passwordTextField: TextFielding = DSTextFieldAdapter(placeholder: "Enter your password", isSecureTextEntry: true),
+          passwordTextField: TextFielding = DSTextFieldAdapter(),
           forgotPasswordButton: Buttoning = DSButtonTitlesAdapter(),
           loginButton: Buttoning = DSButtonAdapter(),
           registerButton: Buttoning = DSButtonTitlesAdapter()
@@ -76,9 +76,18 @@ final class LoginScreen: UIView {
         addGestureRecognizer(tapGesture)  // A view detecta o toque e chama o método para fechar o teclado
     }
     
-    private func configureLabels(){
+    private func configureFields(){
         emailLabel.setDTO(.init(text: "Email"))
         passwordLabel.setDTO(.init(text: "Password"))
+        
+        emailTextField.setDTO(.init(placeholder: "Enter your Email",
+                                    isSecureTextEntry: false)
+        )
+        
+        passwordTextField.setDTO(.init(placeholder: "Enter your Password", isSecureTextEntry: true))
+        
+        emailTextField.delegate = self  // Define o delegate para o loginTextField
+        passwordTextField.delegate = self
     }
     
     private func configureButtons(){
@@ -120,9 +129,9 @@ extension LoginScreen: ViewCodeProtocol {
     
     func setupElements() {
         addSubview(emailLabel)
-        addSubview(emailTextField.view)
+        addSubview(emailTextField)
         addSubview(passwordLabel)
-        addSubview(passwordTextField.view)
+        addSubview(passwordTextField)
         addSubview(forgotPasswordButton)
         addSubview(loginButton)
         addSubview(registerButton)
@@ -135,25 +144,25 @@ extension LoginScreen: ViewCodeProtocol {
             make.leading.equalToSuperview().offset(25)
         }
         
-        emailTextField.view.snp.makeConstraints { make in
+        emailTextField.snp.makeConstraints { make in
             make.top.equalTo(emailLabel.snp.bottom).offset(8)
             make.leading.trailing.equalToSuperview().inset(25)
             make.height.equalTo(50)
         }
         
         passwordLabel.snp.makeConstraints { make in
-            make.top.equalTo(emailTextField.view.snp.bottom).offset(16)
+            make.top.equalTo(emailTextField.snp.bottom).offset(16)
             make.leading.equalToSuperview().offset(25)
         }
         
-        passwordTextField.view.snp.makeConstraints { make in
+        passwordTextField.snp.makeConstraints { make in
             make.top.equalTo(passwordLabel.snp.bottom).offset(8)
             make.leading.trailing.equalToSuperview().inset(25)
             make.height.equalTo(50)
         }
         
         forgotPasswordButton.snp.makeConstraints { make in
-            make.top.equalTo(passwordTextField.view.snp.bottom).offset(12)
+            make.top.equalTo(passwordTextField.snp.bottom).offset(12)
             make.trailing.equalToSuperview().inset(25)
         }
         
@@ -170,9 +179,9 @@ extension LoginScreen: ViewCodeProtocol {
     }
     
     func setupAdditionalConfiguration() {
+        configureFields()
+        configureButtons()
         setupTapGesture()
-        emailTextField.delegate = self  // Define o delegate para o loginTextField
-        passwordTextField.delegate = self  // Define o delegate para o passwordTextField
         backgroundColor = DSColors.primaryColor
     }
 }
@@ -181,8 +190,8 @@ extension LoginScreen: ViewCodeProtocol {
 
 extension LoginScreen: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if textField == emailTextField.view {
-            passwordTextField.view.becomeFirstResponder()
+        if textField == emailTextField {
+            passwordTextField.becomeFirstResponder()
         } else {
             textField.resignFirstResponder()
         }
