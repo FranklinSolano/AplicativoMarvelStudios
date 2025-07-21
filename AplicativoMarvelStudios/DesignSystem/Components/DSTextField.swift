@@ -45,7 +45,6 @@ class DSTextField: UITextField {
     }
     
     func setDTO(_ dto: TextFieldDTO) {
-        self.text = dto.text
            self.placeholder = dto.placeholder
            self.isSecureTextEntry = dto.isSecureTextEntry
            self.attributedPlaceholder = NSAttributedString(

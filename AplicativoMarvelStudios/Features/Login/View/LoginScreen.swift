@@ -76,15 +76,18 @@ final class LoginScreen: UIView {
         addGestureRecognizer(tapGesture)  // A view detecta o toque e chama o método para fechar o teclado
     }
     
-    private func configureFields(){
+    private func configureLabels(){
         emailLabel.setDTO(.init(text: "Email"))
         passwordLabel.setDTO(.init(text: "Password"))
-        
+    }
+    
+    private func configureTextFields() {
         emailTextField.setDTO(.init(placeholder: "Enter your Email",
                                     isSecureTextEntry: false)
         )
         
-        passwordTextField.setDTO(.init(placeholder: "Enter your Password", isSecureTextEntry: true))
+        passwordTextField.setDTO(.init(placeholder: "Enter your Password",
+                                       isSecureTextEntry: true))
         
         emailTextField.delegate = self  // Define o delegate para o loginTextField
         passwordTextField.delegate = self
@@ -179,7 +182,8 @@ extension LoginScreen: ViewCodeProtocol {
     }
     
     func setupAdditionalConfiguration() {
-        configureFields()
+        configureLabels()
+        configureTextFields()
         configureButtons()
         setupTapGesture()
         backgroundColor = DSColors.primaryColor
