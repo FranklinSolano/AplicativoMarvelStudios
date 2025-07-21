@@ -22,6 +22,7 @@ struct Keys {
               let dict = NSDictionary(contentsOfFile: path) as? [String: Any],
               let value = dict[key] as? String else {
             fatalError("Keys.plist está faltando ou não contém a chave \(key)")
+            
         }
         return value
     }

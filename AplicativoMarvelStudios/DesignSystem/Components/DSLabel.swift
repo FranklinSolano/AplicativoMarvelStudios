@@ -7,31 +7,48 @@
 
 import UIKit
 
-protocol Labeling: AnyObject {
-    var view: UIView { get }
-    var text: String? { get set }
-    var textColor: UIColor! { get set }
-    var font: UIFont! { get set }
-    var numberOfLines: Int { get set }
-    var textAlignment: NSTextAlignment { get set }
-}
 
- class DSLabel: UILabel {
-
-    init(text: String,textColor: UIColor = DSColors.titleTextColor,font: UIFont = DSFonts.titleBold18 ,numberOfLines: Int = 0,textAlignment: NSTextAlignment = .left) {
-        super.init(frame: .zero)
+struct LabelDTO {
+    let text: String
+    let textColor: UIColor
+    let font: UIFont
+    let numberOfLines: Int
+    let textAlignment: NSTextAlignment
+    
+    init(
+        text: String,
+        textColor: UIColor = DSColors.titleTextColor,
+        font: UIFont = DSFonts.titleBold18,
+        numberOfLines: Int = 0,
+        textAlignment: NSTextAlignment = .left
+    ) {
         self.text = text
         self.textColor = textColor
         self.font = font
         self.numberOfLines = numberOfLines
         self.textAlignment = textAlignment
     }
+}
 
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+protocol Labeling: UIView {
+    func setDTO(_ dto: LabelDTO)
+}
+
+class DSLabel: UILabel {
+    func configure(_ dto: LabelDTO){
+        self.text = dto.text
+        self.textColor = dto.textColor
+        self.font = dto.font
+        self.numberOfLines = dto.numberOfLines
+        self.textAlignment = dto.textAlignment
     }
 }
 
 final class DSLabelAdapter: DSLabel, Labeling {
-    var view: UIView { return self }
+    func setDTO(_ dto: LabelDTO) {
+        configure(dto)
+    }
+    
+    
 }
+

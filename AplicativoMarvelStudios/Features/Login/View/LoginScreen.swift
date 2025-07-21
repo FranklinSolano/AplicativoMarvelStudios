@@ -35,46 +35,34 @@ final class LoginScreen: UIView {
     
     // MARK: - Init
     
-    init(emailLabel: Labeling = DSLabelAdapter(text: "Email"),
-         emailTextField: TextFielding = DSTextFieldAdapter(placeholder: "Enter your email", isSecureTextEntry: false),
-         passwordLabel: Labeling = DSLabelAdapter(text: "Password"),
-         passwordTextField: TextFielding = DSTextFieldAdapter(placeholder: "Enter your passeord", isSecureTextEntry: true),
-         forgotPasswordButton: Buttoning = DSButtonTitlesAdapter(title: "Forgot Password?", font: DSFonts.subtitleSemibold16),
-         loginButton: Buttoning = DSButtonAdapter(title: "Login"),
-         registerButton: Buttoning = DSButtonTitlesAdapter(title: "Don't have an account? Sign up", font: DSFonts.subtitleSemibold16))
-    {
-        
-        self.emailLabel = emailLabel
-        self.emailTextField = emailTextField
-        self.passwordLabel  = passwordLabel
-        self.passwordTextField = passwordTextField
-        self.forgotPasswordButton = forgotPasswordButton
-        self.loginButton = loginButton
-        self.registerButton = registerButton
-        
-        super.init(frame: .zero)
-        setupView()
-        actionsButtons()
-        self.emailTextField.text = "franklin@gmail.com"
-        self.passwordTextField.text = "12345678"
-    }
+    init(
+          emailLabel: Labeling = DSLabelAdapter(),
+          emailTextField: TextFielding = DSTextFieldAdapter(placeholder: "Enter your email", isSecureTextEntry: false),
+          passwordLabel: Labeling = DSLabelAdapter(),
+          passwordTextField: TextFielding = DSTextFieldAdapter(placeholder: "Enter your password", isSecureTextEntry: true),
+          forgotPasswordButton: Buttoning = DSButtonTitlesAdapter(),
+          loginButton: Buttoning = DSButtonAdapter(),
+          registerButton: Buttoning = DSButtonTitlesAdapter()
+      ) {
+          self.emailLabel = emailLabel
+          self.emailTextField = emailTextField
+          self.passwordLabel  = passwordLabel
+          self.passwordTextField = passwordTextField
+          self.forgotPasswordButton = forgotPasswordButton
+          self.loginButton = loginButton
+          self.registerButton = registerButton
+          
+          super.init(frame: .zero)
+          
+          setupView()
+          configureButtons()
+          
+          self.emailTextField.text = "franklin@gmail.com"
+          self.passwordTextField.text = "12345678"
+      }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    // MARK: - Actions
-    
-    @objc private func tappedForgotPassword() {
-        delegate?.ActionForgotPasswordButton()
-    }
-    
-    @objc private func tappedLogin() {
-        delegate?.ActionLoginButton()
-    }
-    
-    @objc private func tappedRegister() {
-        delegate?.ActionRegisterButton()
     }
     
     @objc private func dismissKeyboard() {
@@ -88,12 +76,40 @@ final class LoginScreen: UIView {
         addGestureRecognizer(tapGesture)  // A view detecta o toque e chama o método para fechar o teclado
     }
     
-    private func actionsButtons(){
-        forgotPasswordButton.addTarget(self, action: #selector(tappedForgotPassword), for: .touchUpInside)
-        loginButton.addTarget(self, action: #selector(tappedLogin), for: .touchUpInside)
-        registerButton.addTarget(self, action: #selector(tappedRegister), for: .touchUpInside)
+    private func configureLabels(){
+        emailLabel.setDTO(.init(text: "Email"))
+        passwordLabel.setDTO(.init(text: "Password"))
     }
     
+    private func configureButtons(){
+        
+        forgotPasswordButton.setDTO(
+            .init(title: "Forgot Password", isEnable: true,
+                  font: DSFonts.subtitleSemibold16)
+        )
+        
+        forgotPasswordButton.onClick { [weak self] in
+            self?.delegate?.ActionForgotPasswordButton()
+        }
+        
+        
+        loginButton.setDTO(.init(title: "Login",
+                                 isEnable: true)
+        )
+        
+        loginButton.onClick { [weak self] in
+            self?.delegate?.ActionLoginButton()
+        }
+        
+        registerButton.setDTO(.init(title: "Don't have an account? Sign up",
+                                    isEnable: true,
+                                    font: DSFonts.subtitleSemibold16)
+        )
+        
+        registerButton.onClick { [weak self] in
+            self?.delegate?.ActionRegisterButton()
+        }
+    }
 }
 
 // MARK: - ViewCodeProtocol
@@ -103,51 +119,51 @@ extension LoginScreen: ViewCodeProtocol {
     // MARK: - Setup Methods
     
     func setupElements() {
-        addSubview(emailLabel.view)
+        addSubview(emailLabel)
         addSubview(emailTextField.view)
-        addSubview(passwordLabel.view)
+        addSubview(passwordLabel)
         addSubview(passwordTextField.view)
-        addSubview(forgotPasswordButton.view)
-        addSubview(loginButton.view)
-        addSubview(registerButton.view)
+        addSubview(forgotPasswordButton)
+        addSubview(loginButton)
+        addSubview(registerButton)
     }
     
     func setupConstraints() {
         
-        emailLabel.view.snp.makeConstraints { make in
+        emailLabel.snp.makeConstraints { make in
             make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(60)
             make.leading.equalToSuperview().offset(25)
         }
         
         emailTextField.view.snp.makeConstraints { make in
-            make.top.equalTo(emailLabel.view.snp.bottom).offset(8)
+            make.top.equalTo(emailLabel.snp.bottom).offset(8)
             make.leading.trailing.equalToSuperview().inset(25)
             make.height.equalTo(50)
         }
         
-        passwordLabel.view.snp.makeConstraints { make in
+        passwordLabel.snp.makeConstraints { make in
             make.top.equalTo(emailTextField.view.snp.bottom).offset(16)
             make.leading.equalToSuperview().offset(25)
         }
         
         passwordTextField.view.snp.makeConstraints { make in
-            make.top.equalTo(passwordLabel.view.snp.bottom).offset(8)
+            make.top.equalTo(passwordLabel.snp.bottom).offset(8)
             make.leading.trailing.equalToSuperview().inset(25)
             make.height.equalTo(50)
         }
         
-        forgotPasswordButton.view.snp.makeConstraints { make in
+        forgotPasswordButton.snp.makeConstraints { make in
             make.top.equalTo(passwordTextField.view.snp.bottom).offset(12)
             make.trailing.equalToSuperview().inset(25)
         }
         
-        loginButton.view.snp.makeConstraints { make in
-            make.top.equalTo(forgotPasswordButton.view.snp.bottom).offset(20)
+        loginButton.snp.makeConstraints { make in
+            make.top.equalTo(forgotPasswordButton.snp.bottom).offset(20)
             make.leading.trailing.equalToSuperview().inset(25)
             make.height.equalTo(50)
         }
         
-        registerButton.view.snp.makeConstraints { make in
+        registerButton.snp.makeConstraints { make in
             make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom)
             make.centerX.equalToSuperview()
         }

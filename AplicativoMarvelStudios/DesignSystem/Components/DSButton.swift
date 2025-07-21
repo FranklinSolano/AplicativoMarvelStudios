@@ -7,24 +7,19 @@
 
 import UIKit
 
-protocol Buttoning: AnyObject {
-    var view: UIView { get }
-    var title: String? { get set }
-    var isEnabled: Bool { get set }
-    func addTarget(_ target: Any?, action: Selector, for controlEvents: UIControl.Event)
+protocol Buttoning: UIView {
+    func setDTO(_ dto: ButtonDTO)
+    func onClick(_ action: @escaping () -> Void)
 }
 
 class DSButton: UIButton {
     
-    init(title: String) {
+    override init(frame: CGRect) {
         super.init(frame: .zero)
-        self.setTitle(title, for: .normal)
         self.setTitleColor(DSColors.titleTextColor, for: .normal)
         self.backgroundColor = DSColors.secondaryColor
         self.clipsToBounds = true
         self.layer.cornerRadius = 15
-        self.isEnabled = true
-        self.alpha = 1
     }
     
     required init?(coder: NSCoder) {
@@ -33,64 +28,153 @@ class DSButton: UIButton {
 }
 
 final class DSButtonAdapter: DSButton, Buttoning {
-    var view: UIView { return self }
+    private var onClickAction: (() -> Void)?
     
-    var title: String? {
-        get { return self.title(for: .normal) }
-        set { self.setTitle(newValue, for: .normal) }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.addTarget(self, action: #selector(didTap), for: .touchUpInside)
     }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func setDTO(_ dto: ButtonDTO) {
+        self.setTitle(dto.title, for: .normal)
+        self.isEnabled = dto.isEnable
+        self.alpha = dto.isEnable ? 1 : 0.5
+        if let font = dto.font {
+            self.titleLabel?.font = font
+        }
+    }
+    
+    func onClick(_ action: @escaping () -> Void) {
+        self.onClickAction = action
+    }
+    
+    @objc private func didTap() {
+        onClickAction?()
+    }
+    
+    
 }
 
 
 class DSButtonTitles: UIButton {
     
-    init(title: String, font: UIFont) {
-        super.init(frame: .zero)
-        self.setTitle(title, for: .normal)
+    override init(frame: CGRect = .zero) {
+        super.init(frame: frame)
         self.setTitleColor(DSColors.titleTextColor, for: .normal)
-        self.titleLabel?.font = font
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+
+
+
+final class DSButtonTitlesAdapter: DSButtonTitles, Buttoning {
+    
+    private var onClickAction: (() -> Void)?
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.addTarget(self, action: #selector(didTap), for: .touchUpInside)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-}
-
-final class DSButtonTitlesAdapter: DSButtonTitles, Buttoning {
-    var view: UIView { return self }
-    
-    var title: String? {
-        get { return self.title(for: .normal) }
-        set { self.setTitle(newValue, for: .normal) }
+    func setDTO(_ dto: ButtonDTO) {
+        self.setTitle(dto.title, for: .normal)
+        self.isEnabled = dto.isEnable
+        self.alpha = dto.isEnable ? 1 : 0.5
+        if let font = dto.font {
+            self.titleLabel?.font = font
+        }
     }
+    
+    func onClick(_ action: @escaping () -> Void) {
+        self.onClickAction = action
+    }
+    
+    @objc private func didTap() {
+        onClickAction?()
+    }
+    
+    
 }
 
 //MARK: - Button in Image
 protocol ButtonImageing: AnyObject {
-    var view: UIView { get }
-    func setImage(_ image: UIImage?, for state: UIControl.State)
-    func addTarget(_ target: Any?, action: Selector, for controlEvents: UIControl.Event)
-    var tintiColor: UIColor? { get set }
-    var isEnabled: Bool { get set }
+    func setDTO(_ dto: ImageButtonDTO)
+    func onClick(_ action: @escaping () -> Void)
 }
 
 final class DSButtonImageAdapter: UIButton, ButtonImageing {
-    var tintiColor: UIColor?
+  
     
-    var view: UIView { self }
     
-    init(image: UIImage? = nil, tintColor: UIColor? = nil) {
-        super.init(frame: .zero)
-        if let img = image {
-            setImage(img, for: .normal)
-        }
-        self.tintColor = tintColor
+    private var onClickAction: (() -> Void)?
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         self.backgroundColor = .clear
         self.clipsToBounds = true
+        self.addTarget(self, action: #selector(didTap), for: .touchUpInside)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    func setDTO(_ dto: ImageButtonDTO) {
+        self.setImage(dto.image, for: .normal)
+        self.tintColor = dto.tintColor
+        self.isEnabled = dto.isEnable
+        self.alpha = dto.isEnable ? 1 : 0.5
+    }
+    
+    func onClick(_ action: @escaping () -> Void) {
+        self.onClickAction = action
+    }
+    
+    @objc private func didTap() {
+        onClickAction?()
+    }
+    
+}
+
+
+struct ButtonDTO {
+    let title: String
+    let isEnable: Bool
+    let font: UIFont?
+    
+    init(title: String = "",
+         isEnable: Bool = true,
+         font: UIFont? = nil) {
+        self.title = title
+        self.isEnable = isEnable
+        self.font = font
+    }
+
+}
+
+struct ImageButtonDTO {
+    let image: UIImage?
+    let tintColor: UIColor?
+    let isEnable: Bool
+    
+    init(image: UIImage? = nil,
+           tintColor: UIColor? = nil,
+           isEnable: Bool = true) {
+          self.image = image
+          self.tintColor = tintColor
+          self.isEnable = isEnable
+      }
 }
