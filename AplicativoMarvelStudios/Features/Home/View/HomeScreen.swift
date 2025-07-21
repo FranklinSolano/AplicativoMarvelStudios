@@ -22,15 +22,9 @@ final class HomeScreen: UIView {
     
     // MARK: - Init
     
-    init(userName: Labeling = DSLabelAdapter(text: "Hi, Solas",
-                                             textColor: DSColors.titleTextColor,
-                                             font: DSFonts.titleBold18,
-                                             numberOfLines: 0,
-                                             textAlignment: .center),
+    init(userName: Labeling = DSLabelAdapter(),
          searchPerson: SearchBaring = DSSearchBarAdapter(),
-         descriptionName: Labeling = DSLabelAdapter(text: "Marvel Characters",
-                                                    textColor: DSColors.titleTextColor,
-                                                    font: DSFonts.titleBold22),
+         descriptionName: Labeling = DSLabelAdapter(),
          tableView: TableViewing = DSTableViewAdapter(),
          activityIndicator: LoadingIndicatable = DSActivityIndicatorAdapter()) {
         
@@ -47,6 +41,19 @@ final class HomeScreen: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    private func configureLabels(){
+        userName.setDTO(.init(text: "Hi, Solas",
+                              textColor: DSColors.titleTextColor,
+                              font: DSFonts.titleBold18,
+                              numberOfLines: 0,
+                              textAlignment: .center))
+        
+        descriptionName.setDTO(.init(text: "Marvel Characters",
+                                     textColor: DSColors.titleTextColor,
+                                     font: DSFonts.titleBold22))
+    }
+    
     
     // MARK: - Outher Methods
     
@@ -74,34 +81,34 @@ final class HomeScreen: UIView {
 
 extension HomeScreen: ViewCodeProtocol {
     func setupElements() {
-           addSubview(userName.view)
+           addSubview(userName)
            addSubview(searchPerson.view)
-           addSubview(descriptionName.view)
+           addSubview(descriptionName)
            addSubview(tableView.view)
            addSubview(activityIndicator.view)
        }
 
        func setupConstraints() {
-           userName.view.snp.makeConstraints { make in
+           userName.snp.makeConstraints { make in
                make.top.equalTo(safeAreaLayoutGuide.snp.top)
                make.leading.equalToSuperview().offset(30)
                make.trailing.equalToSuperview().inset(30)
            }
 
            searchPerson.view.snp.makeConstraints { make in
-               make.top.equalTo(userName.view.snp.bottom).offset(20)
+               make.top.equalTo(userName.snp.bottom).offset(20)
                make.leading.equalToSuperview().offset(30)
                make.trailing.equalToSuperview().inset(30)
                make.height.equalTo(50)
            }
 
-           descriptionName.view.snp.makeConstraints { make in
+           descriptionName.snp.makeConstraints { make in
                make.top.equalTo(searchPerson.view.snp.bottom).offset(20)
                make.leading.equalToSuperview().offset(20)
            }
 
            tableView.view.snp.makeConstraints { make in
-               make.top.equalTo(descriptionName.view.snp.bottom).offset(20)
+               make.top.equalTo(descriptionName.snp.bottom).offset(20)
                make.leading.trailing.bottom.equalToSuperview()
            }
 
@@ -113,5 +120,6 @@ extension HomeScreen: ViewCodeProtocol {
     func setupAdditionalConfiguration() {
         backgroundColor = DSColors.primaryColor
         registerCells()
+        configureLabels()
     }
 }

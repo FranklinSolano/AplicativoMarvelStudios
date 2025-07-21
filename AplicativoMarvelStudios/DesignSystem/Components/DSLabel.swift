@@ -32,6 +32,7 @@ struct LabelDTO {
 
 protocol Labeling: UIView {
     func setDTO(_ dto: LabelDTO)
+    var text: String? {get set}
 }
 
 class DSLabel: UILabel {

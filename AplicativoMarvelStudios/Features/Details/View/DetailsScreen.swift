@@ -29,12 +29,12 @@ final class DetailsScreen: UIView {
     let activityIndicator: LoadingIndicatable
 
     init(
-        backButton: Buttoning = DSButtonTitlesAdapter(title: "<- Back", font: DSFonts.subtitleSemibold16),
-        favoritesButton: ButtonImageing = DSButtonImageAdapter(image: UIImage(systemName: "heart"), tintColor: .red),
+        backButton: Buttoning = DSButtonTitlesAdapter(),
+        favoritesButton: ButtonImageing = DSButtonImageAdapter(),
         imagePerson: ImageViewing = DSImageViewAdapter(image: nil),
-        personName: Labeling = DSLabelAdapter(text: "", textColor: DSColors.titleTextColor, font: DSFonts.subtitleSemibold16, numberOfLines: 0, textAlignment: .center),
-        descriptionPerson: Labeling = DSLabelAdapter(text: "", textColor: DSColors.titleTextColor, font: DSFonts.captionLight14, numberOfLines: 0, textAlignment: .left),
-        personRelated: Labeling = DSLabelAdapter(text: "More characters", textColor: DSColors.titleTextColor, font: DSFonts.subtitleSemibold16, numberOfLines: 0, textAlignment: .left),
+        personName: Labeling = DSLabelAdapter(),
+        descriptionPerson: Labeling = DSLabelAdapter(),
+        personRelated: Labeling = DSLabelAdapter(),
         collectionView: CollectionViewing = DSCollectionViewAdapter(scroll: .horizontal, spacing: 10),
         activityIndicator: LoadingIndicatable = DSActivityIndicatorAdapter()
     ) {
@@ -54,21 +54,35 @@ final class DetailsScreen: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
-    private func setupActions() {
-        backButton.addTarget(self, action: #selector(tappedBackButton), for: .touchUpInside)
-        favoritesButton.addTarget(self, action: #selector(tappedFavoritesButton), for: .touchUpInside)
+    
+    private func configureLabels() {
+        personName.setDTO(.init(text: "", textColor: DSColors.titleTextColor, font: DSFonts.subtitleSemibold16, numberOfLines: 0, textAlignment: .center))
+        
+        descriptionPerson.setDTO(.init(text: "", textColor: DSColors.titleTextColor, font: DSFonts.captionLight14, numberOfLines: 0, textAlignment: .left))
+        
+        personRelated.setDTO(.init(text: "More characters", textColor: DSColors.titleTextColor, font: DSFonts.subtitleSemibold16, numberOfLines: 0, textAlignment: .left))
     }
-
-    @objc private func tappedBackButton() {
-        delegate?.actionBack()
+    
+    private func configureButtons() {
+        backButton.setDTO(.init(title: "<- Back", isEnable: true, font: DSFonts.subtitleSemibold16))
+        backButton.onClick { [weak self] in
+            self?.delegate?.actionBack()
+        }
+        
+        upadateFavoriteButton()
+        
+        favoritesButton.onClick { [weak self] in
+            guard let self = self else { return }
+            self.isFavorited.toggle()
+            self.upadateFavoriteButton()
+            self.delegate?.actionFavoritesSave()
+        }
     }
-
-    @objc private func tappedFavoritesButton() {
-        isFavorited.toggle()
-        let imageName = isFavorited ? "heart.fill" : "heart"
-        favoritesButton.setImage(UIImage(systemName: imageName), for: .normal)
-        delegate?.actionFavoritesSave()
+    
+    private func upadateFavoriteButton() {
+        let iconName = isFavorited ? "heart.fill" : "heart"
+        let dto = ImageButtonDTO(image: UIImage(systemName: iconName), tintColor: .red, isEnable: true)
+        favoritesButton.setDTO(dto)
     }
 
     func configCollectionView(delegate: UICollectionViewDelegate, dataSource: UICollectionViewDataSource) {
@@ -96,70 +110,70 @@ final class DetailsScreen: UIView {
     func showLoading() {
         activityIndicator.startAnimating()
         collectionView.view.isHidden = true
-        personRelated.view.isHidden = true
+        personRelated.isHidden = true
         imagePerson.view.isHidden = true
-        favoritesButton.view.isHidden = true
+        favoritesButton.isHidden = true
     }
 
     func hideLoading() {
         activityIndicator.stopAnimating()
         collectionView.view.isHidden = false
-        personRelated.view.isHidden = false
+        personRelated.isHidden = false
         imagePerson.view.isHidden = false
-        favoritesButton.view.isHidden = false
+        favoritesButton.isHidden = false
     }
 }
 
 extension DetailsScreen: ViewCodeProtocol {
     func setupElements() {
-        addSubview(backButton.view)
-        addSubview(favoritesButton.view)
-        addSubview(personName.view)
+        addSubview(backButton)
+        addSubview(favoritesButton)
+        addSubview(personName)
         addSubview(imagePerson.view)
-        addSubview(descriptionPerson.view)
-        addSubview(personRelated.view)
+        addSubview(descriptionPerson)
+        addSubview(personRelated)
         addSubview(collectionView.view)
         addSubview(activityIndicator.view)
     }
 
     func setupConstraints() {
-        backButton.view.snp.makeConstraints { make in
+        backButton.snp.makeConstraints { make in
             make.top.equalTo(safeAreaLayoutGuide.snp.top)
             make.leading.equalToSuperview().offset(25)
         }
 
-        personName.view.snp.makeConstraints { make in
+        personName.snp.makeConstraints { make in
             make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(25)
             make.leading.equalToSuperview().offset(16)
             make.trailing.equalToSuperview().inset(16)
         }
 
-        favoritesButton.view.snp.makeConstraints { make in
-            make.centerY.equalTo(personName.view.snp.centerY)
+        favoritesButton.snp.makeConstraints { make in
+            make.centerY.equalTo(personName.snp.centerY)
             make.trailing.equalToSuperview().inset(20)
             make.width.height.equalTo(24)
         }
 
         imagePerson.view.snp.makeConstraints { make in
-            make.top.equalTo(personName.view.snp.bottom).offset(20)
+            make.top.equalTo(personName.snp.bottom).offset(20)
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(self.snp.width).multipliedBy(0.6)
         }
 
-        descriptionPerson.view.snp.makeConstraints { make in
+        descriptionPerson.snp.makeConstraints { make in
             make.top.equalTo(imagePerson.view.snp.bottom).offset(12)
             make.leading.equalToSuperview().offset(16)
             make.trailing.equalToSuperview().inset(16)
         }
 
-        personRelated.view.snp.makeConstraints { make in
-            make.top.equalTo(descriptionPerson.view.snp.bottom).offset(20)
+        personRelated.snp.makeConstraints { make in
+            make.top.equalTo(descriptionPerson.snp.bottom).offset(20)
             make.leading.equalToSuperview().offset(16)
             make.trailing.equalToSuperview().inset(16)
         }
 
         collectionView.view.snp.makeConstraints { make in
-            make.top.equalTo(personRelated.view.snp.bottom).offset(10)
+            make.top.equalTo(personRelated.snp.bottom).offset(10)
             make.leading.trailing.bottom.equalToSuperview().inset(10)
         }
 
@@ -170,7 +184,8 @@ extension DetailsScreen: ViewCodeProtocol {
 
     func setupAdditionalConfiguration() {
         backgroundColor = DSColors.primaryColor
-        setupActions()
+        configureLabels()
+        configureButtons()
         registerCells()
     }
 }

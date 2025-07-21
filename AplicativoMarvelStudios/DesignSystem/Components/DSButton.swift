@@ -7,6 +7,21 @@
 
 import UIKit
 
+struct ButtonDTO {
+    let title: String
+    let isEnable: Bool
+    let font: UIFont?
+    
+    init(title: String = "",
+         isEnable: Bool = true,
+         font: UIFont? = nil) {
+        self.title = title
+        self.isEnable = isEnable
+        self.font = font
+    }
+
+}
+
 protocol Buttoning: UIView {
     func setDTO(_ dto: ButtonDTO)
     func onClick(_ action: @escaping () -> Void)
@@ -110,7 +125,7 @@ final class DSButtonTitlesAdapter: DSButtonTitles, Buttoning {
 }
 
 //MARK: - Button in Image
-protocol ButtonImageing: AnyObject {
+protocol ButtonImageing: UIView {
     func setDTO(_ dto: ImageButtonDTO)
     func onClick(_ action: @escaping () -> Void)
 }
@@ -147,22 +162,6 @@ final class DSButtonImageAdapter: UIButton, ButtonImageing {
         onClickAction?()
     }
     
-}
-
-
-struct ButtonDTO {
-    let title: String
-    let isEnable: Bool
-    let font: UIFont?
-    
-    init(title: String = "",
-         isEnable: Bool = true,
-         font: UIFont? = nil) {
-        self.title = title
-        self.isEnable = isEnable
-        self.font = font
-    }
-
 }
 
 struct ImageButtonDTO {

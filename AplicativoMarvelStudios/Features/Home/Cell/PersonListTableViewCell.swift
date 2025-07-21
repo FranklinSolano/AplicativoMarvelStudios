@@ -23,7 +23,7 @@ final class PersonListTableViewCell: UITableViewCell {
     
     init(
         imagePerson: ImageViewing = DSImageViewAdapter(image: .placeholder),
-        heroName: Labeling = DSLabelAdapter(text: "", textColor: DSColors.titleTextColor, font: DSFonts.subtitleSemibold16, numberOfLines: 0, textAlignment: .left)
+        heroName: Labeling = DSLabelAdapter()
     ) {
         self.imagePerson = imagePerson
         self.heroName = heroName
@@ -33,6 +33,10 @@ final class PersonListTableViewCell: UITableViewCell {
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func configureLabels(){
+        heroName.setDTO(.init(text: "", textColor: DSColors.titleTextColor, font: DSFonts.subtitleSemibold16, numberOfLines: 0, textAlignment: .left))
     }
     
     // MARK: - Setup
@@ -54,7 +58,7 @@ extension PersonListTableViewCell: ViewCodeProtocol {
     
     func setupElements() {
         addSubview(imagePerson.view)
-        addSubview(heroName.view)
+        addSubview(heroName)
     }
     
     func setupConstraints() {
@@ -65,7 +69,7 @@ extension PersonListTableViewCell: ViewCodeProtocol {
             make.width.equalTo(85)
         }
         
-        heroName.view.snp.makeConstraints { make in
+        heroName.snp.makeConstraints { make in
             make.leading.equalTo(imagePerson.view.snp.trailing).offset(15)
             make.centerY.equalTo(imagePerson.view.snp.centerY)
         }
@@ -74,5 +78,6 @@ extension PersonListTableViewCell: ViewCodeProtocol {
     func setupAdditionalConfiguration() {
         backgroundColor = DSColors.primaryColor
         selectionStyle = .none
+        configureLabels()
     }
 }

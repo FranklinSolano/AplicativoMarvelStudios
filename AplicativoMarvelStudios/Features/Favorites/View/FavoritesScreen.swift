@@ -17,11 +17,7 @@ final class FavoritesScreen: UIView {
 
     // MARK: - Init
     
-    init(titleLabel: Labeling = DSLabelAdapter(text: "Favorites Characters",
-                                               textColor: DSColors.titleTextColor,
-                                               font: DSFonts.titleBold22,
-                                               numberOfLines: 0,
-                                               textAlignment: .center),
+    init(titleLabel: Labeling = DSLabelAdapter(),
          collectionViewFavorites: CollectionViewing = DSCollectionViewAdapter(scroll: .vertical, spacing: 10)) {
         
         self.titleLabel = titleLabel
@@ -36,6 +32,14 @@ final class FavoritesScreen: UIView {
     }
 
     // MARK: - Methods
+    
+    private func configureLabels(){
+        titleLabel.setDTO(.init(text: "Favorites Characters",
+                                textColor: DSColors.titleTextColor,
+                                font: DSFonts.titleBold22,
+                                numberOfLines: 0,
+                                textAlignment: .center))
+    }
     
     func configCollectoinView(delegate: UICollectionViewDelegate, dataSource: UICollectionViewDataSource) {
         collectionViewFavorites.delegate = delegate
@@ -53,24 +57,26 @@ final class FavoritesScreen: UIView {
 
 extension FavoritesScreen: ViewCodeProtocol {
     func setupElements() {
-        addSubview(titleLabel.view)
+        addSubview(titleLabel)
         addSubview(collectionViewFavorites.view)
     }
     
     func setupConstraints() {
-        titleLabel.view.snp.makeConstraints { make in
+        titleLabel.snp.makeConstraints { make in
             make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(25)
             make.centerX.equalToSuperview()
         }
         
         collectionViewFavorites.view.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.view.snp.bottom).offset(35)
+            make.top.equalTo(titleLabel.snp.bottom).offset(35)
             make.leading.trailing.bottom.equalToSuperview()
         }
     }
     
     func setupAdditionalConfiguration() {
+        configureLabels()
         backgroundColor = DSColors.primaryColor
         registerCells()
+      
     }
 }

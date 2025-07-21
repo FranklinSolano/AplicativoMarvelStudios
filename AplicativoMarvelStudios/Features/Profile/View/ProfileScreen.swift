@@ -77,7 +77,9 @@ final class ProfileScreen: UIView {
     }
     
     private func configureButtons(){
+        
         exitButton.setDTO(.init(title: "Exit"))
+                          
         exitButton.onClick { [weak self] in
             self?.delegate?.actionExitApp()
         }
@@ -164,7 +166,7 @@ extension ProfileScreen: ViewCodeProtocol {
         backgroundColor = DSColors.primaryColor
         configureLabels()
         configureTextFields()
-        configureTextFields()
+        configureButtons()
         actionsButton()
         configTranslatesAutoresizingMaskIntoConstraints()
         imageUser.view.tintColor = DSColors.secondaryColor
