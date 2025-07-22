@@ -4,7 +4,6 @@
 //
 //  Created by Franklin  Stilhano Solano on 22/06/25.
 //
-
 import UIKit
 import SnapKit
 
@@ -14,34 +13,47 @@ final class FavoritesEmptyCell: UICollectionViewCell {
     
     static let identifier: String = "FavoritesEmptyCell"
     
-    private lazy var titleLabel: UILabel = {
-        let label = DSLabel(text: "You don't have any favorites yet 🙁", textColor: DSColors.titleTextColor, font: DSFonts.titleBold22, numberOfLines: 0, textAlignment: .center)
-        return label
-    }()
+    private let titleLabel: Labeling = DSLabelAdapter()
+    
+    // MARK: - Init
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
     }
-    
+
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
+        setupView()
     }
+    
+    private func configureLabels(){
+        titleLabel.setDTO(.init(
+            text: "You don't have any favorites yet 🙁",
+            textColor: DSColors.titleTextColor,
+            font: DSFonts.titleBold22,
+            numberOfLines: 0,
+            textAlignment: .center
+        ))
+    }
+    
 }
 
 extension FavoritesEmptyCell: ViewCodeProtocol {
+    
     func setupElements() {
         contentView.addSubview(titleLabel)
     }
     
     func setupConstraints() {
         titleLabel.snp.makeConstraints { make in
-            make.centerX.centerY.equalToSuperview()
-            make.leading.trailing.edges.equalToSuperview().inset(40)
+            make.center.equalToSuperview()
+            make.leading.trailing.equalToSuperview().inset(40)
         }
     }
     
     func setupAdditionalConfiguration() {
+        configureLabels()
         backgroundColor = .clear
     }
 }

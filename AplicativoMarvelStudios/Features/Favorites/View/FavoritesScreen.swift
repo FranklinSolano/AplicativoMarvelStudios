@@ -8,42 +8,50 @@
 import UIKit
 import SnapKit
 
-// MARK: - FavoritesScreen
-
 final class FavoritesScreen: UIView {
     
     // MARK: - UI Elements
     
-    private var titleLabel: UILabel = {
-        let label = DSLabel(text: "Favorites Characters", textColor: DSColors.titleTextColor, font: DSFonts.titleBold22, numberOfLines: 0, textAlignment: .center)
-        return label
-    }()
-    
-    lazy var collectionViewFavorites: UICollectionView = {
-        let collectionView = DSCollectionView(scroll: .vertical, spacing: 10)
-        collectionView.register(FavoritesEmptyCell.self, forCellWithReuseIdentifier:  FavoritesEmptyCell.identifier)
-        collectionView.register(ListCharactersCollectionViewCell.self, forCellWithReuseIdentifier:  ListCharactersCollectionViewCell.identifier)
-        return collectionView
-    }()
-    
+    let titleLabel: Labeling
+    let collectionViewFavorites: CollectionViewing
+
     // MARK: - Init
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(titleLabel: Labeling = DSLabelAdapter(),
+         collectionViewFavorites: CollectionViewing = DSCollectionViewAdapter(scroll: .vertical, spacing: 10)) {
+        
+        self.titleLabel = titleLabel
+        self.collectionViewFavorites = collectionViewFavorites
+        
+        super.init(frame: .zero)
         setupView()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     // MARK: - Methods
     
-    func configCollectoinView(delegate: UICollectionViewDelegate, dataSource: UICollectionViewDataSource){
+    private func configureLabels(){
+        titleLabel.setDTO(.init(text: "Favorites Characters",
+                                textColor: DSColors.titleTextColor,
+                                font: DSFonts.titleBold22,
+                                numberOfLines: 0,
+                                textAlignment: .center))
+    }
+    
+    func configCollectoinView(delegate: UICollectionViewDelegate, dataSource: UICollectionViewDataSource) {
         collectionViewFavorites.delegate = delegate
         collectionViewFavorites.dataSource = dataSource
     }
+    
+    private func registerCells(){
+        collectionViewFavorites.register(FavoritesEmptyCell.self, forCellWithReuseIdentifier: FavoritesEmptyCell.identifier)
+        collectionViewFavorites.register(ListCharactersCollectionViewCell.self, forCellWithReuseIdentifier: ListCharactersCollectionViewCell.identifier)
+    }
 }
+
 
 // MARK: - ViewCodeProtocol
 
@@ -54,7 +62,6 @@ extension FavoritesScreen: ViewCodeProtocol {
     }
     
     func setupConstraints() {
-        
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(25)
             make.centerX.equalToSuperview()
@@ -67,6 +74,9 @@ extension FavoritesScreen: ViewCodeProtocol {
     }
     
     func setupAdditionalConfiguration() {
+        configureLabels()
         backgroundColor = DSColors.primaryColor
+        registerCells()
+      
     }
 }

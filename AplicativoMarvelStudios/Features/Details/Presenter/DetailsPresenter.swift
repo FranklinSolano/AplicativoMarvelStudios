@@ -8,14 +8,13 @@
 import UIKit
 
 //MARK: - Protocol
-@MainActor
-protocol DetailsPresenting: AnyObject {
-    func navigateBack()
+protocol DetailsPresenting {
+    func navigateBack() async
     func getDetailsPerson(result: HeroesModel)
     func showResultAlertError(title: String, message: String)
     func showLoading()
     func hideLoading()
-    func updateDetails(id: HeroesModel, data: [HeroesModel])
+    func updateDetails(id: HeroesModel, data: [HeroesModel]) async
 }
 
 //MARK: - DetailsPresenter
@@ -24,41 +23,49 @@ final class DetailsPresenter {
     
     // MARK: - Properties
     
-    var view: DetailsViewControllerDisplay? //weak
-    private var coordinator: DetailsCoordinating?
+    weak var view: DetailsViewControllerDisplay?
+    private var coordinator: DetailsCoordinating
     
     // MARK: - Init
     
-    init(view: DetailsViewControllerDisplay, coordinator: DetailsCoordinating) {
+    init(view: DetailsViewControllerDisplay? = nil, coordinator: DetailsCoordinating) {
         self.view = view
         self.coordinator = coordinator
     }
 }
 
 // MARK: - DetailsPresenting
-@MainActor
+
 extension DetailsPresenter: DetailsPresenting {
-    func updateDetails(id: HeroesModel, data: [HeroesModel]) {
-        coordinator?.updateDetails(id: id, data: data)
+    func updateDetails(id: HeroesModel, data: [HeroesModel]) async {
+        await coordinator.updateDetails(id: id, data: data)
     }
     
     func showLoading() {
-        view?.showLoading()
-    }
+            Task { @MainActor in
+                self.view?.showLoading()
+            }
+        }
+
+        func hideLoading() {
+            Task { @MainActor in
+                self.view?.hideLoading()
+            }
+        }
+
+        func showResultAlertError(title: String, message: String) {
+            Task { @MainActor in
+                self.view?.showResultAlertError(title: title, message: message)
+            }
+        }
+
+        func getDetailsPerson(result: HeroesModel) {
+            Task { @MainActor in
+                self.view?.getResultDataPerson(data: result)
+            }
+        }
     
-    func hideLoading() {
-        view?.hideLoading()
-    }
-    
-    func showResultAlertError(title: String, message: String) {
-        view?.showResultAlertError(title: title, message: message)
-    }
-    
-    func getDetailsPerson(result: HeroesModel) {
-        view?.getResultDataPerson(data: result)
-    }
-    
-    func navigateBack() {
-        coordinator?.navigateBack()
+    func navigateBack() async {
+        await coordinator.navigateBack()
     }
 }

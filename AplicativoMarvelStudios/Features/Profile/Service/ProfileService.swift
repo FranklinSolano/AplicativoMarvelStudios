@@ -9,7 +9,7 @@ import FirebaseAuth
 
 // MARK: - Protocol
 
-protocol ProfileServicing: AnyObject {
+protocol ProfileServicing {
     func logoutAndShowLogin() throws
 }
 

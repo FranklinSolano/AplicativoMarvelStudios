@@ -7,17 +7,16 @@
 
 import UIKit
 
-final class DSButton: UIButton {
+//MARK: - DSButton
+
+class DSButton: UIButton {
     
-    init(title: String) {
+    override init(frame: CGRect) {
         super.init(frame: .zero)
-        self.setTitle(title, for: .normal)
         self.setTitleColor(DSColors.titleTextColor, for: .normal)
         self.backgroundColor = DSColors.secondaryColor
         self.clipsToBounds = true
         self.layer.cornerRadius = 15
-        self.isEnabled = true
-        self.alpha = 05
     }
     
     required init?(coder: NSCoder) {
@@ -25,17 +24,17 @@ final class DSButton: UIButton {
     }
 }
 
-final class DSButtonTitles: UIButton {
+//MARK: - DSButtonTitles
+
+class DSButtonTitles: UIButton {
     
-    init(title: String, font: UIFont) {
-        super.init(frame: .zero)
-        self.setTitle(title, for: .normal)
+    override init(frame: CGRect = .zero) {
+        super.init(frame: frame)
         self.setTitleColor(DSColors.titleTextColor, for: .normal)
-        self.titleLabel?.font = font
+        self.backgroundColor = .clear
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
 }

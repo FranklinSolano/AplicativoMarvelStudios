@@ -7,7 +7,7 @@
 
 import UIKit
 
-// MARK: - FavoritesListCharactersCell
+// MARK: - ListCharactersCollectionViewCell
 
 final class ListCharactersCollectionViewCell: UICollectionViewCell {
     
@@ -15,17 +15,15 @@ final class ListCharactersCollectionViewCell: UICollectionViewCell {
     
     static let identifier: String = "ListCharactersCollectionViewCell"
     
-    // MARK: - UI Elements
+    private let imagePerson: ImageViewing
     
-    private lazy var imagePerson: UIImageView = {
-        let imageView = DSImageView(image: .placeholder)
-        return imageView
-    }()
+    // MARK: - Init com injeção
     
-    // MARK: - Init
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(
+        imagePerson: ImageViewing = DSImageViewAdapter(image: .placeholder)
+    ) {
+        self.imagePerson = imagePerson
+        super.init(frame: .zero)
         setupView()
     }
     
@@ -33,20 +31,17 @@ final class ListCharactersCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Outher Methods
+    // MARK: - Public Method
     
-    func SetupCell(data: HeroesModel?){
-        if let urlString = data?.imageURL, let url = URL(string: urlString) {
-            imagePerson.sd_setImage(with: url, placeholderImage: UIImage(named: "placeholder"))
-        } else {
-            imagePerson.image = UIImage(named: "placeholder")
-        }
+    func setupCell(data: HeroesModel?) {
+        imagePerson.setImage(from: data?.imageURL)
     }
 }
 
 // MARK: - ViewCodeProtocol
 
 extension ListCharactersCollectionViewCell: ViewCodeProtocol {
+    
     func setupElements() {
         contentView.addSubview(imagePerson)
     }
@@ -57,5 +52,7 @@ extension ListCharactersCollectionViewCell: ViewCodeProtocol {
         }
     }
     
-    func setupAdditionalConfiguration() {}
+    func setupAdditionalConfiguration() {
+        backgroundColor = .clear
+    }
 }

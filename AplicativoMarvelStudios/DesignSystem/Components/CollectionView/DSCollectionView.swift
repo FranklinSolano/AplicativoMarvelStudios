@@ -6,8 +6,19 @@
 //
 
 import UIKit
+//MARK: - CollectionViewing
 
-final class DSCollectionView: UICollectionView {
+protocol CollectionViewing: UIView {
+    var delegate: UICollectionViewDelegate? { get set }
+    var dataSource: UICollectionViewDataSource? { get set }
+    func register(_ cellClass: AnyClass?, forCellWithReuseIdentifier identifier: String)
+    func reloadData()
+    var isHidden: Bool { get set }
+}
+
+//MARK: - DSCollectionView
+
+class DSCollectionView: UICollectionView {
     
     init(scroll: UICollectionView.ScrollDirection = .vertical, spacing: CGFloat){
         let layout = UICollectionViewFlowLayout()
@@ -20,12 +31,14 @@ final class DSCollectionView: UICollectionView {
         backgroundColor = .clear
         showsVerticalScrollIndicator = false
         showsHorizontalScrollIndicator = false
-
     }
-    
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
 }
+
+//MARK: - DSCollectionViewAdapter
+
+final class DSCollectionViewAdapter: DSCollectionView, CollectionViewing {}

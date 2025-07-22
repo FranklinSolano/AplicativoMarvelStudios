@@ -7,7 +7,6 @@
 
 import UIKit
 
-
 // MARK: - Protocols
 
 protocol LoginViewControllerDisplay: AnyObject {
@@ -21,7 +20,16 @@ final class LoginViewController: UIViewController {
     // MARK: - Properties
     
     private var screen: LoginScreen?
-    var interactor: LoginInteracting?
+    let interactor: LoginInteracting
+    
+    init(interactor: LoginInteracting) {
+        self.interactor = interactor
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // MARK: - Lifecycle
     
@@ -41,17 +49,17 @@ final class LoginViewController: UIViewController {
 extension LoginViewController: LoginScreenProtocol {
     
     func ActionRegisterButton() {
-        interactor?.navigateToRegister()
+        interactor.navigateToRegister()
     }
     
     func ActionForgotPasswordButton() {
-        interactor?.navigateToForgotPassword()
+        interactor.navigateToForgotPassword()
     }
     
     func ActionLoginButton() {
         guard let email = screen?.emailTextField.text,
               let passwpord = screen?.passwordTextField.text else { return }
-        interactor?.callServiceLogin(email: email, password: passwpord)
+        interactor.callServiceLogin(email: email, password: passwpord)
     }
 }
 
@@ -61,7 +69,7 @@ extension LoginViewController: LoginViewControllerDisplay {
     func showAlertLogin(title: String, message: String, success: Bool) {
         self.getAlertController(title: title, message: message) { [ self] in //weak
             if success {
-                self.interactor?.navigateToHome()
+                self.interactor.navigateToHome()
             }
             // Se não for sucesso, não faz nada após o alerta
         }

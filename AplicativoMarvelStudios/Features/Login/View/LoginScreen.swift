@@ -11,7 +11,7 @@ import SnapKit
 
 // MARK: - Protocols
 
-protocol LoginScreenProtocol: AnyObject {
+protocol LoginScreenProtocol {
     func ActionLoginButton()
     func ActionRegisterButton()
     func ActionForgotPasswordButton()
@@ -23,73 +23,46 @@ final class LoginScreen: UIView {
     
     // MARK: - Properties
     
-    var delegate: LoginScreenProtocol? //weak
+    var delegate: LoginScreenProtocol?
     
-    // MARK: - UI Elements
-    
-    lazy var emailLabel: UILabel = {
-        let label = DSLabel(text: "Email:")
-        return label
-    }()
-    
-    lazy var emailTextField: UITextField = {
-        let textField = DSTextField(placeholder: "Enter your email", isSecureTextEntry: false)
-        textField.text = "franklin@gmail.com"
-        return textField
-    }()
-    
-    lazy var passwordLabel: UILabel = {
-        let label = DSLabel(text: "Password:")
-        return label
-    }()
-    
-    lazy var passwordTextField: UITextField = {
-        let textField = DSTextField(placeholder: "Enter your password", isSecureTextEntry: true)
-        textField.text = "12345678"
-        return textField
-    }()
-    
-    lazy var forgotPasswordButton: UIButton = {
-        let button = DSButtonTitles(title: "Forgot Password?", font: DSFonts.subtitleSemibold16)
-        button.addTarget(self, action: #selector(tappedForgotPassword), for: .touchUpInside)
-        return button
-    }()
-    
-    lazy var loginButton: UIButton = {
-        let button = DSButton(title: "Login")
-        button.addTarget(self, action: #selector(tappedLogin), for: .touchUpInside)
-        return button
-    }()
-    
-    lazy var registerButton: UIButton = {
-        let button = DSButtonTitles(title: "Don't have an account? Sign up", font: DSFonts.subtitleSemibold16)
-        button.addTarget(self, action: #selector(tappedRegister), for: .touchUpInside)
-        return button
-    }()
+    let emailLabel: Labeling
+    let emailTextField: TextFielding
+    let passwordLabel: Labeling
+    let passwordTextField: TextFielding
+    let forgotPasswordButton: Buttoning
+    let loginButton: Buttoning
+    let registerButton: Buttoning
     
     // MARK: - Init
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupView()
-    }
+    init(
+          emailLabel: Labeling = DSLabelAdapter(),
+          emailTextField: TextFielding = DSTextFieldAdapter(),
+          passwordLabel: Labeling = DSLabelAdapter(),
+          passwordTextField: TextFielding = DSTextFieldAdapter(),
+          forgotPasswordButton: Buttoning = DSButtonTitlesAdapter(),
+          loginButton: Buttoning = DSButtonAdapter(),
+          registerButton: Buttoning = DSButtonTitlesAdapter()
+      ) {
+          self.emailLabel = emailLabel
+          self.emailTextField = emailTextField
+          self.passwordLabel  = passwordLabel
+          self.passwordTextField = passwordTextField
+          self.forgotPasswordButton = forgotPasswordButton
+          self.loginButton = loginButton
+          self.registerButton = registerButton
+          
+          super.init(frame: .zero)
+          
+          setupView()
+          configureButtons()
+          
+          self.emailTextField.text = "franklin@gmail.com"
+          self.passwordTextField.text = "12345678"
+      }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    // MARK: - Actions
-    
-    @objc private func tappedForgotPassword() {
-        delegate?.ActionForgotPasswordButton()
-    }
-    
-    @objc private func tappedLogin() {
-        delegate?.ActionLoginButton()
-    }
-    
-    @objc private func tappedRegister() {
-        delegate?.ActionRegisterButton()
     }
     
     @objc private func dismissKeyboard() {
@@ -103,6 +76,52 @@ final class LoginScreen: UIView {
         addGestureRecognizer(tapGesture)  // A view detecta o toque e chama o método para fechar o teclado
     }
     
+    private func configureLabels(){
+        emailLabel.setDTO(.init(text: "Email"))
+        passwordLabel.setDTO(.init(text: "Password"))
+    }
+    
+    private func configureTextFields() {
+        emailTextField.setDTO(.init(placeholder: "Enter your Email",
+                                    isSecureTextEntry: false)
+        )
+        
+        passwordTextField.setDTO(.init(placeholder: "Enter your Password",
+                                       isSecureTextEntry: true))
+        
+        emailTextField.delegate = self  // Define o delegate para o loginTextField
+        passwordTextField.delegate = self
+    }
+    
+    private func configureButtons(){
+        
+        forgotPasswordButton.setDTO(
+            .init(title: "Forgot Password", isEnable: true,
+                  font: DSFonts.subtitleSemibold16)
+        )
+        
+        forgotPasswordButton.onClick { [weak self] in
+            self?.delegate?.ActionForgotPasswordButton()
+        }
+        
+        
+        loginButton.setDTO(.init(title: "Login",
+                                 isEnable: true)
+        )
+        
+        loginButton.onClick { [weak self] in
+            self?.delegate?.ActionLoginButton()
+        }
+        
+        registerButton.setDTO(.init(title: "Don't have an account? Sign up",
+                                    isEnable: true,
+                                    font: DSFonts.subtitleSemibold16)
+        )
+        
+        registerButton.onClick { [weak self] in
+            self?.delegate?.ActionRegisterButton()
+        }
+    }
 }
 
 // MARK: - ViewCodeProtocol
@@ -163,9 +182,10 @@ extension LoginScreen: ViewCodeProtocol {
     }
     
     func setupAdditionalConfiguration() {
+        configureLabels()
+        configureTextFields()
+        configureButtons()
         setupTapGesture()
-        emailTextField.delegate = self  // Define o delegate para o loginTextField
-        passwordTextField.delegate = self  // Define o delegate para o passwordTextField
         backgroundColor = DSColors.primaryColor
     }
 }
