@@ -43,11 +43,11 @@ final class ListCharactersCollectionViewCell: UICollectionViewCell {
 extension ListCharactersCollectionViewCell: ViewCodeProtocol {
     
     func setupElements() {
-        contentView.addSubview(imagePerson.view)
+        contentView.addSubview(imagePerson)
     }
     
     func setupConstraints() {
-        imagePerson.view.snp.makeConstraints { make in
+        imagePerson.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
     }

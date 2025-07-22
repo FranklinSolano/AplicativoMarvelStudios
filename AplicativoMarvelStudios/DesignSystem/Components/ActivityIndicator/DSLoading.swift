@@ -7,16 +7,18 @@
 
 import UIKit
 
-protocol LoadingIndicatable: AnyObject {
-    var view: UIView { get }
+//MARK: - LoadingIndicatable
+
+protocol LoadingIndicatable: UIView {
     func startAnimating()
     func stopAnimating()
     var isHidden: Bool { get set }
 }
 
-final class DSActivityIndicatorAdapter: UIActivityIndicatorView, LoadingIndicatable {
-    var view: UIView { return self }
+//MARK: - DSActivityIndicatorAdapter
 
+final class DSActivityIndicatorAdapter: UIActivityIndicatorView, LoadingIndicatable {
+    
     init() {
         super.init(style: .large)
         hidesWhenStopped = true

@@ -2,11 +2,12 @@
 //  DSLabel.swift
 //  AplicativoMarvelStudios
 //
-//  Created by Franklin  Stilhano Solano on 28/05/25.
+//  Created by Franklin  Stilhano Solano on 22/07/25.
 //
 
 import UIKit
 
+//MARK: LabelDTO
 
 struct LabelDTO {
     let text: String
@@ -30,10 +31,14 @@ struct LabelDTO {
     }
 }
 
+//MARK: Labeling
+
 protocol Labeling: UIView {
     func setDTO(_ dto: LabelDTO)
     var text: String? {get set}
 }
+
+//MARK: - DSLabel
 
 class DSLabel: UILabel {
     func configure(_ dto: LabelDTO){
@@ -45,11 +50,11 @@ class DSLabel: UILabel {
     }
 }
 
+//MARK: - DSLabelAdapter
+
 final class DSLabelAdapter: DSLabel, Labeling {
     func setDTO(_ dto: LabelDTO) {
         configure(dto)
     }
-    
-    
 }
 

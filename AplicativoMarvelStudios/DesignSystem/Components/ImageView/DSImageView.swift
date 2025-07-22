@@ -8,13 +8,14 @@
 import UIKit
 import SDWebImage
 
+//MARK: - ImageViewing
 
-protocol ImageViewing: AnyObject {
-    var view: UIView { get }
+protocol ImageViewing: UIView {
     var image: UIImage? { get set }
     func setImage(from urlString: String?)
 }
 
+//MARK: - DSImageView
 
 class DSImageView: UIImageView {
     override init(image: UIImage?) {
@@ -33,8 +34,9 @@ class DSImageView: UIImageView {
     }
 }
 
+//MARK: - DSImageViewAdapter
+
 final class DSImageViewAdapter: DSImageView, ImageViewing {
-    var view: UIView { self }
     func setImage(from urlString: String?) {
         guard let urlString = urlString, let url = URL(string: urlString) else {
             self.image = UIImage(named: "placeholder")

@@ -6,14 +6,17 @@
 //
 
 import UIKit
+//MARK: - CollectionViewing
 
-protocol CollectionViewing: AnyObject {
-    var view: UIView { get }
+protocol CollectionViewing: UIView {
     var delegate: UICollectionViewDelegate? { get set }
     var dataSource: UICollectionViewDataSource? { get set }
     func register(_ cellClass: AnyClass?, forCellWithReuseIdentifier identifier: String)
     func reloadData()
+    var isHidden: Bool { get set }
 }
+
+//MARK: - DSCollectionView
 
 class DSCollectionView: UICollectionView {
     
@@ -28,9 +31,7 @@ class DSCollectionView: UICollectionView {
         backgroundColor = .clear
         showsVerticalScrollIndicator = false
         showsHorizontalScrollIndicator = false
-
     }
-    
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -38,10 +39,6 @@ class DSCollectionView: UICollectionView {
     
 }
 
-final class DSCollectionViewAdapter: DSCollectionView, CollectionViewing {
-    var view: UIView { return self }
-    
-    override func reloadData() {
-        super.reloadData()  // chama o método original do UICollectionView
-    }
-}
+//MARK: - DSCollectionViewAdapter
+
+final class DSCollectionViewAdapter: DSCollectionView, CollectionViewing {}

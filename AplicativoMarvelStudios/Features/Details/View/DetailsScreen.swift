@@ -109,17 +109,17 @@ final class DetailsScreen: UIView {
 
     func showLoading() {
         activityIndicator.startAnimating()
-        collectionView.view.isHidden = true
+        collectionView.isHidden = true
         personRelated.isHidden = true
-        imagePerson.view.isHidden = true
+        imagePerson.isHidden = true
         favoritesButton.isHidden = true
     }
 
     func hideLoading() {
         activityIndicator.stopAnimating()
-        collectionView.view.isHidden = false
+        collectionView.isHidden = false
         personRelated.isHidden = false
-        imagePerson.view.isHidden = false
+        imagePerson.isHidden = false
         favoritesButton.isHidden = false
     }
 }
@@ -129,10 +129,10 @@ extension DetailsScreen: ViewCodeProtocol {
         addSubview(backButton)
         addSubview(favoritesButton)
         addSubview(personName)
-        addSubview(imagePerson.view)
+        addSubview(imagePerson)
         addSubview(descriptionPerson)
         addSubview(personRelated)
-        addSubview(collectionView.view)
+        addSubview(collectionView)
         addSubview(activityIndicator.view)
     }
 
@@ -154,14 +154,14 @@ extension DetailsScreen: ViewCodeProtocol {
             make.width.height.equalTo(24)
         }
 
-        imagePerson.view.snp.makeConstraints { make in
+        imagePerson.snp.makeConstraints { make in
             make.top.equalTo(personName.snp.bottom).offset(20)
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(self.snp.width).multipliedBy(0.6)
         }
 
         descriptionPerson.snp.makeConstraints { make in
-            make.top.equalTo(imagePerson.view.snp.bottom).offset(12)
+            make.top.equalTo(imagePerson.snp.bottom).offset(12)
             make.leading.equalToSuperview().offset(16)
             make.trailing.equalToSuperview().inset(16)
         }
@@ -172,7 +172,7 @@ extension DetailsScreen: ViewCodeProtocol {
             make.trailing.equalToSuperview().inset(16)
         }
 
-        collectionView.view.snp.makeConstraints { make in
+        collectionView.snp.makeConstraints { make in
             make.top.equalTo(personRelated.snp.bottom).offset(10)
             make.leading.trailing.bottom.equalToSuperview().inset(10)
         }

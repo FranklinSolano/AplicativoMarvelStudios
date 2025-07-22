@@ -7,17 +7,17 @@
 
 import UIKit
 
-protocol SearchBaring: AnyObject {
-    var view: UIView { get }
+//MARK: - SearchBaring
+
+protocol SearchBaring: UIView {
     var delegate: UISearchBarDelegate? { get set }
     var text: String? { get set }
     func resignFirstResponder()
 }
 
+//MARK: - SearchBaring
+
 final class DSSearchBarAdapter: UISearchBar, SearchBaring {
-    func resignFirstResponder() {}
-    
-    var view: UIView { return self }
 
     init() {
         super.init(frame: .zero)
@@ -29,4 +29,6 @@ final class DSSearchBarAdapter: UISearchBar, SearchBaring {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    func resignFirstResponder() {}
 }

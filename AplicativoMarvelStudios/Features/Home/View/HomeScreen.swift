@@ -82,9 +82,9 @@ final class HomeScreen: UIView {
 extension HomeScreen: ViewCodeProtocol {
     func setupElements() {
            addSubview(userName)
-           addSubview(searchPerson.view)
+           addSubview(searchPerson)
            addSubview(descriptionName)
-           addSubview(tableView.view)
+           addSubview(tableView)
            addSubview(activityIndicator.view)
        }
 
@@ -95,7 +95,7 @@ extension HomeScreen: ViewCodeProtocol {
                make.trailing.equalToSuperview().inset(30)
            }
 
-           searchPerson.view.snp.makeConstraints { make in
+           searchPerson.snp.makeConstraints { make in
                make.top.equalTo(userName.snp.bottom).offset(20)
                make.leading.equalToSuperview().offset(30)
                make.trailing.equalToSuperview().inset(30)
@@ -103,11 +103,11 @@ extension HomeScreen: ViewCodeProtocol {
            }
 
            descriptionName.snp.makeConstraints { make in
-               make.top.equalTo(searchPerson.view.snp.bottom).offset(20)
+               make.top.equalTo(searchPerson.snp.bottom).offset(20)
                make.leading.equalToSuperview().offset(20)
            }
 
-           tableView.view.snp.makeConstraints { make in
+           tableView.snp.makeConstraints { make in
                make.top.equalTo(descriptionName.snp.bottom).offset(20)
                make.leading.trailing.bottom.equalToSuperview()
            }

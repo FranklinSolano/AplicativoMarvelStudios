@@ -58,7 +58,7 @@ final class FavoritesScreen: UIView {
 extension FavoritesScreen: ViewCodeProtocol {
     func setupElements() {
         addSubview(titleLabel)
-        addSubview(collectionViewFavorites.view)
+        addSubview(collectionViewFavorites)
     }
     
     func setupConstraints() {
@@ -67,7 +67,7 @@ extension FavoritesScreen: ViewCodeProtocol {
             make.centerX.equalToSuperview()
         }
         
-        collectionViewFavorites.view.snp.makeConstraints { make in
+        collectionViewFavorites.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(35)
             make.leading.trailing.bottom.equalToSuperview()
         }

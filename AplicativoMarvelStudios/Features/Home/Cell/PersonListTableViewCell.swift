@@ -57,12 +57,12 @@ final class PersonListTableViewCell: UITableViewCell {
 extension PersonListTableViewCell: ViewCodeProtocol {
     
     func setupElements() {
-        addSubview(imagePerson.view)
+        addSubview(imagePerson)
         addSubview(heroName)
     }
     
     func setupConstraints() {
-        imagePerson.view.snp.makeConstraints { make in
+        imagePerson.snp.makeConstraints { make in
             make.leading.equalToSuperview().offset(15)
             make.centerY.equalToSuperview()
             make.height.equalTo(95)
@@ -70,8 +70,8 @@ extension PersonListTableViewCell: ViewCodeProtocol {
         }
         
         heroName.snp.makeConstraints { make in
-            make.leading.equalTo(imagePerson.view.snp.trailing).offset(15)
-            make.centerY.equalTo(imagePerson.view.snp.centerY)
+            make.leading.equalTo(imagePerson.snp.trailing).offset(15)
+            make.centerY.equalTo(imagePerson.snp.centerY)
         }
     }
     

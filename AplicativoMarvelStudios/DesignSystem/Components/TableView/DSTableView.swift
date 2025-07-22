@@ -7,8 +7,9 @@
 
 import UIKit
 
-protocol TableViewing: AnyObject {
-    var view: UIView { get }
+//MARK: - TableViewing
+
+protocol TableViewing: UIView {
     var delegate: UITableViewDelegate? { get set }
     var dataSource: UITableViewDataSource? { get set }
     func register(_ cellClass: AnyClass?, forCellReuseIdentifier identifier: String)
@@ -16,9 +17,9 @@ protocol TableViewing: AnyObject {
     var isHidden: Bool { get set }
 }
 
-final class DSTableViewAdapter: UITableView, TableViewing {
-    var view: UIView { return self }
+//MARK: - DSTableViewAdapter
 
+final class DSTableViewAdapter: UITableView, TableViewing {
     init() {
         super.init(frame: .zero, style: .plain)
         backgroundColor = DSColors.secondaryColor

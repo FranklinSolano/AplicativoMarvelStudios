@@ -85,26 +85,25 @@ final class ProfileScreen: UIView {
         }
     }
     
+    private func configureSegmentedControl(){
+        themeSwitcher.onClick { index in
+            let selectedTheme: ThemeManager.Theme = index == 0 ? .light : .dark
+            ThemeManager.shared.setTheme(selectedTheme)
+        }
+    }
+    
+    
     // MARK: - Actions
-    
-    @objc private func themeChanged() {
-        let selectedTheme: ThemeManager.Theme = themeSwitcher.selectedSegmentIndex == 0 ? .light : .dark
-        ThemeManager.shared.setTheme(selectedTheme)
-    }
-    
-    private func actionsButton(){
-        themeSwitcher.addTarget(self, action: #selector(themeChanged), for: .valueChanged)
-    }
     
     private func configTranslatesAutoresizingMaskIntoConstraints(){
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        imageUser.view.translatesAutoresizingMaskIntoConstraints = false
+        imageUser.translatesAutoresizingMaskIntoConstraints = false
         nameUserLabel.translatesAutoresizingMaskIntoConstraints = false
         emailLabel.translatesAutoresizingMaskIntoConstraints = false
         emailTextField.translatesAutoresizingMaskIntoConstraints = false
         exitButton.translatesAutoresizingMaskIntoConstraints = false
         selectThemeLabel.translatesAutoresizingMaskIntoConstraints = false
-        themeSwitcher.view.translatesAutoresizingMaskIntoConstraints = false
+        themeSwitcher.translatesAutoresizingMaskIntoConstraints = false
         descriptionVersionApp.translatesAutoresizingMaskIntoConstraints = false
     }
 }
@@ -114,13 +113,13 @@ final class ProfileScreen: UIView {
 extension ProfileScreen: ViewCodeProtocol {
     func setupElements() {
         addSubview(titleLabel)
-        addSubview(imageUser.view)
+        addSubview(imageUser)
         addSubview(nameUserLabel)
         addSubview(emailLabel)
         addSubview(emailTextField)
         addSubview(exitButton)
         addSubview(selectThemeLabel)
-        addSubview(themeSwitcher.view)
+        addSubview(themeSwitcher)
         addSubview(descriptionVersionApp)
     }
     
@@ -129,15 +128,15 @@ extension ProfileScreen: ViewCodeProtocol {
             titleLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 25),
             titleLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
             
-            imageUser.view.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 35),
-            imageUser.view.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-            imageUser.view.widthAnchor.constraint(equalToConstant: 100),
-            imageUser.view.heightAnchor.constraint(equalToConstant: 100),
+            imageUser.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 35),
+            imageUser.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+            imageUser.widthAnchor.constraint(equalToConstant: 100),
+            imageUser.heightAnchor.constraint(equalToConstant: 100),
             
-            nameUserLabel.centerYAnchor.constraint(equalTo: imageUser.view.centerYAnchor),
-            nameUserLabel.leadingAnchor.constraint(equalTo: imageUser.view.trailingAnchor, constant: 15),
+            nameUserLabel.centerYAnchor.constraint(equalTo: imageUser.centerYAnchor),
+            nameUserLabel.leadingAnchor.constraint(equalTo: imageUser.trailingAnchor, constant: 15),
             
-            emailLabel.topAnchor.constraint(equalTo: imageUser.view.bottomAnchor, constant: 35),
+            emailLabel.topAnchor.constraint(equalTo: imageUser.bottomAnchor, constant: 35),
             emailLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
             
             emailTextField.topAnchor.constraint(equalTo: emailLabel.bottomAnchor, constant: 15),
@@ -153,9 +152,9 @@ extension ProfileScreen: ViewCodeProtocol {
             selectThemeLabel.topAnchor.constraint(equalTo: exitButton.bottomAnchor, constant: 25),
             selectThemeLabel.trailingAnchor.constraint(equalTo: emailTextField.trailingAnchor),
             
-            themeSwitcher.view.topAnchor.constraint(equalTo: selectThemeLabel.bottomAnchor, constant: 5),
-            themeSwitcher.view.trailingAnchor.constraint(equalTo: selectThemeLabel.trailingAnchor),
-            themeSwitcher.view.widthAnchor.constraint(equalToConstant: 200),
+            themeSwitcher.topAnchor.constraint(equalTo: selectThemeLabel.bottomAnchor, constant: 5),
+            themeSwitcher.trailingAnchor.constraint(equalTo: selectThemeLabel.trailingAnchor),
+            themeSwitcher.widthAnchor.constraint(equalToConstant: 200),
             
             descriptionVersionApp.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -16),
             descriptionVersionApp.centerXAnchor.constraint(equalTo: centerXAnchor)
@@ -167,8 +166,8 @@ extension ProfileScreen: ViewCodeProtocol {
         configureLabels()
         configureTextFields()
         configureButtons()
-        actionsButton()
+        configureSegmentedControl()
         configTranslatesAutoresizingMaskIntoConstraints()
-        imageUser.view.tintColor = DSColors.secondaryColor
+        imageUser.tintColor = DSColors.secondaryColor
     }
 }
