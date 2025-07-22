@@ -85,7 +85,7 @@ extension HomeScreen: ViewCodeProtocol {
            addSubview(searchPerson)
            addSubview(descriptionName)
            addSubview(tableView)
-           addSubview(activityIndicator.view)
+           addSubview(activityIndicator)
        }
 
        func setupConstraints() {
@@ -112,7 +112,7 @@ extension HomeScreen: ViewCodeProtocol {
                make.leading.trailing.bottom.equalToSuperview()
            }
 
-           activityIndicator.view.snp.makeConstraints { make in
+           activityIndicator.snp.makeConstraints { make in
                make.center.equalToSuperview()
            }
        }

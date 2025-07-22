@@ -133,7 +133,7 @@ extension DetailsScreen: ViewCodeProtocol {
         addSubview(descriptionPerson)
         addSubview(personRelated)
         addSubview(collectionView)
-        addSubview(activityIndicator.view)
+        addSubview(activityIndicator)
     }
 
     func setupConstraints() {
@@ -177,7 +177,7 @@ extension DetailsScreen: ViewCodeProtocol {
             make.leading.trailing.bottom.equalToSuperview().inset(10)
         }
 
-        activityIndicator.view.snp.makeConstraints { make in
+        activityIndicator.snp.makeConstraints { make in
             make.center.equalToSuperview()
         }
     }
