@@ -22,6 +22,8 @@ final class LoginViewController: UIViewController {
     private var screen: LoginScreen?
     let interactor: LoginInteracting
     
+    //MARK: - Init
+    
     init(interactor: LoginInteracting) {
         self.interactor = interactor
         super.init(nibName: nil, bundle: nil)
@@ -34,9 +36,11 @@ final class LoginViewController: UIViewController {
     // MARK: - Lifecycle
     
     override func loadView() {
-        screen = LoginScreen()
-        screen?.delegate = self
-        view = screen
+        let dependency = LoginScreenDependency(emailLabel: DSLabelAdapter(), emailTextField: DSTextFieldAdapter(), passwordLabel: DSLabelAdapter(), passwordTextField: DSTextFieldAdapter(), forgotPasswordButton: DSButtonTitlesAdapter(), loginButton: DSButtonAdapter(), registerButton: DSButtonTitlesAdapter())
+        let loginScreen = LoginScreen(dependency: dependency)
+        loginScreen.delegate = self
+        self.screen = loginScreen
+        view = loginScreen
     }
     
     override func viewDidLoad() {
@@ -57,8 +61,8 @@ extension LoginViewController: LoginScreenProtocol {
     }
     
     func ActionLoginButton() {
-        guard let email = screen?.emailTextField.text,
-              let passwpord = screen?.passwordTextField.text else { return }
+        guard let email = screen?.emailText,
+              let passwpord = screen?.passwordText else { return }
         interactor.callServiceLogin(email: email, password: passwpord)
     }
 }
