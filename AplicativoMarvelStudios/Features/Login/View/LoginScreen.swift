@@ -9,16 +9,6 @@
 import UIKit
 import SnapKit
 
-struct LoginScreenDependency {
-    let emailLabel: Labeling
-    let emailTextField: TextFielding
-    let passwordLabel: Labeling
-    let passwordTextField: TextFielding
-    let forgotPasswordButton: Buttoning
-    let loginButton: Buttoning
-    let registerButton: Buttoning
-}
-
 // MARK: - Protocols
 
 protocol LoginScreenProtocol {
@@ -34,12 +24,12 @@ final class LoginScreen: UIView {
     // MARK: - Properties
     
     var delegate: LoginScreenProtocol?
-    private let dependency: LoginScreenDependency
+    private let dependency: LogindependencyProtocol
     
     
     // MARK: - Init
     
-    init(dependency: LoginScreenDependency) {
+    init(dependency: LogindependencyProtocol) {
         self.dependency = dependency
           super.init(frame: .zero)
           setupView()

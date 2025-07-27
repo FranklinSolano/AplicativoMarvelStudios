@@ -21,14 +21,17 @@ final class LoginViewController: UIViewController {
     
     private var screen: LoginScreen?
     let interactor: LoginInteracting
+    let dependency: LogindependencyProtocol
+
     
     //MARK: - Init
     
-    init(interactor: LoginInteracting) {
+    init(interactor: LoginInteracting, dependency: LogindependencyProtocol) {
         self.interactor = interactor
+        self.dependency = dependency
         super.init(nibName: nil, bundle: nil)
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -36,12 +39,11 @@ final class LoginViewController: UIViewController {
     // MARK: - Lifecycle
     
     override func loadView() {
-        let dependency = LoginScreenDependency(emailLabel: DSLabelAdapter(), emailTextField: DSTextFieldAdapter(), passwordLabel: DSLabelAdapter(), passwordTextField: DSTextFieldAdapter(), forgotPasswordButton: DSButtonTitlesAdapter(), loginButton: DSButtonAdapter(), registerButton: DSButtonTitlesAdapter())
-        let loginScreen = LoginScreen(dependency: dependency)
-        loginScreen.delegate = self
-        self.screen = loginScreen
-        view = loginScreen
-    }
+          let loginScreen = LoginScreen(dependency: dependency)
+          loginScreen.delegate = self
+          self.screen = loginScreen
+          view = loginScreen
+      }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -79,4 +81,5 @@ extension LoginViewController: LoginViewControllerDisplay {
         }
     }
 }
+
 
