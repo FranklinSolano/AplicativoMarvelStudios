@@ -5,6 +5,8 @@
 //  Created by Franklin  Stilhano Solano on 01/05/25.
 //
 
+
+
 import UIKit
 
 // MARK: - Protocols
@@ -19,19 +21,21 @@ final class LoginViewController: UIViewController {
     
     // MARK: - Properties
     
+    typealias Dependencies = HasDesignSystemComponentsInterface
+    private let dependencies: Dependencies
+    
     private var screen: LoginScreen?
     let interactor: LoginInteracting
-    let dependency: LogindependencyProtocol
-
+    
     
     //MARK: - Init
     
-    init(interactor: LoginInteracting, dependency: LogindependencyProtocol) {
+    init(interactor: LoginInteracting, dependencies: Dependencies = DependencyContainer()) {
         self.interactor = interactor
-        self.dependency = dependency
+        self.dependencies = dependencies
         super.init(nibName: nil, bundle: nil)
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -39,11 +43,13 @@ final class LoginViewController: UIViewController {
     // MARK: - Lifecycle
     
     override func loadView() {
-          let loginScreen = LoginScreen(dependency: dependency)
-          loginScreen.delegate = self
-          self.screen = loginScreen
-          view = loginScreen
-      }
+        let loginDependency = LoginDependency(components: dependencies.designSystemComponents)
+        let loginScreen = LoginScreen(dependency: loginDependency)
+        loginScreen.delegate = self
+        self.screen = loginScreen
+        self.view = loginScreen
+        
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

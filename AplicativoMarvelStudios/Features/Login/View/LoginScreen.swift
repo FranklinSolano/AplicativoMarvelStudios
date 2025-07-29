@@ -9,6 +9,37 @@
 import UIKit
 import SnapKit
 
+
+protocol LogindependencyProtocol {
+    var emailLabel: Labeling { get }
+    var passwordLabel: Labeling { get }
+    var emailTextField: TextFielding { get }
+    var passwordTextField: TextFielding { get }
+    var forgotPasswordButton: Buttoning { get }
+    var loginButton: Buttoning { get }
+    var registerButton: Buttoning { get }
+}
+
+struct LoginDependency: LogindependencyProtocol {
+    let emailLabel: Labeling
+    let passwordLabel: Labeling
+    let emailTextField: TextFielding
+    let passwordTextField: TextFielding
+    let forgotPasswordButton: Buttoning
+    let loginButton: Buttoning
+    let registerButton: Buttoning
+    
+    init(components: DesignSystemComponentsInterface) {
+        emailLabel = components.makeLabel()
+        passwordLabel = components.makeLabel()
+        emailTextField = components.makeTextField()
+        passwordTextField = components.makeTextField()
+        forgotPasswordButton = components.makeButtonTitles()
+        loginButton = components.makeButton()
+        registerButton = components.makeButtonTitles()
+    }
+}
+
 // MARK: - Protocols
 
 protocol LoginScreenProtocol {
