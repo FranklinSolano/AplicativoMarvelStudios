@@ -5,6 +5,8 @@
 //  Created by Franklin  Stilhano Solano on 01/05/25.
 //
 
+
+
 import UIKit
 
 // MARK: - Protocols
@@ -19,12 +21,21 @@ final class LoginViewController: UIViewController {
     
     // MARK: - Properties
     
-    private var screen: LoginScreen?
-    let interactor: LoginInteracting
+    typealias Dependencies = HasDesignSystemComponentsInterface
+    private let dependencies: Dependencies
+    private let screen: LoginScreen
+    private let interactor: LoginInteracting
     
-    init(interactor: LoginInteracting) {
+    
+    //MARK: - Init
+    
+    init(interactor: LoginInteracting, dependencies: Dependencies = DependencyContainer()) {
         self.interactor = interactor
+        self.dependencies = dependencies
+        let screenDependency = LoginDependency(components: dependencies.designSystemComponents)
+        self.screen = LoginScreen(dependency: screenDependency)
         super.init(nibName: nil, bundle: nil)
+        self.screen.delegate = self
     }
     
     required init?(coder: NSCoder) {
@@ -34,9 +45,8 @@ final class LoginViewController: UIViewController {
     // MARK: - Lifecycle
     
     override func loadView() {
-        screen = LoginScreen()
-        screen?.delegate = self
-        view = screen
+        self.view = screen
+        
     }
     
     override func viewDidLoad() {
@@ -57,8 +67,8 @@ extension LoginViewController: LoginScreenProtocol {
     }
     
     func ActionLoginButton() {
-        guard let email = screen?.emailTextField.text,
-              let passwpord = screen?.passwordTextField.text else { return }
+        guard let email = screen.emailText,
+              let passwpord = screen.passwordText else { return }
         interactor.callServiceLogin(email: email, password: passwpord)
     }
 }
@@ -75,4 +85,5 @@ extension LoginViewController: LoginViewControllerDisplay {
         }
     }
 }
+
 

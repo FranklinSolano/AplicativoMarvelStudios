@@ -10,20 +10,19 @@ import UIKit
 final class LoginFactory: UIViewController {
 
     func make(navigationController: UINavigationController) -> (viewController: LoginViewController, coordinator: LoginCoordinator) {
-
         let coordinator = LoginCoordinator()
         coordinator.navigationController = navigationController
-
+        
         let service = LoginService()
-        let presenter = LoginPresenter(view: nil, coordinator: coordinator) // view será ligada depois
+        let presenter = LoginPresenter(view: nil, coordinator: coordinator)
         coordinator.presenter = presenter
-
+        
         let interactor = LoginInteractor(presenter: presenter, service: service)
-
+        
         let loginVC = LoginViewController(interactor: interactor)
-        presenter.view = loginVC             // a vire é ligada aquii
+        presenter.view = loginVC
         
         return (loginVC, coordinator)
     }
-}
 
+}
