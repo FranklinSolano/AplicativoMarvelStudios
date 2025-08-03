@@ -23,9 +23,8 @@ final class LoginViewController: UIViewController {
     
     typealias Dependencies = HasDesignSystemComponentsInterface
     private let dependencies: Dependencies
-    
-    private var screen: LoginScreen?
-    let interactor: LoginInteracting
+    private let screen: LoginScreen
+    private let interactor: LoginInteracting
     
     
     //MARK: - Init
@@ -33,7 +32,10 @@ final class LoginViewController: UIViewController {
     init(interactor: LoginInteracting, dependencies: Dependencies = DependencyContainer()) {
         self.interactor = interactor
         self.dependencies = dependencies
+        let screenDependency = LoginDependency(components: dependencies.designSystemComponents)
+        self.screen = LoginScreen(dependency: screenDependency)
         super.init(nibName: nil, bundle: nil)
+        self.screen.delegate = self
     }
     
     required init?(coder: NSCoder) {
@@ -43,11 +45,7 @@ final class LoginViewController: UIViewController {
     // MARK: - Lifecycle
     
     override func loadView() {
-        let loginDependency = LoginDependency(components: dependencies.designSystemComponents)
-        let loginScreen = LoginScreen(dependency: loginDependency)
-        loginScreen.delegate = self
-        self.screen = loginScreen
-        self.view = loginScreen
+        self.view = screen
         
     }
     
@@ -69,8 +67,8 @@ extension LoginViewController: LoginScreenProtocol {
     }
     
     func ActionLoginButton() {
-        guard let email = screen?.emailText,
-              let passwpord = screen?.passwordText else { return }
+        guard let email = screen.emailText,
+              let passwpord = screen.passwordText else { return }
         interactor.callServiceLogin(email: email, password: passwpord)
     }
 }

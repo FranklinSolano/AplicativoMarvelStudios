@@ -1,9 +1,10 @@
 //
-//  protocol.swift
+//  ContainerGlobal.swift
 //  AplicativoMarvelStudios
 //
-//  Created by Franklin  Stilhano Solano on 26/07/25.
+//  Created by Franklin  Stilhano Solano on 29/07/25.
 //
+
 
 import Foundation
 
@@ -71,6 +72,7 @@ final class DesignSystemComponents: DesignSystemComponentsInterface {
 }
 
 protocol HttpServicesInterface {}
+
 final class HttpServices: HttpServicesInterface {}
 
 // MARK: - 2. Protocolos para declarar dependências
