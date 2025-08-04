@@ -24,20 +24,20 @@ final class LoginScreen: UIView {
     // MARK: - Properties
     
     var delegate: LoginScreenProtocol?
-    private let components: DesignSystemComponentsInterface
+    private let dependencies: HasDesignSystemComponentsInterface
     
-    private lazy var emailLabel = components.makeLabel()
-    private lazy var emailTextField = components.makeTextField()
-    private lazy var passwordLabel = components.makeLabel()
-    private lazy var passwordTextField = components.makeTextField()
-    private lazy var forgotPasswordButton = components.makeButtonTitles()
-    private lazy var loginButton = components.makeButton()
-    private lazy var registerButton = components.makeButtonTitles()
+    private lazy var emailLabel = dependencies.designSystemComponents.makeLabel()
+    private lazy var emailTextField = dependencies.designSystemComponents.makeTextField()
+    private lazy var passwordLabel = dependencies.designSystemComponents.makeLabel()
+    private lazy var passwordTextField = dependencies.designSystemComponents.makeTextField()
+    private lazy var forgotPasswordButton = dependencies.designSystemComponents.makeButtonTitles()
+    private lazy var loginButton = dependencies.designSystemComponents.makeButton()
+    private lazy var registerButton = dependencies.designSystemComponents.makeButtonTitles()
     
     // MARK: - Init
     
-    init(components: DesignSystemComponentsInterface) {
-        self.components = components
+    init(dependencies: HasDesignSystemComponentsInterface) {
+        self.dependencies = dependencies
         super.init(frame: .zero)
         setupView()
     }

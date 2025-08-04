@@ -30,7 +30,7 @@ final class FavoritesViewController: UIViewController {
     init(interactor: FavoritesInteracting, dependencies: Dependencies = DependencyContainer()) {
         self.interactor = interactor
         self.dependencies = dependencies
-        self.screen = FavoritesScreen(components: dependencies.designSystemComponents)
+        self.screen = FavoritesScreen(dependencies: dependencies)
         super.init(nibName: nil, bundle: nil)
         screen.configCollectoinView(delegate: self, dataSource: self)
     }

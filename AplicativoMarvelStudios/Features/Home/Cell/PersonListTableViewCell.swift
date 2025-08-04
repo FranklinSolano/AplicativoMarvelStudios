@@ -15,15 +15,15 @@ final class PersonListTableViewCell: UITableViewCell {
     static let identifier: String = "PersonListTableViewCell"
     
     // MARK: - Properties
-    private let components: DesignSystemComponentsInterface
+    private let dependencies: HasDesignSystemComponentsInterface
     
-    private lazy var imagePerson = components.makeImageView()
-    private lazy var heroName = components.makeLabel()
+    private lazy var imagePerson = dependencies.designSystemComponents.makeImageView()
+    private lazy var heroName = dependencies.designSystemComponents.makeLabel()
 
     // MARK: - Init
     
-    init(components: DesignSystemComponentsInterface) {
-        self.components = components
+    init(dependencies: HasDesignSystemComponentsInterface) {
+        self.dependencies = dependencies
         super.init(style: .default, reuseIdentifier: Self.identifier)
         setupView()
     }

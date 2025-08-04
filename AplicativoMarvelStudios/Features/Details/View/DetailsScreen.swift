@@ -16,21 +16,21 @@ protocol DetailsViewProtocol {
 
 final class DetailsScreen: UIView {
     
-    private let components: DesignSystemComponentsInterface
+    private let dependencies: HasDesignSystemComponentsInterface
     var delegate: DetailsViewProtocol?
     var isFavorited: Bool = false
     
-    private lazy var backButton = components.makeButtonTitles()
-    private lazy var favoritesButton = components.makeButtonImage()
-    private lazy var imagePerson = components.makeImageView()
-    private lazy var personName = components.makeLabel()
-    private lazy var descriptionPerson = components.makeLabel()
-    private lazy var personRelated = components.makeLabel()
-    lazy var collectionView = components.makeCollectionView()
-    lazy var activityIndicator = components.makeActivityIndicator()
+    private lazy var backButton = dependencies.designSystemComponents.makeButtonTitles()
+    private lazy var favoritesButton = dependencies.designSystemComponents.makeButtonImage()
+    private lazy var imagePerson = dependencies.designSystemComponents.makeImageView()
+    private lazy var personName = dependencies.designSystemComponents.makeLabel()
+    private lazy var descriptionPerson = dependencies.designSystemComponents.makeLabel()
+    private lazy var personRelated = dependencies.designSystemComponents.makeLabel()
+    lazy var collectionView = dependencies.designSystemComponents.makeCollectionView()
+    lazy var activityIndicator = dependencies.designSystemComponents.makeActivityIndicator()
     
-    init(components: DesignSystemComponentsInterface) {
-        self.components = components
+    init(dependencies: HasDesignSystemComponentsInterface) {
+        self.dependencies = dependencies
         super.init(frame: .zero)
         setupView()
     }

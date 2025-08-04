@@ -18,22 +18,22 @@ protocol ProfileScreenProtocol: AnyObject {
 final class ProfileScreen: UIView {
     
     weak var delegate: ProfileScreenProtocol?
-    private let components: DesignSystemComponentsInterface
+    private let dependencies: HasDesignSystemComponentsInterface
     
-    private lazy var titleLabel = components.makeLabel()
-    private lazy var imageUser = components.makeImageView()
-    private lazy var nameUserLabel = components.makeLabel()
-    private lazy var emailLabel = components.makeLabel()
-    private lazy var emailTextField = components.makeTextField()
-    private lazy var exitButton = components.makeButton()
-    private lazy var selectThemeLabel = components.makeLabel()
-    private lazy var themeSwitcher = components.makeSegmentedControling()
-    private lazy var descriptionVersionApp  = components.makeLabel()
+    private lazy var titleLabel = dependencies.designSystemComponents.makeLabel()
+    private lazy var imageUser = dependencies.designSystemComponents.makeImageView()
+    private lazy var nameUserLabel = dependencies.designSystemComponents.makeLabel()
+    private lazy var emailLabel = dependencies.designSystemComponents.makeLabel()
+    private lazy var emailTextField = dependencies.designSystemComponents.makeTextField()
+    private lazy var exitButton = dependencies.designSystemComponents.makeButton()
+    private lazy var selectThemeLabel = dependencies.designSystemComponents.makeLabel()
+    private lazy var themeSwitcher = dependencies.designSystemComponents.makeSegmentedControling()
+    private lazy var descriptionVersionApp  = dependencies.designSystemComponents.makeLabel()
     
     // MARK: - Init com injeção
     
-    init(components: DesignSystemComponentsInterface) {
-        self.components = components
+    init(dependencies: HasDesignSystemComponentsInterface) {
+        self.dependencies = dependencies
         super.init(frame: .zero)
         setupView()
     }

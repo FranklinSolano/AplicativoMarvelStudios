@@ -14,18 +14,18 @@ final class HomeScreen: UIView {
     
     // MARK: - UI Elements
     
-    private let components: DesignSystemComponentsInterface
+    private let dependencies: HasDesignSystemComponentsInterface
     
-    private lazy var userName = components.makeLabel()
-    private lazy var searchPerson = components.makeSearchBar()
-    private lazy var descriptionName = components.makeLabel()
-    lazy var tableView = components.makeTableView()
-    lazy var activityIndicator = components.makeActivityIndicator()
+    private lazy var userName = dependencies.designSystemComponents.makeLabel()
+    private lazy var searchPerson = dependencies.designSystemComponents.makeSearchBar()
+    private lazy var descriptionName = dependencies.designSystemComponents.makeLabel()
+    lazy var tableView = dependencies.designSystemComponents.makeTableView()
+    lazy var activityIndicator = dependencies.designSystemComponents.makeActivityIndicator()
     
     // MARK: - Init
     
-    init(components: DesignSystemComponentsInterface) {
-        self.components = components
+    init(dependencies: HasDesignSystemComponentsInterface) {
+        self.dependencies = dependencies
         super.init(frame: .zero)
         setupView()
     }

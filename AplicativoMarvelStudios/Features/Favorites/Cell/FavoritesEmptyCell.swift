@@ -12,14 +12,14 @@ final class FavoritesEmptyCell: UICollectionViewCell {
     // MARK: - Properties
     
     static let identifier: String = "FavoritesEmptyCell"
-    private let components: DesignSystemComponentsInterface
+    private let dependencies: HasDesignSystemComponentsInterface
     
-    private lazy var titleLabel = components.makeLabel()
+    private lazy var titleLabel = dependencies.designSystemComponents.makeLabel()
     
     // MARK: - Init
     
-     init(components: DesignSystemComponentsInterface) {
-        self.components = components
+    init(dependencies: HasDesignSystemComponentsInterface) {
+        self.dependencies = dependencies
          super.init(frame: .zero)
         setupView()
     }

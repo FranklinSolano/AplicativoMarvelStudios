@@ -11,15 +11,15 @@ import SnapKit
 final class FavoritesScreen: UIView {
     
     // MARK: - UI Elements
-    private let components: DesignSystemComponentsInterface
+    private let dependencies: HasDesignSystemComponentsInterface
     
-    private lazy var titleLabel = components.makeLabel()
-    private lazy var collectionViewFavorites = components.makeCollectionView()
+    private lazy var titleLabel = dependencies.designSystemComponents.makeLabel()
+    private lazy var collectionViewFavorites = dependencies.designSystemComponents.makeCollectionView()
 
     // MARK: - Init
     
-    init(components: DesignSystemComponentsInterface) {
-        self.components = components
+    init(dependencies: HasDesignSystemComponentsInterface) {
+        self.dependencies = dependencies
         super.init(frame: .zero)
         setupView()
     }

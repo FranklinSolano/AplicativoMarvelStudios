@@ -40,7 +40,7 @@ final class HomeViewController: UIViewController {
     init(interactor: HomeInteracting, dependencies: Dependencies = DependencyContainer() ){
         self.interactor = interactor
         self.dependencies = dependencies
-        self.screen = HomeScreen(components: dependencies.designSystemComponents)
+        self.screen = HomeScreen(dependencies: dependencies)
         super.init(nibName: nil, bundle: nil)
         screen.configTableView(delegate: self, dataSource: self)
     }

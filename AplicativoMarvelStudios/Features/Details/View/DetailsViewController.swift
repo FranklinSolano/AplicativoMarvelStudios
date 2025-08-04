@@ -40,7 +40,7 @@ final class DetailsViewController: UIViewController {
     init(interactor: DetailsInteracting, dependencies: Dependencies = DependencyContainer()) {
         self.interactor = interactor
         self.dependencies = dependencies
-        self.screen = DetailsScreen(components: dependencies.designSystemComponents)
+        self.screen = DetailsScreen(dependencies: dependencies)
         super.init(nibName: nil, bundle: nil)
         screen.delegate = self
         screen.configCollectionView(delegate: self, dataSource: self)

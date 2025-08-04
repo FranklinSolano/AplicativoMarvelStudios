@@ -32,7 +32,7 @@ final class LoginViewController: UIViewController {
     init(interactor: LoginInteracting, dependencies: Dependencies = DependencyContainer()) {
         self.interactor = interactor
         self.dependencies = dependencies
-        self.screen = LoginScreen(components: dependencies.designSystemComponents)
+        self.screen = LoginScreen(dependencies: dependencies)
         super.init(nibName: nil, bundle: nil)
         self.screen.delegate = self
     }
