@@ -22,21 +22,27 @@ final class HomeViewController: UIViewController {
     
     // MARK: - Properties
     
-    private var screen: HomeScreen?
+    typealias Dependencies = HasDesignSystemComponentsInterface
+    private let dependencies: Dependencies
+    private let screen: HomeScreen
     let interactor: HomeInteracting
+    
     private var characters: [HeroesModel] = [] {
         didSet {
-            screen?.hideLoading()
-            screen?.tableView.reloadData()
+            screen.hideLoading()
+            screen.tableView.reloadData()
         }
     }
     var presenter: LeakedPresenter? = LeakedPresenter() // metodo para da Leaks forcado e aprender usar o instruments
     
     // MARK: - Init
     
-    init(interactor: HomeInteracting){
+    init(interactor: HomeInteracting, dependencies: Dependencies = DependencyContainer() ){
         self.interactor = interactor
+        self.dependencies = dependencies
+        self.screen = HomeScreen(dependencies: dependencies)
         super.init(nibName: nil, bundle: nil)
+        screen.configTableView(delegate: self, dataSource: self)
     }
     
     required init?(coder: NSCoder) {
@@ -46,13 +52,12 @@ final class HomeViewController: UIViewController {
     // MARK: - Lifecycle
     
     override func loadView() {
-        screen = HomeScreen()
-        screen?.configTableView(delegate: self, dataSource: self)
         view = screen
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        screen?.showLoading()
+        screen.showLoading()
         interactor.fetchHeroes()
         presenter = nil // metodo para da Leaks forcado e aprender usar o instruments
     }
@@ -71,11 +76,11 @@ extension HomeViewController: HomeViewDisplay {
     }
     
     func showLoading() {
-        screen?.showLoading()
+        screen.showLoading()
     }
     
     func hideLoading() {
-        screen?.hideLoading()
+        screen.hideLoading()
     }
 }
 

@@ -15,18 +15,15 @@ final class PersonListTableViewCell: UITableViewCell {
     static let identifier: String = "PersonListTableViewCell"
     
     // MARK: - Properties
+    private let dependencies: HasDesignSystemComponentsInterface
     
-    private let imagePerson: ImageViewing
-    private let heroName: Labeling
+    private lazy var imagePerson = dependencies.designSystemComponents.makeImageView()
+    private lazy var heroName = dependencies.designSystemComponents.makeLabel()
 
     // MARK: - Init
     
-    init(
-        imagePerson: ImageViewing = DSImageViewAdapter(image: .placeholder),
-        heroName: Labeling = DSLabelAdapter()
-    ) {
-        self.imagePerson = imagePerson
-        self.heroName = heroName
+    init(dependencies: HasDesignSystemComponentsInterface) {
+        self.dependencies = dependencies
         super.init(style: .default, reuseIdentifier: Self.identifier)
         setupView()
     }
@@ -57,8 +54,8 @@ final class PersonListTableViewCell: UITableViewCell {
 extension PersonListTableViewCell: ViewCodeProtocol {
     
     func setupElements() {
-        addSubview(imagePerson)
-        addSubview(heroName)
+        contentView.addSubview(imagePerson)
+        contentView.addSubview(heroName)
     }
     
     func setupConstraints() {

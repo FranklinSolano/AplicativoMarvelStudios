@@ -18,41 +18,22 @@ protocol ProfileScreenProtocol: AnyObject {
 final class ProfileScreen: UIView {
     
     weak var delegate: ProfileScreenProtocol?
+    private let dependencies: HasDesignSystemComponentsInterface
     
-    let titleLabel: Labeling
-    let imageUser: ImageViewing
-    let nameUserLabel: Labeling
-    let emailLabel: Labeling
-    let emailTextField: TextFielding
-    let exitButton: Buttoning
-    let selectThemeLabel: Labeling
-    let themeSwitcher: SegmentedControling
-    let descriptionVersionApp: Labeling
+    private lazy var titleLabel = dependencies.designSystemComponents.makeLabel()
+    private lazy var imageUser = dependencies.designSystemComponents.makeImageView()
+    private lazy var nameUserLabel = dependencies.designSystemComponents.makeLabel()
+    private lazy var emailLabel = dependencies.designSystemComponents.makeLabel()
+    private lazy var emailTextField = dependencies.designSystemComponents.makeTextField()
+    private lazy var exitButton = dependencies.designSystemComponents.makeButton()
+    private lazy var selectThemeLabel = dependencies.designSystemComponents.makeLabel()
+    private lazy var themeSwitcher = dependencies.designSystemComponents.makeSegmentedControling()
+    private lazy var descriptionVersionApp  = dependencies.designSystemComponents.makeLabel()
     
     // MARK: - Init com injeção
     
-    init(
-        titleLabel: Labeling = DSLabelAdapter(),
-        imageUser: ImageViewing = DSImageViewAdapter(image: UIImage(systemName: "person.crop.circle.fill")),
-        nameUserLabel: Labeling = DSLabelAdapter(),
-        emailLabel: Labeling = DSLabelAdapter(),
-        emailTextField: TextFielding = DSTextFieldAdapter(),
-        exitButton: Buttoning = DSButtonAdapter(),
-        selectThemeLabel: Labeling = DSLabelAdapter(),
-        themeSwitcher: SegmentedControling = DSSegmentedControlAdapter(items: ["Claro", "Escuro"]),
-        descriptionVersionApp: Labeling = DSLabelAdapter()
-    ) {
-        
-        self.titleLabel = titleLabel
-        self.imageUser = imageUser
-        self.nameUserLabel = nameUserLabel
-        self.emailLabel = emailLabel
-        self.emailTextField = emailTextField
-        self.exitButton = exitButton
-        self.selectThemeLabel = selectThemeLabel
-        self.themeSwitcher = themeSwitcher
-        self.descriptionVersionApp = descriptionVersionApp
-        
+    init(dependencies: HasDesignSystemComponentsInterface) {
+        self.dependencies = dependencies
         super.init(frame: .zero)
         setupView()
     }
@@ -86,6 +67,10 @@ final class ProfileScreen: UIView {
     }
     
     private func configureSegmentedControl(){
+        themeSwitcher.setItems(["Light", "Dark"]) // //// 🟢 Define o índice baseado no tema atual
+        let currentTheme = ThemeManager.shared.currentTheme
+        themeSwitcher.selectedSegmentIndex = currentTheme == .light ? 0 : 1
+        
         themeSwitcher.onClick { index in
             let selectedTheme: ThemeManager.Theme = index == 0 ? .light : .dark
             ThemeManager.shared.setTheme(selectedTheme)

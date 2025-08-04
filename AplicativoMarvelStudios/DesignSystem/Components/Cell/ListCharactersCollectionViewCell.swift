@@ -14,15 +14,14 @@ final class ListCharactersCollectionViewCell: UICollectionViewCell {
     // MARK: - Properties
     
     static let identifier: String = "ListCharactersCollectionViewCell"
+    private let dependencies: HasDesignSystemComponentsInterface
     
-    private let imagePerson: ImageViewing
+    private lazy var imagePerson = dependencies.designSystemComponents.makeImageView()
     
     // MARK: - Init com injeção
     
-    init(
-        imagePerson: ImageViewing = DSImageViewAdapter(image: .placeholder)
-    ) {
-        self.imagePerson = imagePerson
+    init(dependencies: HasDesignSystemComponentsInterface) {
+        self.dependencies = dependencies
         super.init(frame: .zero)
         setupView()
     }
