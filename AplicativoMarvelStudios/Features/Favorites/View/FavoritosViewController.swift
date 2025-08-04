@@ -19,15 +19,20 @@ final class FavoritesViewController: UIViewController {
     
     // MARK: - Properties
     
-    var screen: FavoritesScreen?
-    var interactor: FavoritesInteracting
+    typealias Dependencies = HasDesignSystemComponentsInterface
+    private let dependencies: Dependencies
+    private let screen: FavoritesScreen
+    private let interactor: FavoritesInteracting
     private var favorites: [HeroesModel] = []
     
     //MARK: - Init
     
-    init(interactor: FavoritesInteracting) {
+    init(interactor: FavoritesInteracting, dependencies: Dependencies = DependencyContainer()) {
         self.interactor = interactor
+        self.dependencies = dependencies
+        self.screen = FavoritesScreen(components: dependencies.designSystemComponents)
         super.init(nibName: nil, bundle: nil)
+        screen.configCollectoinView(delegate: self, dataSource: self)
     }
     
     required init?(coder: NSCoder) {
@@ -38,8 +43,6 @@ final class FavoritesViewController: UIViewController {
     // MARK: - Lifecycle
     
     override func loadView() {
-        screen = FavoritesScreen()
-        screen?.configCollectoinView(delegate: self, dataSource: self)
         view = screen
     }
     

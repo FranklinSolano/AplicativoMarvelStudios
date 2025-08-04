@@ -12,19 +12,20 @@ final class FavoritesEmptyCell: UICollectionViewCell {
     // MARK: - Properties
     
     static let identifier: String = "FavoritesEmptyCell"
+    private let components: DesignSystemComponentsInterface
     
-    private let titleLabel: Labeling = DSLabelAdapter()
+    private lazy var titleLabel = components.makeLabel()
     
     // MARK: - Init
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+     init(components: DesignSystemComponentsInterface) {
+        self.components = components
+         super.init(frame: .zero)
         setupView()
     }
 
     required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        setupView()
+        fatalError("init(coder:) has not been implemented")
     }
     
     private func configureLabels(){
