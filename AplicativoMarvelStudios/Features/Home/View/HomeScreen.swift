@@ -14,26 +14,18 @@ final class HomeScreen: UIView {
     
     // MARK: - UI Elements
     
-    let userName: Labeling
-    let searchPerson: SearchBaring
-    let descriptionName: Labeling
-    let tableView: TableViewing
-    let activityIndicator: LoadingIndicatable
+    private let components: DesignSystemComponentsInterface
+    
+    private lazy var userName = components.makeLabel()
+    private lazy var searchPerson = components.makeSearchBar()
+    private lazy var descriptionName = components.makeLabel()
+    lazy var tableView = components.makeTableView()
+    lazy var activityIndicator = components.makeActivityIndicator()
     
     // MARK: - Init
     
-    init(userName: Labeling = DSLabelAdapter(),
-         searchPerson: SearchBaring = DSSearchBarAdapter(),
-         descriptionName: Labeling = DSLabelAdapter(),
-         tableView: TableViewing = DSTableViewAdapter(),
-         activityIndicator: LoadingIndicatable = DSActivityIndicatorAdapter()) {
-        
-        self.userName = userName
-        self.searchPerson = searchPerson
-        self.descriptionName = descriptionName
-        self.tableView = tableView
-        self.activityIndicator = activityIndicator
-        
+    init(components: DesignSystemComponentsInterface) {
+        self.components = components
         super.init(frame: .zero)
         setupView()
     }
@@ -81,41 +73,41 @@ final class HomeScreen: UIView {
 
 extension HomeScreen: ViewCodeProtocol {
     func setupElements() {
-           addSubview(userName)
-           addSubview(searchPerson)
-           addSubview(descriptionName)
-           addSubview(tableView)
-           addSubview(activityIndicator)
-       }
-
-       func setupConstraints() {
-           userName.snp.makeConstraints { make in
-               make.top.equalTo(safeAreaLayoutGuide.snp.top)
-               make.leading.equalToSuperview().offset(30)
-               make.trailing.equalToSuperview().inset(30)
-           }
-
-           searchPerson.snp.makeConstraints { make in
-               make.top.equalTo(userName.snp.bottom).offset(20)
-               make.leading.equalToSuperview().offset(30)
-               make.trailing.equalToSuperview().inset(30)
-               make.height.equalTo(50)
-           }
-
-           descriptionName.snp.makeConstraints { make in
-               make.top.equalTo(searchPerson.snp.bottom).offset(20)
-               make.leading.equalToSuperview().offset(20)
-           }
-
-           tableView.snp.makeConstraints { make in
-               make.top.equalTo(descriptionName.snp.bottom).offset(20)
-               make.leading.trailing.bottom.equalToSuperview()
-           }
-
-           activityIndicator.snp.makeConstraints { make in
-               make.center.equalToSuperview()
-           }
-       }
+        addSubview(userName)
+        addSubview(searchPerson)
+        addSubview(descriptionName)
+        addSubview(tableView)
+        addSubview(activityIndicator)
+    }
+    
+    func setupConstraints() {
+        userName.snp.makeConstraints { make in
+            make.top.equalTo(safeAreaLayoutGuide.snp.top)
+            make.leading.equalToSuperview().offset(30)
+            make.trailing.equalToSuperview().inset(30)
+        }
+        
+        searchPerson.snp.makeConstraints { make in
+            make.top.equalTo(userName.snp.bottom).offset(20)
+            make.leading.equalToSuperview().offset(30)
+            make.trailing.equalToSuperview().inset(30)
+            make.height.equalTo(50)
+        }
+        
+        descriptionName.snp.makeConstraints { make in
+            make.top.equalTo(searchPerson.snp.bottom).offset(20)
+            make.leading.equalToSuperview().offset(20)
+        }
+        
+        tableView.snp.makeConstraints { make in
+            make.top.equalTo(descriptionName.snp.bottom).offset(20)
+            make.leading.trailing.bottom.equalToSuperview()
+        }
+        
+        activityIndicator.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+        }
+    }
     
     func setupAdditionalConfiguration() {
         backgroundColor = DSColors.primaryColor
