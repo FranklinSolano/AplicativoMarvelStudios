@@ -32,8 +32,7 @@ final class ProfileViewController: UIViewController {
     init(interactor: ProfileInteracting, dependencies: Dependencies = DependencyContainer()) {
         self.interactor = interactor
         self.dependencies = dependencies
-        let screenDependency = ProfileDependency(components: dependencies.designSystemComponents)
-        self.screen = ProfileScreen(dependency: screenDependency)
+        self.screen = ProfileScreen(components: dependencies.designSystemComponents)
         super.init(nibName: nil, bundle: nil)
         self.screen.delegate = self
     }
