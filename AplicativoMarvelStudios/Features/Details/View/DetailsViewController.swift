@@ -22,21 +22,28 @@ final class DetailsViewController: UIViewController {
     
     // MARK: - Properties
     
-    private var screen: DetailsScreen?
-    var interactor: DetailsInteracting
+    typealias Dependencies = HasDesignSystemComponentsInterface
+    private let dependencies: Dependencies
+    
+    private let screen: DetailsScreen
+    private let interactor: DetailsInteracting
     var personListImage: [HeroesModel] = [] {
         didSet {
-            screen?.collectionView.reloadData()
-            screen?.hideLoading()
+            screen.collectionView.reloadData()
+            screen.hideLoading()
         }
     }
     var idPerson: Int?
     
     //MARK: - Init
     
-    init(interactor: DetailsInteracting) {
+    init(interactor: DetailsInteracting, dependencies: Dependencies = DependencyContainer()) {
         self.interactor = interactor
+        self.dependencies = dependencies
+        self.screen = DetailsScreen(components: dependencies.designSystemComponents)
         super.init(nibName: nil, bundle: nil)
+        screen.delegate = self
+        screen.configCollectionView(delegate: self, dataSource: self)
     }
     
     required init?(coder: NSCoder) {
@@ -47,16 +54,13 @@ final class DetailsViewController: UIViewController {
     // MARK: - Lifecycle
     
     override func loadView() {
-        screen = DetailsScreen()
-        screen?.delegate = self
-        screen?.configCollectionView(delegate: self, dataSource: self)
         view = screen
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         guard let idPerson = idPerson else { return }
-        screen?.showLoading()
+        screen.showLoading()
         interactor.fetchDetailsPerson(idPerson: idPerson)
     }
     
@@ -72,7 +76,7 @@ final class DetailsViewController: UIViewController {
 extension DetailsViewController: DetailsViewControllerDisplay {
     
     func getResultDataPerson(data: HeroesModel) {
-        screen?.setupView(data: data)
+        screen.setupView(data: data)
         shufflePersonImages()
     }
     
@@ -81,11 +85,11 @@ extension DetailsViewController: DetailsViewControllerDisplay {
     }
     
     func showLoading() {
-        screen?.showLoading()
+        screen.showLoading()
     }
     
     func hideLoading() {
-        screen?.hideLoading()
+        screen.hideLoading()
     }
 }
 
