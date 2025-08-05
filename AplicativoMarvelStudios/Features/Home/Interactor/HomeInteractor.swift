@@ -21,11 +21,11 @@ final class HomeInteractor{
     // MARK: - Properties
     
     var presenter: HomePresenting
-    private var service: HomeService
+    private var service: HomeServicing
     
     // MARK: - Init
     
-    init(presenter: HomePresenting, service: HomeService) {
+    init(presenter: HomePresenting, service: HomeServicing) {
         self.presenter = presenter
         self.service = service
     }

@@ -71,9 +71,26 @@ final class DesignSystemComponents: DesignSystemComponentsInterface {
     }
 }
 
-protocol HttpServicesInterface {}
+protocol HttpServicesInterface {
+    func makeLoginSErvice() -> LoginServicing
+    func makeHomeService() -> HomeServicing
+    func makeDetailsService() -> DetailsServicing
+    
+}
 
-final class HttpServices: HttpServicesInterface {}
+final class HttpServices: HttpServicesInterface {
+    func makeHomeService() ->  HomeServicing {
+        return HomeService()
+    }
+    
+    func makeDetailsService() ->  DetailsServicing {
+        return DetailsService()
+    }
+    
+    func makeLoginSErvice() ->  LoginServicing {
+        return LoginService()
+    }
+}
 
 // MARK: - 2. Protocolos para declarar dependências
 

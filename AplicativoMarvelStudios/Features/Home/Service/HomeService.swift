@@ -11,17 +11,22 @@ import CryptoKit
 
 
 // MARK: - Protocol
-protocol HomeServiceProtocol {
+protocol HomeServicing {
     func fetchCharacters(completion: @escaping (Result<[HeroesModel], ServiceError>) -> Void)
 }
 
-final class HomeService: HomeServiceProtocol {
+final class HomeService: HomeServicing {
     func fetchCharacters(completion: @escaping (Result<[HeroesModel], ServiceError>) -> Void) {
         
-        let ts = String(Date().timeIntervalSince1970)
-        let hash = (ts + Keys.marvelPrivateKey + Keys.marvelPublicKey).md5
-        let urlString = "https://gateway.marvel.com/v1/public/characters?limit=100&ts=\(ts)&apikey=\(Keys.marvelPublicKey)&hash=\(hash)"
-        print("📡 URL da requisição:\n\(urlString)")
+        let ts = "1"  // timestamp fixo para teste
+           let hashString = ts + Keys.marvelPrivateKey + Keys.marvelPublicKey
+           let hash = hashString.md5
+           
+           print("🧮 String para hash: '\(hashString)'")
+           print("🔒 Hash MD5: '\(hash)'")
+           
+           let urlString = "https://gateway.marvel.com/v1/public/characters?limit=5&ts=\(ts)&apikey=\(Keys.marvelPublicKey)&hash=\(hash)"
+           print("📡 URL de teste:\n\(urlString)")
         
         guard let url = URL(string: urlString) else {
             completion(.failure(.invalidURL))

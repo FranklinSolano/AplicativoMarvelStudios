@@ -12,8 +12,9 @@ final class LoginFactory: UIViewController {
     func make(navigationController: UINavigationController) -> (viewController: LoginViewController, coordinator: LoginCoordinator) {
         let coordinator = LoginCoordinator()
         coordinator.navigationController = navigationController
+        let dependencies = DependencyContainer()
+        let service = dependencies.httpServices.makeLoginSErvice()
         
-        let service = LoginService()
         let presenter = LoginPresenter(view: nil, coordinator: coordinator)
         coordinator.presenter = presenter
         

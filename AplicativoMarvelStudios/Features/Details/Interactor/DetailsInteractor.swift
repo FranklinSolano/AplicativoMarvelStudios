@@ -21,7 +21,7 @@ final class DetailsInteractor {
     
     //MARK: - Properties
     var presenter: DetailsPresenting
-    private var  service: DetailsServicing?
+    private var  service: DetailsServicing
     
     //MARK: - Init
     
@@ -44,7 +44,7 @@ extension DetailsInteractor: DetailsInteracting {
     func fetchDetailsPerson(idPerson: Int)  {
         presenter.showLoading()
         
-        service?.fetchCharacterDetail(id: idPerson, completion: { [weak self] result in
+        service.fetchCharacterDetail(id: idPerson, completion: { [weak self] result in
             guard let self else { return }
             
             Task {
