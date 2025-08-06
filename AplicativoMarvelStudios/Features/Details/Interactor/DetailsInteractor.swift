@@ -21,13 +21,13 @@ final class DetailsInteractor {
     
     //MARK: - Properties
     var presenter: DetailsPresenting
-    private var  service: DetailsServicing
+    private var  dependencies: HasHttpServicesInterface
     
     //MARK: - Init
     
-    init(presenter: DetailsPresenting, service: DetailsServicing) {
+    init(presenter: DetailsPresenting, dependencies: HasHttpServicesInterface) {
         self.presenter = presenter
-        self.service = service
+        self.dependencies = dependencies
     }
 }
 
@@ -44,7 +44,9 @@ extension DetailsInteractor: DetailsInteracting {
     func fetchDetailsPerson(idPerson: Int)  {
         presenter.showLoading()
         
-        service.fetchCharacterDetail(id: idPerson, completion: { [weak self] result in
+        let detailsService = dependencies.httpServices.makeDetailsService()
+        
+        detailsService.fetchCharacterDetail(id: idPerson, completion: { [weak self] result in
             guard let self else { return }
             
             Task {

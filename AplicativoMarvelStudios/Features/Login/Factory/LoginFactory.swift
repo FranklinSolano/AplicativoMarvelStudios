@@ -13,14 +13,13 @@ final class LoginFactory: UIViewController {
         let coordinator = LoginCoordinator()
         coordinator.navigationController = navigationController
         let dependencies = DependencyContainer()
-        let service = dependencies.httpServices.makeLoginSErvice()
         
         let presenter = LoginPresenter(view: nil, coordinator: coordinator)
         coordinator.presenter = presenter
         
-        let interactor = LoginInteractor(presenter: presenter, service: service)
+        let interactor = LoginInteractor(presenter: presenter, dependencies: dependencies)
         
-        let loginVC = LoginViewController(interactor: interactor)
+        let loginVC = LoginViewController(interactor: interactor, dependencies: dependencies)
         presenter.view = loginVC
         
         return (loginVC, coordinator)

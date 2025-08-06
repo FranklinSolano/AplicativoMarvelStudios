@@ -75,10 +75,19 @@ protocol HttpServicesInterface {
     func makeLoginSErvice() -> LoginServicing
     func makeHomeService() -> HomeServicing
     func makeDetailsService() -> DetailsServicing
-    
+    func makeProfileService() -> ProfileServicing
+    func makeFavoritesService() -> FavoritesService
 }
 
 final class HttpServices: HttpServicesInterface {
+    func makeFavoritesService() -> FavoritesService {
+        return FavoritesService()
+    }
+    
+    func makeProfileService() ->  ProfileServicing {
+        return ProfileService()
+    }
+    
     func makeHomeService() ->  HomeServicing {
         return HomeService()
     }

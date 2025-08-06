@@ -17,11 +17,10 @@ final class DetailsFactory: UIViewController {
         let presenter = DetailsPresenter(coordinator: coordinator)
         
         let dependencies = DependencyContainer()
-        let service = dependencies.httpServices.makeDetailsService()
         
-        let interactor = DetailsInteractor(presenter: presenter, service: service)
+        let interactor = DetailsInteractor(presenter: presenter, dependencies: dependencies)
         
-        let detailsVC = DetailsViewController(interactor: interactor)
+        let detailsVC = DetailsViewController(interactor: interactor, dependencies: dependencies)
         
         presenter.view = detailsVC
         coordinator.presenter = presenter
