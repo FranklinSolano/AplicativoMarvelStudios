@@ -20,7 +20,7 @@ final class HomeFactory: UIViewController {
         let dependencies = DependencyContainer()
 
         // 4. Interactor recebe o presenter
-        let interactor = HomeInteractor(presenter: presenter, dependencies: dependencies)
+        let interactor = HomeInteractor(presenter: presenter, dependenciesService: dependencies)
 
         // 5. ViewController recebe o interactor no init
         let homeVC = HomeViewController(interactor: interactor)

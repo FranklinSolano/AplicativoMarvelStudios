@@ -23,13 +23,13 @@ class LoginInteractor {
     // MARK: - Properties
     
     let presenter: LoginPresenting
-    private let dependencies: HasHttpServicesInterface
+    private let dependenciesService: HasHttpServicesInterface
     
     // MARK: - Init
     
-    init(presenter: LoginPresenting, dependencies: HasHttpServicesInterface) {
+    init(presenter: LoginPresenting, dependenciesService: HasHttpServicesInterface) {
         self.presenter = presenter
-        self.dependencies = dependencies
+        self.dependenciesService = dependenciesService
     }
     
     //MARK: - Outher Methods
@@ -42,7 +42,7 @@ extension LoginInteractor: LoginInteracting {
     
     func callServiceLogin(email: String, password: String) {
         
-        let loginService = dependencies.httpServices.makeLoginSErvice()
+        let loginService = dependenciesService.httpServices.makeLoginSErvice()
         
         loginService.callServiceLogin(email: email, password: password, completion: { [ weak self] success, errorMessage in //weak
             DispatchQueue.main.async {

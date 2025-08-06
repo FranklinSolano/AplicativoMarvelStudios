@@ -22,7 +22,7 @@ final class ProfileFactory: UIViewController  {
         
         let dependencies = DependencyContainer()
         
-        let interactor = ProfileInteractor(presenter: presenter, dependencies: dependencies)
+        let interactor = ProfileInteractor(presenter: presenter, dependenciesService: dependencies)
         
         let profileVC = ProfileViewController(interactor: interactor,dependencies: dependencies)
         

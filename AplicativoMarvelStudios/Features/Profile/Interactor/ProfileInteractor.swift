@@ -21,19 +21,19 @@ final class ProfileInteractor: ProfileInteracting {
     // MARK: - Properties
     
     var presenter: ProfilePresenting
-    private var dependencies: HasHttpServicesInterface
+    private var dependenciesService: HasHttpServicesInterface
     
     // MARK: - Init
     
-    init(presenter: ProfilePresenting, dependencies: HasHttpServicesInterface) {
+    init(presenter: ProfilePresenting, dependenciesService: HasHttpServicesInterface) {
         self.presenter = presenter
-        self.dependencies = dependencies
+        self.dependenciesService = dependenciesService
     }
     
     // MARK: - Methods
     
     func logoutUser() {
-        let profileService = dependencies.httpServices.makeProfileService()
+        let profileService = dependenciesService.httpServices.makeProfileService()
         do {
             try profileService.logoutAndShowLogin()
             presenter.logoutSuccess()

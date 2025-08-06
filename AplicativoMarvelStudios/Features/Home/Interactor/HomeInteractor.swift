@@ -21,13 +21,13 @@ final class HomeInteractor{
     // MARK: - Properties
     
     var presenter: HomePresenting
-    private let dependencies: HasHttpServicesInterface
+    private let dependenciesService: HasHttpServicesInterface
     
     // MARK: - Init
     
-    init(presenter: HomePresenting, dependencies: HasHttpServicesInterface) {
+    init(presenter: HomePresenting, dependenciesService: HasHttpServicesInterface) {
         self.presenter = presenter
-        self.dependencies = dependencies
+        self.dependenciesService = dependenciesService
     }
     
     //MARK: - Outher Methods
@@ -47,7 +47,7 @@ extension HomeInteractor: HomeInteracting {
             await MainActor.run {
                 presenter.showLoading()
             }
-            let homeService = dependencies.httpServices.makeHomeService()
+            let homeService = dependenciesService.httpServices.makeHomeService()
             
             homeService.fetchCharacters { [ weak self] result in
                 guard let self = self else { return }

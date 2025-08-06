@@ -18,7 +18,7 @@ final class FavoritesFactory: UIViewController {
         
         let dependencies = DependencyContainer()
         
-        let interactor = FavoritesInteractor(presenter: presenter, dependencies: dependencies)
+        let interactor = FavoritesInteractor(presenter: presenter, dependenciesService: dependencies)
         
         let favoritesVC = FavoritesViewController(interactor: interactor)
         
