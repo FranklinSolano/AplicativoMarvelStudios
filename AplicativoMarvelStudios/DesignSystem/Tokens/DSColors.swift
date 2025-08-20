@@ -21,7 +21,7 @@ enum DSColors {
         return UIColor { trait in
             switch trait.userInterfaceStyle {
             case .dark:
-                return UIColor(red: 47/255, green: 28/255, blue: 26/255, alpha: 1)
+                return UIColor(red: 8/255, green: 127/255, blue: 1/255, alpha: 1)
             default:
                 return UIColor(red: 38/255, green: 104/255, blue: 115/255, alpha: 1) // #3A69D7
             }

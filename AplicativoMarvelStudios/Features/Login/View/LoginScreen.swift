@@ -26,6 +26,7 @@ final class LoginScreen: UIView {
     var delegate: LoginScreenProtocol?
     private let dependencies: HasDesignSystemComponentsInterface
     
+    private lazy var imageBackgroud = dependencies.designSystemComponents.makeImageView()
     private lazy var emailLabel = dependencies.designSystemComponents.makeLabel()
     private lazy var emailTextField = dependencies.designSystemComponents.makeTextField()
     private lazy var passwordLabel = dependencies.designSystemComponents.makeLabel()
@@ -55,6 +56,10 @@ final class LoginScreen: UIView {
     private func setupTapGesture() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         addGestureRecognizer(tapGesture)  // A view detecta o toque e chama o método para fechar o teclado
+    }
+    
+    private func configureImage(){
+        imageBackgroud.image = UIImage(named: "loginBackgroud")
     }
     
     private func configureLabels(){
@@ -114,6 +119,7 @@ extension LoginScreen: ViewCodeProtocol {
     // MARK: - Setup Methods
     
     func setupElements() {
+        addSubview(imageBackgroud)
         addSubview(emailLabel)
         addSubview(emailTextField)
         addSubview(passwordLabel)
@@ -124,6 +130,10 @@ extension LoginScreen: ViewCodeProtocol {
     }
     
     func setupConstraints() {
+        
+        imageBackgroud.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
         
         emailLabel.snp.makeConstraints { make in
             make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(60)
@@ -165,6 +175,7 @@ extension LoginScreen: ViewCodeProtocol {
     }
     
     func setupAdditionalConfiguration() {
+        configureImage()
         configureLabels()
         configureTextFields()
         configureButtons()

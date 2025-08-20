@@ -22,8 +22,9 @@ final class DSSearchBarAdapter: UISearchBar, SearchBaring {
     init() {
         super.init(frame: .zero)
         placeholder = "Search"
-        barTintColor = DSColors.primaryColor
+        barTintColor = DSColors.secondaryColor
         searchBarStyle = .minimal
+        searchTextField.backgroundColor = DSColors.secondaryColor
     }
 
     required init?(coder: NSCoder) {
