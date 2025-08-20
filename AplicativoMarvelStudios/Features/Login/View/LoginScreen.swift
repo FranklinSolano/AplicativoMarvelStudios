@@ -178,7 +178,7 @@ extension LoginScreen: ViewCodeProtocol {
 extension LoginScreen: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == emailTextField {
-            passwordTextField.becomeFirstResponder()
+            passwordTextField.becomeFirstResponder() //metodo para ir para o proximo textfield
         } else {
             textField.resignFirstResponder()
         }

@@ -45,7 +45,6 @@ final class LoginViewController: UIViewController {
     
     override func loadView() {
         self.view = screen
-        
     }
     
     override func viewDidLoad() {

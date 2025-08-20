@@ -5,55 +5,52 @@
 //  Created by Franklin  Stilhano Solano on 28/05/25.
 //
 
-
 import UIKit
 
 // MARK: - Protocol
-@MainActor //Garantir que os metodos rode na Thread Principal
+@MainActor
 protocol HomePresenting {
-    func presentCharacters(_ characters: [HeroesModel])
+    func presentCharacters(_ characters: [RMCharacter])
     func showAlertError()
     func showLoading()
     func hideLoading()
-    func navigateToDetail(data: [HeroesModel], idPerson: HeroesModel)
+    func navigateToDetail(character: RMCharacter)
 }
 
 // MARK: - Presenter
-
 final class HomePresenter {
     
     // MARK: - Properties
-    
     weak var view: HomeViewDisplay?
     private var coordinator: HomeCoordinating
     
     // MARK: - Init
-    
     init(view: HomeViewDisplay? = nil, coordinator: HomeCoordinating) {
         self.view = view
         self.coordinator = coordinator
     }
 }
 
-//MARK: - HomePresenting
-
+// MARK: - HomePresenting
 extension HomePresenter: HomePresenting {
-    func navigateToDetail(data: [HeroesModel], idPerson: HeroesModel) {
-        coordinator.navigateToDetail(data: data, idPerson: idPerson)
+    func navigateToDetail(character: RMCharacter) {
+        coordinator.navigateToDetail(character: character)
     }
     
-    func presentCharacters(_ characters: [HeroesModel]) {
+    func presentCharacters(_ characters: [RMCharacter]) {
         view?.displayCharacters(characters)
     }
     
-    func showAlertError(){
-        view?.showAlertError(title: "Atenção", message: "Error ao buscar personagens, Tente novamente!")
+    func showAlertError() {
+        view?.showAlertError(title: "Atenção", message: "Erro ao buscar personagens, tente novamente!")
     }
     
     func showLoading() {
         view?.showLoading()
     }
+    
     func hideLoading() {
         view?.hideLoading()
     }
 }
+

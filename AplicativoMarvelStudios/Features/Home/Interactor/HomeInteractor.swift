@@ -10,8 +10,8 @@ import UIKit
 // MARK: - Protocol
 
 protocol HomeInteracting {
-    func fetchHeroes()
-    func navigateToDetail(data: [HeroesModel], idPerson: HeroesModel)
+    func fetchChracters()
+    func navigateToDetail(character: RMCharacter)
 }
 
 // MARK: - Interactor
@@ -36,21 +36,24 @@ final class HomeInteractor{
 //MARK: - HomeInteracting
 
 extension HomeInteractor: HomeInteracting {
-    func navigateToDetail(data: [HeroesModel], idPerson: HeroesModel) {
+    
+    func navigateToDetail(character: RMCharacter) {
         Task {
-            await presenter.navigateToDetail(data: data, idPerson: idPerson)
+            await presenter.navigateToDetail(character: character)
         }
+        
     }
     
-    func fetchHeroes() {
+    func fetchChracters() {
         Task {
             await MainActor.run {
                 presenter.showLoading()
             }
+            
             let homeService = dependenciesService.httpServices.makeHomeService()
             
-            homeService.fetchCharacters { [ weak self] result in
-                guard let self = self else { return }
+            homeService.fetchCharacters { [weak self] result in
+                guard let self = self else { return}
                 
                 Task { @MainActor in
                     switch result {
