@@ -38,9 +38,9 @@ final class ListCharactersCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Public Method
     
-//    func setupCell(data: HeroesModel?) {
-//        imagePerson.setImage(from: data?.imageURL)
-//    }
+    func setupCell(data: RMCharacter?) {
+        imagePerson.setImage(from: data?.image)
+    }
 }
 
 // MARK: - ViewCodeProtocol

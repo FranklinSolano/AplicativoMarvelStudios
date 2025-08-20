@@ -78,17 +78,17 @@ final class DetailsScreen: UIView {
         collectionView.register(ListCharactersCollectionViewCell.self, forCellWithReuseIdentifier: ListCharactersCollectionViewCell.identifier)
     }
     
-    func setupView(data: HeroesModel?) {
-        personName.text = data?.heroName
+    func setupView(data: RMCharacter?) {
+        personName.text = data?.name
         
-        if let description = data?.descrepitionPerson.trimmingCharacters(in: .whitespacesAndNewlines), !description.isEmpty {
+        if let description = data?.status.description.trimmingCharacters(in: .whitespacesAndNewlines), !description.isEmpty {
             descriptionPerson.text = "Character description: \(description)"
         } else {
             descriptionPerson.text = "Character description not found"
         }
         
         // Passa a String direto para o adapter, que faz a conversão interna
-        imagePerson.setImage(from: data?.imageURL)
+        imagePerson.setImage(from: data?.image)
     }
     
     func showLoading() {

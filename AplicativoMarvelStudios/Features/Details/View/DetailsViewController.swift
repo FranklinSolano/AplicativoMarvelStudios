@@ -10,7 +10,7 @@ import UIKit
 // MARK: - Protocol
 @MainActor
 protocol DetailsViewControllerDisplay: AnyObject {
-    func getResultDataPerson(data: HeroesModel)
+    func getResultDataPerson(data: RMCharacter)
     func showLoading()
     func hideLoading()
     func showResultAlertError(title: String, message: String)
@@ -27,7 +27,7 @@ final class DetailsViewController: UIViewController {
     
     private let screen: DetailsScreen
     private let interactor: DetailsInteracting
-    var personListImage: [HeroesModel] = [] {
+    var personListImage: [RMCharacter] = [] {
         didSet {
             screen.collectionView.reloadData()
             screen.hideLoading()
@@ -75,7 +75,7 @@ final class DetailsViewController: UIViewController {
 
 extension DetailsViewController: DetailsViewControllerDisplay {
     
-    func getResultDataPerson(data: HeroesModel) {
+    func getResultDataPerson(data: RMCharacter) {
         screen.setupView(data: data)
         shufflePersonImages()
     }
@@ -112,8 +112,8 @@ extension DetailsViewController: UICollectionViewDelegate, UICollectionViewDataS
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ListCharactersCollectionViewCell.identifier, for: indexPath) as? ListCharactersCollectionViewCell
-        let hero = personListImage[indexPath.row]
-//        cell?.setupCell(data: hero)
+        let person = personListImage[indexPath.row]
+        cell?.setupCell(data: person)
         return cell ?? UICollectionViewCell()
     }
     
@@ -131,6 +131,6 @@ extension DetailsViewController: UICollectionViewDelegate, UICollectionViewDataS
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let idPerson = personListImage[indexPath.row]
-        interactor.updateDetails(id: idPerson, data: self.personListImage)
+//        interactor.updateDetails(id: idPerson, data: self.personListImage)
     }
 }

@@ -20,7 +20,7 @@ protocol CollectionViewing: UIView {
 
 class DSCollectionView: UICollectionView {
     
-    init(scroll: UICollectionView.ScrollDirection = .vertical, spacing: CGFloat){
+    init(scroll: UICollectionView.ScrollDirection = .horizontal, spacing: CGFloat){
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = scroll
         layout.minimumLineSpacing = spacing

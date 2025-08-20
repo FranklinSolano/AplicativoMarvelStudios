@@ -51,7 +51,7 @@ final class DesignSystemComponents: DesignSystemComponentsInterface {
     }
     
     func makeCollectionView() ->  CollectionViewing {
-        return DSCollectionViewAdapter(scroll: .vertical, spacing: 10)
+        return DSCollectionViewAdapter(scroll: .horizontal, spacing: 10)
     }
     
     func makeActivityIndicator() ->  LoadingIndicatable {

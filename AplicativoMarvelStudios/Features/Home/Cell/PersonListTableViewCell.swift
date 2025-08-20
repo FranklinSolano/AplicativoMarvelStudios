@@ -63,7 +63,6 @@ final class PersonListTableViewCell: UITableViewCell {
     func setupCell(data: RMCharacter) {
         characterName.text = data.name
         characterSpecies.text = data.species
-        
         imagePerson.setImage(from: data.image)
     }
 }

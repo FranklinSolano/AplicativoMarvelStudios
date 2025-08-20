@@ -104,6 +104,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let character = characters[indexPath.row]
-        interactor.navigateToDetail(character: character)
+        let teste = self.characters
+        interactor.navigateToDetail(character: character, teste: teste)
     }
 }

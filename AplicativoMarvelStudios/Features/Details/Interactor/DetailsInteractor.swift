@@ -12,7 +12,7 @@ import UIKit
 protocol DetailsInteracting {
     func navigateBack()
     func fetchDetailsPerson(idPerson: Int)
-    func updateDetails(id: HeroesModel, data: [HeroesModel])
+    func updateDetails(id: RMCharacter, data: [RMCharacter])
 }
 
 //MARK: - DetailsInteractor
@@ -35,7 +35,7 @@ final class DetailsInteractor {
 
 extension DetailsInteractor: DetailsInteracting {
     
-    func updateDetails(id: HeroesModel, data: [HeroesModel])  {
+    func updateDetails(id: RMCharacter, data: [RMCharacter])  {
         Task {
             await presenter.updateDetails(id: id, data: data)
         }
