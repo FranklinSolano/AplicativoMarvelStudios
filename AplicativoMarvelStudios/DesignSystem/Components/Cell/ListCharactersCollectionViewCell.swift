@@ -20,6 +20,12 @@ final class ListCharactersCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Init com injeção
     
+    override init(frame: CGRect) {
+        self.dependencies = DependencyContainer() // ou sua dependência padrão
+        super.init(frame: frame)
+        setupView()
+    }
+    
     init(dependencies: HasDesignSystemComponentsInterface) {
         self.dependencies = dependencies
         super.init(frame: .zero)
@@ -32,8 +38,8 @@ final class ListCharactersCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Public Method
     
-    func setupCell(data: HeroesModel?) {
-        imagePerson.setImage(from: data?.imageURL)
+    func setupCell(data: RMCharacter?) {
+        imagePerson.setImage(from: data?.image)
     }
 }
 

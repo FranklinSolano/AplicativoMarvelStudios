@@ -51,7 +51,7 @@ final class DesignSystemComponents: DesignSystemComponentsInterface {
     }
     
     func makeCollectionView() ->  CollectionViewing {
-        return DSCollectionViewAdapter(scroll: .vertical, spacing: 10)
+        return DSCollectionViewAdapter(scroll: .horizontal, spacing: 10)
     }
     
     func makeActivityIndicator() ->  LoadingIndicatable {
@@ -71,9 +71,35 @@ final class DesignSystemComponents: DesignSystemComponentsInterface {
     }
 }
 
-protocol HttpServicesInterface {}
+protocol HttpServicesInterface {
+    func makeLoginSErvice() -> LoginServicing
+    func makeHomeService() -> HomeServicing
+    func makeDetailsService() -> DetailsServicing
+    func makeProfileService() -> ProfileServicing
+    func makeFavoritesService() -> FavoritesService
+}
 
-final class HttpServices: HttpServicesInterface {}
+final class HttpServices: HttpServicesInterface {
+    func makeFavoritesService() -> FavoritesService {
+        return FavoritesService()
+    }
+    
+    func makeProfileService() ->  ProfileServicing {
+        return ProfileService()
+    }
+    
+    func makeHomeService() ->  HomeServicing {
+        return HomeService()
+    }
+    
+    func makeDetailsService() ->  DetailsServicing {
+        return DetailsService()
+    }
+    
+    func makeLoginSErvice() ->  LoginServicing {
+        return LoginService()
+    }
+}
 
 // MARK: - 2. Protocolos para declarar dependências
 

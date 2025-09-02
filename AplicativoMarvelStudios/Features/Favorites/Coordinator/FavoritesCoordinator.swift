@@ -30,7 +30,7 @@ final class FavoritesCoordinator: FavoritesCoordinating {
         let detailsFactory = DetailsFactory()
         let detailsVC = detailsFactory.make(navigationController: navigationController)
         detailsVC.idPerson = id.id
-        detailsVC.personListImage = data
+//        detailsVC.personListImage = data
         navigationController.pushViewController(detailsVC, animated: true)
     }
 }

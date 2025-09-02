@@ -14,26 +14,17 @@ struct HeroesModel: Codable {
     var descrepitionPerson: String
 }
 
-struct CharacterResponse: Codable {
-    let data: CharacterData
+
+
+struct RickAndMortyResponse: Codable {
+    let results: [RMCharacter]
 }
 
-struct CharacterData: Codable {
-    let results: [Character]
-}
-
-struct Character: Codable {
-    let id: Int?
+struct RMCharacter: Codable {
+    let id: Int
     let name: String
-    let description: String?
-    let thumbnail: Thumbnail
+    let status: String
+    let species: String
+    let image: String
 }
 
-struct Thumbnail: Codable {
-    let path: String
-    let `extension`: String
-
-    var fullPath: String {
-        return "\(path).\(self.extension)".replacingOccurrences(of: "http://", with: "https://")
-    }
-}

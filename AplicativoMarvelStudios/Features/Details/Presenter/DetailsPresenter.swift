@@ -10,11 +10,11 @@ import UIKit
 //MARK: - Protocol
 protocol DetailsPresenting {
     func navigateBack() async
-    func getDetailsPerson(result: HeroesModel)
+    func getDetailsPerson(result: RMCharacter)
     func showResultAlertError(title: String, message: String)
     func showLoading()
     func hideLoading()
-    func updateDetails(id: HeroesModel, data: [HeroesModel]) async
+    func updateDetails(id: RMCharacter, data: [RMCharacter]) async
 }
 
 //MARK: - DetailsPresenter
@@ -37,7 +37,7 @@ final class DetailsPresenter {
 // MARK: - DetailsPresenting
 
 extension DetailsPresenter: DetailsPresenting {
-    func updateDetails(id: HeroesModel, data: [HeroesModel]) async {
+    func updateDetails(id: RMCharacter, data: [RMCharacter]) async {
         await coordinator.updateDetails(id: id, data: data)
     }
     
@@ -59,7 +59,7 @@ extension DetailsPresenter: DetailsPresenting {
             }
         }
 
-        func getDetailsPerson(result: HeroesModel) {
+    func getDetailsPerson(result: RMCharacter) {
             Task { @MainActor in
                 self.view?.getResultDataPerson(data: result)
             }

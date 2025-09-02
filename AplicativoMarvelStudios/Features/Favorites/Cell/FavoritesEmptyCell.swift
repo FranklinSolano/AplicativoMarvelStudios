@@ -18,6 +18,12 @@ final class FavoritesEmptyCell: UICollectionViewCell {
     
     // MARK: - Init
     
+    override init(frame: CGRect) {
+        self.dependencies = DependencyContainer() // ou sua dependência padrão
+        super.init(frame: frame)
+        setupView()
+    }
+    
     init(dependencies: HasDesignSystemComponentsInterface) {
         self.dependencies = dependencies
          super.init(frame: .zero)

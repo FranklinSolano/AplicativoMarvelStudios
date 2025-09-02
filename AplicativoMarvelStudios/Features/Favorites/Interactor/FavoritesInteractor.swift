@@ -18,14 +18,17 @@ protocol FavoritesInteracting {
 final class FavoritesInteractor {
     
     var presenter: FavoritesPresenting
-    private var service: FavoritesServicing?
+    private var dependenciesService: HasHttpServicesInterface
     
-    init(presenter: FavoritesPresenting, service: FavoritesServicing) {
+    init(presenter: FavoritesPresenting, dependenciesService: HasHttpServicesInterface) {
         self.presenter = presenter
-        self.service = service
+        self.dependenciesService = dependenciesService
     }
 }
 
 //MARK: - FavoritesInteracting
 
-extension FavoritesInteractor: FavoritesInteracting {}
+extension FavoritesInteractor: FavoritesInteracting {
+    
+//    let favoritesService = dependencies.httpServices.makeFavoritesService()
+}

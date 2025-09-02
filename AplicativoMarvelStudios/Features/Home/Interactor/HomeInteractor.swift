@@ -10,8 +10,8 @@ import UIKit
 // MARK: - Protocol
 
 protocol HomeInteracting {
-    func fetchHeroes()
-    func navigateToDetail(data: [HeroesModel], idPerson: HeroesModel)
+    func fetchChracters()
+    func navigateToDetail(character: RMCharacter, randomCharacters: [RMCharacter])
 }
 
 // MARK: - Interactor
@@ -21,13 +21,13 @@ final class HomeInteractor{
     // MARK: - Properties
     
     var presenter: HomePresenting
-    private var service: HomeService
+    private let dependenciesService: HasHttpServicesInterface
     
     // MARK: - Init
     
-    init(presenter: HomePresenting, service: HomeService) {
+    init(presenter: HomePresenting, dependenciesService: HasHttpServicesInterface) {
         self.presenter = presenter
-        self.service = service
+        self.dependenciesService = dependenciesService
     }
     
     //MARK: - Outher Methods
@@ -36,20 +36,24 @@ final class HomeInteractor{
 //MARK: - HomeInteracting
 
 extension HomeInteractor: HomeInteracting {
-    func navigateToDetail(data: [HeroesModel], idPerson: HeroesModel) {
+    
+    func navigateToDetail(character: RMCharacter, randomCharacters: [RMCharacter]) {
         Task {
-            await presenter.navigateToDetail(data: data, idPerson: idPerson)
+            await presenter.navigateToDetail(character: character, randomCharacters: randomCharacters)
         }
+        
     }
     
-    func fetchHeroes() {
+    func fetchChracters() {
         Task {
             await MainActor.run {
                 presenter.showLoading()
             }
             
-            service.fetchCharacters { [ weak self] result in
-                guard let self = self else { return }
+            let homeService = dependenciesService.httpServices.makeHomeService()
+            
+            homeService.fetchCharacters { [weak self] result in
+                guard let self = self else { return}
                 
                 Task { @MainActor in
                     switch result {

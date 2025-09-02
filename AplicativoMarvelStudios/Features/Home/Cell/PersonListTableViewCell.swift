@@ -18,9 +18,18 @@ final class PersonListTableViewCell: UITableViewCell {
     private let dependencies: HasDesignSystemComponentsInterface
     
     private lazy var imagePerson = dependencies.designSystemComponents.makeImageView()
-    private lazy var heroName = dependencies.designSystemComponents.makeLabel()
+    private lazy var characterName = dependencies.designSystemComponents.makeLabel()
+    private lazy var characterSpecies = dependencies.designSystemComponents.makeLabel()
 
     // MARK: - Init
+    
+    
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+            // Forneça as dependências usando o Resolver ou DependencyContainer
+            self.dependencies = DependencyContainer()
+            super.init(style: .default, reuseIdentifier: reuseIdentifier)
+            setupView()
+        }
     
     init(dependencies: HasDesignSystemComponentsInterface) {
         self.dependencies = dependencies
@@ -32,20 +41,29 @@ final class PersonListTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func configureLabels(){
-        heroName.setDTO(.init(text: "", textColor: DSColors.titleTextColor, font: DSFonts.subtitleSemibold16, numberOfLines: 0, textAlignment: .left))
+    private func configureLabels() {
+        characterName.setDTO(
+            .init(text: "",
+                  textColor: DSColors.titleTextColor,
+                  font: DSFonts.subtitleSemibold16,
+                  numberOfLines: 1,
+                  textAlignment: .left)
+        )
+        
+        characterSpecies.setDTO(
+            .init(text: "",
+                  textColor: DSColors.titleTextColor,
+                  font: DSFonts.captionLight14,
+                  numberOfLines: 1,
+                  textAlignment: .left)
+        )
     }
     
     // MARK: - Setup
-    
-    func setupCell(data: HeroesModel?) {
-        heroName.text = data?.heroName
-        
-        if let urlString = data?.imageURL {
-            imagePerson.setImage(from: urlString)
-        } else {
-            imagePerson.image = .placeholder
-        }
+    func setupCell(data: RMCharacter) {
+        characterName.text = data.name
+        characterSpecies.text = data.species
+        imagePerson.setImage(from: data.image)
     }
 }
 
@@ -55,7 +73,8 @@ extension PersonListTableViewCell: ViewCodeProtocol {
     
     func setupElements() {
         contentView.addSubview(imagePerson)
-        contentView.addSubview(heroName)
+        contentView.addSubview(characterName)
+        contentView.addSubview(characterSpecies)
     }
     
     func setupConstraints() {
@@ -66,9 +85,16 @@ extension PersonListTableViewCell: ViewCodeProtocol {
             make.width.equalTo(85)
         }
         
-        heroName.snp.makeConstraints { make in
+        characterName.snp.makeConstraints { make in
             make.leading.equalTo(imagePerson.snp.trailing).offset(15)
-            make.centerY.equalTo(imagePerson.snp.centerY)
+            make.top.equalTo(imagePerson.snp.top).offset(10)
+            make.trailing.equalToSuperview().inset(15)
+        }
+        
+        characterSpecies.snp.makeConstraints { make in
+            make.leading.equalTo(characterName.snp.leading)
+            make.top.equalTo(characterName.snp.bottom).offset(5)
+            make.trailing.equalToSuperview().inset(15)
         }
     }
     

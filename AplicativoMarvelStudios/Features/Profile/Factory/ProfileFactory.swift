@@ -20,11 +20,11 @@ final class ProfileFactory: UIViewController  {
         
         let presenter = ProfilePresenter(coordinator: coordinator)
         
-        let service = ProfileService()
+        let dependencies = DependencyContainer()
         
-        let interactor = ProfileInteractor(presenter: presenter, service: service)
+        let interactor = ProfileInteractor(presenter: presenter, dependenciesService: dependencies)
         
-        let profileVC = ProfileViewController(interactor: interactor)
+        let profileVC = ProfileViewController(interactor: interactor,dependencies: dependencies)
         
         presenter.view = profileVC
         coordinator.presenter = presenter

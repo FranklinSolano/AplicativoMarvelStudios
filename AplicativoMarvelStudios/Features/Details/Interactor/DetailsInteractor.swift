@@ -12,7 +12,7 @@ import UIKit
 protocol DetailsInteracting {
     func navigateBack()
     func fetchDetailsPerson(idPerson: Int)
-    func updateDetails(id: HeroesModel, data: [HeroesModel])
+    func updateDetails(id: RMCharacter, data: [RMCharacter])
 }
 
 //MARK: - DetailsInteractor
@@ -21,13 +21,13 @@ final class DetailsInteractor {
     
     //MARK: - Properties
     var presenter: DetailsPresenting
-    private var  service: DetailsServicing?
+    private var  dependenciesService: HasHttpServicesInterface
     
     //MARK: - Init
     
-    init(presenter: DetailsPresenting, service: DetailsServicing) {
+    init(presenter: DetailsPresenting, dependenciesService: HasHttpServicesInterface) {
         self.presenter = presenter
-        self.service = service
+        self.dependenciesService = dependenciesService
     }
 }
 
@@ -35,7 +35,7 @@ final class DetailsInteractor {
 
 extension DetailsInteractor: DetailsInteracting {
     
-    func updateDetails(id: HeroesModel, data: [HeroesModel])  {
+    func updateDetails(id: RMCharacter, data: [RMCharacter])  {
         Task {
             await presenter.updateDetails(id: id, data: data)
         }
@@ -44,7 +44,9 @@ extension DetailsInteractor: DetailsInteracting {
     func fetchDetailsPerson(idPerson: Int)  {
         presenter.showLoading()
         
-        service?.fetchCharacterDetail(id: idPerson, completion: { [weak self] result in
+        let detailsService = dependenciesService.httpServices.makeDetailsService()
+        
+        detailsService.fetchCharacterDetail(id: idPerson, completion: { [weak self] result in
             guard let self else { return }
             
             Task {
