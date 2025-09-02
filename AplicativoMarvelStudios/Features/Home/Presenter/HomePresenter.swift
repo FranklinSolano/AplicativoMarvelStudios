@@ -14,7 +14,7 @@ protocol HomePresenting {
     func showAlertError()
     func showLoading()
     func hideLoading()
-    func navigateToDetail(character: RMCharacter, teste: [RMCharacter])
+    func navigateToDetail(character: RMCharacter, randomCharacters: [RMCharacter])
 }
 
 // MARK: - Presenter
@@ -33,8 +33,8 @@ final class HomePresenter {
 
 // MARK: - HomePresenting
 extension HomePresenter: HomePresenting {
-    func navigateToDetail(character: RMCharacter, teste: [RMCharacter]) {
-        coordinator.navigateToDetail(character: character, teste: teste)
+    func navigateToDetail(character: RMCharacter, randomCharacters: [RMCharacter]) {
+        coordinator.navigateToDetail(character: character, randomCharacters: randomCharacters)
     }
     
     func presentCharacters(_ characters: [RMCharacter]) {

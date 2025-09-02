@@ -131,6 +131,6 @@ extension DetailsViewController: UICollectionViewDelegate, UICollectionViewDataS
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let idPerson = personListImage[indexPath.row]
-//        interactor.updateDetails(id: idPerson, data: self.personListImage)
+        interactor.updateDetails(id: idPerson, data: self.personListImage)
     }
 }
