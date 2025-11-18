@@ -26,13 +26,6 @@ jobs:
         sudo xcode-select -s "/Applications/Xcode.app/Contents/Developer"
         xcodebuild -version
 
-    - name: Detectar simulador automaticamente
-      id: detect-simulator
-      run: |
-        SIMULATOR=$(xcrun simctl list devices available | grep "iPhone" | head -1 | awk -F "(" '{print $1}' | xargs)
-        echo "Simulador detectado: $SIMULATOR"
-        echo "SIMULATOR=$SIMULATOR" >> $GITHUB_ENV
-
     - name: Cache SPM
       uses: actions/cache@v4
       with:
@@ -56,7 +49,7 @@ jobs:
           -project "${{ env.APP_NAME }}.xcodeproj" \
           -scheme "${{ env.SCHEME }}" \
           -configuration "${{ env.CONFIGURATION }}" \
-          -destination "platform=iOS Simulator,name=${{ env.SIMULATOR }}" \
+          -destination "platform=iOS Simulator" \
           -derivedDataPath DerivedData \
           CODE_SIGNING_ALLOWED=NO \
           | xcpretty
@@ -68,7 +61,7 @@ jobs:
           -project "${{ env.APP_NAME }}.xcodeproj" \
           -scheme "${{ env.SCHEME }}" \
           -configuration "${{ env.CONFIGURATION }}" \
-          -destination "platform=iOS Simulator,name=${{ env.SIMULATOR }}" \
+          -destination "platform=iOS Simulator" \
           clean build 2>&1 \
           | grep "warning:" || echo "✅ Nenhum warning encontrado!" >> $GITHUB_STEP_SUMMARY
 
@@ -98,11 +91,6 @@ jobs:
         sudo xcode-select -s "/Applications/Xcode_16.2.app/Contents/Developer" || \
         sudo xcode-select -s "/Applications/Xcode.app/Contents/Developer"
 
-    - name: Detectar simulador novamente
-      run: |
-        SIMULATOR=$(xcrun simctl list devices available | grep "iPhone" | head -1 | awk -F "(" '{print $1}' | xargs)
-        echo "SIMULATOR=$SIMULATOR" >> $GITHUB_ENV
-
     - name: Análise estática
       run: |
         set -o pipefail
@@ -110,7 +98,7 @@ jobs:
           -project "${{ env.APP_NAME }}.xcodeproj" \
           -scheme "${{ env.SCHEME }}" \
           -configuration Debug \
-          -destination "platform=iOS Simulator,name=${{ env.SIMULATOR }}" \
+          -destination "platform=iOS Simulator" \
           CODE_SIGNING_ALLOWED=NO | xcpretty
 
     - name: Procurar TODO/FIXME
