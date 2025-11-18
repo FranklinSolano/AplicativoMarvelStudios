@@ -37,6 +37,9 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-spm-
     
+    - name: Listar simuladores disponíveis
+      run: xcrun simctl list devices available
+    
     - name: Resolver dependências SPM
       run: |
         xcodebuild -resolvePackageDependencies \
