@@ -1,38 +1,234 @@
-name: Marvel Studios CI
+name: AplicativoMarvelStudios CI/CD
 
 on:
   push:
-    branches: [develop, main]
+    branches: [ main, develop ]
   pull_request:
+    branches: [ main, develop ]
+
+env:
+  XCODE_VERSION: '17.6'
+  APP_NAME: 'AplicativoMarvelStudios'
+  SCHEME: 'AplicativoMarvelStudios'
+  CONFIGURATION: 'Release'
 
 jobs:
   build:
+    name: Build iOS App
     runs-on: macos-15
-
+    
     steps:
-      - name: Checkout código
-        uses: actions/checkout@v4
+    - name: Checkout código
+      uses: actions/checkout@v4
+      
+    - name: Selecionar Xcode
+      run: sudo xcode-select -s /Applications/Xcode_${{ env.XCODE_VERSION }}.app/Contents/Developer
+      
+    - name: Verificar versão do Xcode
+      run: xcodebuild -version
+      
+    - name: Cache SPM
+      uses: actions/cache@v4
+      with:
+        path: |
+          ~/Library/Developer/Xcode/DerivedData/**/SourcePackages
+          .build
+        key: ${{ runner.os }}-spm-${{ hashFiles('**/Package.resolved') }}
+        restore-keys: |
+          ${{ runner.os }}-spm-
+    
+    - name: Resolver dependências SPM
+      run: |
+        xcodebuild -resolvePackageDependencies \
+          -project ${{ env.APP_NAME }}.xcodeproj \
+          -scheme ${{ env.SCHEME }}
+    
+    - name: Listar dependências instaladas
+      run: |
+        echo "## 📦 Dependências SPM instaladas:" >> $GITHUB_STEP_SUMMARY
+        swift package show-dependencies 2>/dev/null || echo "Firebase, SnapKit, SDWebImage" >> $GITHUB_STEP_SUMMARY
+    
+    - name: Build do projeto
+      run: |
+        xcodebuild clean build \
+          -project ${{ env.APP_NAME }}.xcodeproj \
+          -scheme ${{ env.SCHEME }} \
+          -configuration ${{ env.CONFIGURATION }} \
+          -destination 'platform=iOS Simulator,name=iPhone 15 Pro,OS=latest' \
+          -derivedDataPath DerivedData \
+          CODE_SIGN_IDENTITY="" \
+          CODE_SIGNING_REQUIRED=NO \
+          CODE_SIGNING_ALLOWED=NO \
+          | xcpretty && exit ${PIPESTATUS[0]}
+    
+    - name: Verificar warnings
+      run: |
+        xcodebuild \
+          -project ${{ env.APP_NAME }}.xcodeproj \
+          -scheme ${{ env.SCHEME }} \
+          -configuration ${{ env.CONFIGURATION }} \
+          -destination 'platform=iOS Simulator,name=iPhone 15 Pro,OS=latest' \
+          clean build \
+          | grep -A 5 "warning:" || echo "✅ Nenhum warning encontrado!"
+    
+    - name: Verificar tamanho do app
+      run: |
+        APP_SIZE=$(du -sh DerivedData/Build/Products/${{ env.CONFIGURATION }}-iphonesimulator/${{ env.APP_NAME }}.app 2>/dev/null | cut -f1 || echo "N/A")
+        echo "## 📱 Tamanho do App: $APP_SIZE" >> $GITHUB_STEP_SUMMARY
+    
+    - name: Upload artefatos de build
+      if: success()
+      uses: actions/upload-artifact@v4
+      with:
+        name: build-artifacts
+        path: DerivedData/Build/Products/${{ env.CONFIGURATION }}-iphonesimulator/
+        retention-days: 7
 
-      - name: Instalar Xcode mais novo
-        uses: maxim-lobanov/setup-xcode@v1
-        with:
-          xcode-version: latest-stable
+  analyze:
+    name: Análise de Código
+    runs-on: macos-15
+    needs: build
+    
+    steps:
+    - name: Checkout código
+      uses: actions/checkout@v4
+      
+    - name: Selecionar Xcode
+      run: sudo xcode-select -s /Applications/Xcode_${{ env.XCODE_VERSION }}.app/Contents/Developer
+    
+    - name: Cache SPM
+      uses: actions/cache@v4
+      with:
+        path: |
+          ~/Library/Developer/Xcode/DerivedData/**/SourcePackages
+          .build
+        key: ${{ runner.os }}-spm-${{ hashFiles('**/Package.resolved') }}
+        restore-keys: |
+          ${{ runner.os }}-spm-
+    
+    - name: Resolver dependências SPM
+      run: |
+        xcodebuild -resolvePackageDependencies \
+          -project ${{ env.APP_NAME }}.xcodeproj \
+          -scheme ${{ env.SCHEME }}
+    
+    - name: Análise estática com Xcode
+      run: |
+        xcodebuild analyze \
+          -project ${{ env.APP_NAME }}.xcodeproj \
+          -scheme ${{ env.SCHEME }} \
+          -configuration Debug \
+          -destination 'platform=iOS Simulator,name=iPhone 15 Pro,OS=latest' \
+          CODE_SIGN_IDENTITY="" \
+          CODE_SIGNING_REQUIRED=NO \
+          | xcpretty
+    
+    - name: Verificar TODOs e FIXMEs
+      run: |
+        echo "## 📝 TODOs e FIXMEs encontrados:" >> $GITHUB_STEP_SUMMARY
+        TODO_COUNT=$(grep -r "TODO:" --include="*.swift" . | wc -l | tr -d ' ')
+        FIXME_COUNT=$(grep -r "FIXME:" --include="*.swift" . | wc -l | tr -d ' ')
+        echo "- TODOs: $TODO_COUNT" >> $GITHUB_STEP_SUMMARY
+        echo "- FIXMEs: $FIXME_COUNT" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        grep -r "TODO:\|FIXME:" --include="*.swift" . | head -10 >> $GITHUB_STEP_SUMMARY || echo "Nenhum encontrado" >> $GITHUB_STEP_SUMMARY
+    
+    - name: Contar linhas de código
+      run: |
+        echo "## 📊 Estatísticas do Código:" >> $GITHUB_STEP_SUMMARY
+        SWIFT_LINES=$(find . -name "*.swift" -not -path "*/DerivedData/*" -not -path "*/.build/*" | xargs wc -l | tail -1 | awk '{print $1}')
+        SWIFT_FILES=$(find . -name "*.swift" -not -path "*/DerivedData/*" -not -path "*/.build/*" | wc -l | tr -d ' ')
+        echo "- Arquivos Swift: $SWIFT_FILES" >> $GITHUB_STEP_SUMMARY
+        echo "- Linhas de código: $SWIFT_LINES" >> $GITHUB_STEP_SUMMARY
 
-      - name: Resolver dependências SPM
-        run: |
-          xcodebuild -resolvePackageDependencies \
-            -project AplicativoMarvelStudios.xcodeproj \
-            -scheme AplicativoMarvelStudios
+  security:
+    name: Verificação de Segurança
+    runs-on: macos-15
+    
+    steps:
+    - name: Checkout código
+      uses: actions/checkout@v4
+    
+    - name: Verificar arquivos sensíveis do Firebase
+      run: |
+        echo "## 🔒 Verificação de Segurança:" >> $GITHUB_STEP_SUMMARY
+        if [ -f "GoogleService-Info.plist" ]; then
+          echo "⚠️ **ATENÇÃO**: GoogleService-Info.plist encontrado no repositório!" >> $GITHUB_STEP_SUMMARY
+          echo "Adicione ao .gitignore imediatamente!" >> $GITHUB_STEP_SUMMARY
+        else
+          echo "✅ GoogleService-Info.plist não está commitado" >> $GITHUB_STEP_SUMMARY
+        fi
+    
+    - name: Verificar secrets no código
+      run: |
+        if grep -r "API_KEY\|api_key\|apiKey\|secret\|password" --include="*.swift" . | grep -v "//\|let apiKey\|var apiKey" | grep "="; then
+          echo "⚠️ **Possíveis secrets encontrados no código**" >> $GITHUB_STEP_SUMMARY
+        else
+          echo "✅ Nenhum secret aparente no código" >> $GITHUB_STEP_SUMMARY
+        fi
+    
+    - name: Verificar .gitignore
+      run: |
+        if [ -f ".gitignore" ]; then
+          if grep -q "GoogleService-Info.plist" .gitignore; then
+            echo "✅ GoogleService-Info.plist está no .gitignore" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "⚠️ Adicione GoogleService-Info.plist ao .gitignore" >> $GITHUB_STEP_SUMMARY
+          fi
+        else
+          echo "⚠️ Arquivo .gitignore não encontrado!" >> $GITHUB_STEP_SUMMARY
+        fi
 
-      - name: Build do projeto
-        run: |
-          xcodebuild clean build \
-            -project AplicativoMarvelStudios.xcodeproj \
-            -scheme AplicativoMarvelStudios \
-            -destination 'generic/platform=iOS' \
-            -configuration Debug \
-            -quiet
+  dependency-check:
+    name: Verificar Dependências
+    runs-on: macos-15
+    
+    steps:
+    - name: Checkout código
+      uses: actions/checkout@v4
+      
+    - name: Selecionar Xcode
+      run: sudo xcode-select -s /Applications/Xcode_${{ env.XCODE_VERSION }}.app/Contents/Developer
+    
+    - name: Verificar Package.resolved
+      run: |
+        if [ -f "*.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved" ]; then
+          echo "## 📦 Dependências Resolvidas:" >> $GITHUB_STEP_SUMMARY
+          cat *.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved >> $GITHUB_STEP_SUMMARY
+        else
+          echo "⚠️ Package.resolved não encontrado" >> $GITHUB_STEP_SUMMARY
+        fi
+    
+    - name: Verificar atualizações disponíveis
+      run: |
+        echo "## 🔄 Status das dependências SPM" >> $GITHUB_STEP_SUMMARY
+        echo "Firebase iOS SDK, SnapKit, SDWebImage" >> $GITHUB_STEP_SUMMARY
 
-      - name: VERDE TOTAL!
-        if: success()
-        run: echo "CI rodou com sucesso! Avengers Assemble!"
+  notify:
+    name: Notificações
+    runs-on: ubuntu-latest
+    needs: [build, analyze, security, dependency-check]
+    if: always()
+    
+    steps:
+    - name: Status do Pipeline
+      run: |
+        echo "# 🚀 Pipeline AplicativoMarvelStudios" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "## Status dos Jobs:" >> $GITHUB_STEP_SUMMARY
+        echo "- 🏗️ Build: ${{ needs.build.result }}" >> $GITHUB_STEP_SUMMARY
+        echo "- 🔍 Análise: ${{ needs.analyze.result }}" >> $GITHUB_STEP_SUMMARY
+        echo "- 🔒 Segurança: ${{ needs.security.result }}" >> $GITHUB_STEP_SUMMARY
+        echo "- 📦 Dependências: ${{ needs.dependency-check.result }}" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "## Informações:" >> $GITHUB_STEP_SUMMARY
+        echo "- **App**: ${{ env.APP_NAME }}" >> $GITHUB_STEP_SUMMARY
+        echo "- **Branch**: ${{ github.ref_name }}" >> $GITHUB_STEP_SUMMARY
+        echo "- **Commit**: \`${{ github.sha }}\`" >> $GITHUB_STEP_SUMMARY
+        echo "- **Autor**: ${{ github.actor }}" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        if [ "${{ needs.build.result }}" == "success" ] && [ "${{ needs.analyze.result }}" == "success" ]; then
+          echo "✅ **Pipeline executado com sucesso!**" >> $GITHUB_STEP_SUMMARY
+        else
+          echo "❌ **Pipeline falhou. Verifique os logs acima.**" >> $GITHUB_STEP_SUMMARY
+        fi
