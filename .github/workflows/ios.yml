@@ -7,7 +7,7 @@ on:
     branches: [ main, develop ]
 
 env:
-  XCODE_VERSION: '17.6'
+  XCODE_VERSION: '16.2'
   APP_NAME: 'AplicativoMarvelStudios'
   SCHEME: 'AplicativoMarvelStudios'
   CONFIGURATION: 'Release'
@@ -22,10 +22,10 @@ jobs:
       uses: actions/checkout@v4
       
     - name: Selecionar Xcode
-      run: sudo xcode-select -s /Applications/Xcode_${{ env.XCODE_VERSION }}.app/Contents/Developer
-      
-    - name: Verificar versão do Xcode
-      run: xcodebuild -version
+      run: |
+        sudo xcode-select -s /Applications/Xcode_16.2.app/Contents/Developer || \
+        sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
+        xcodebuild -version
       
     - name: Cache SPM
       uses: actions/cache@v4
@@ -94,7 +94,10 @@ jobs:
       uses: actions/checkout@v4
       
     - name: Selecionar Xcode
-      run: sudo xcode-select -s /Applications/Xcode_${{ env.XCODE_VERSION }}.app/Contents/Developer
+      run: |
+        sudo xcode-select -s /Applications/Xcode_16.2.app/Contents/Developer || \
+        sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
+        xcodebuild -version
     
     - name: Cache SPM
       uses: actions/cache@v4
@@ -188,7 +191,10 @@ jobs:
       uses: actions/checkout@v4
       
     - name: Selecionar Xcode
-      run: sudo xcode-select -s /Applications/Xcode_${{ env.XCODE_VERSION }}.app/Contents/Developer
+      run: |
+        sudo xcode-select -s /Applications/Xcode_16.2.app/Contents/Developer || \
+        sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
+        xcodebuild -version
     
     - name: Verificar Package.resolved
       run: |
