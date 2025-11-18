@@ -21,22 +21,18 @@ jobs:
       - name: 3 - Baixa Firebase, SnapKit e SDWebImage (SPM)
         run: xcodebuild -resolvePackageDependencies -project AplicativoMarvelStudios.xcodeproj
 
-      - name: 4 - Cria o simulador iPhone 15 com iOS 16.0 (existe de verdade!)
-        run: |
-          xcrun simctl create "iPhone 15" com.apple.CoreSimulator.SimDeviceType.iPhone-15 "com.apple.CoreSimulator.SimRuntime.iOS-16-0" || true
-
-      - name: 5 - COMPILA EXATAMENTE COMO NO SEU MAC (mas com iPhone 15)
+      - name: 4 - COMPILA NO SIMULADOR iOS 17.6 (igual ao seu projeto agora!)
         run: |
           xcodebuild clean build \
             -project AplicativoMarvelStudios.xcodeproj \
             -scheme AplicativoMarvelStudios \
-            -destination 'platform=iOS Simulator,name=iPhone 15,OS=16.0' \
+            -destination 'platform=iOS Simulator,name=iPhone 15,OS=17.6' \
             -quiet
 
-      - name: AVENGERS ASSEMBLE! Compilou perfeitamente!
+      - name: AVENGERS ASSEMBLE! Compilou perfeitamente no iOS 17.6!
         if: success()
-        run: echo "DEU VERDE! Seu app Marvel tá voando no GitHub!"
+        run: echo "DEU VERDE! Seu app Marvel tá pronto pro futuro!"
 
-      - name: Deu erro de novo?
+      - name: Deu erro?
         if: failure()
-        run: echo "Me manda o log que eu resolvo – mas dessa vez é verde na certa!"
+        run: echo "Me manda o log vermelho que eu arrumo"
