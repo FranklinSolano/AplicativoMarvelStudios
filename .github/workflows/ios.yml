@@ -1,13 +1,14 @@
-name: iOS CI
+name: iOS CI – AplicativoMarvelStudios
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "develop" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "main", "develop" ]
 
 jobs:
   build:
+    name: Build iOS App
     runs-on: macos-latest
 
     env:
@@ -25,7 +26,7 @@ jobs:
     - name: List Simulators
       run: xcrun simctl list
 
-    - name: Get Any Available iOS Simulator
+    - name: Detect Available Simulator
       id: find-sim
       run: |
         DEVICE=$(xcrun simctl list devices available | grep -m1 "Booted" | awk -F '[()]' '{print $2}')
@@ -37,20 +38,53 @@ jobs:
     - name: Boot Simulator (if needed)
       run: xcrun simctl boot "${{ steps.find-sim.outputs.device_id }}" || true
 
-    - name: Build App
+    # 🔹 Resolve Swift Packages (importante!)
+    - name: Resolve Swift Packages
+      run: xcodebuild -resolvePackageDependencies -project "${PROJECT}"
+
+    # 🔹 Build Debug (garante que tudo compila no ambiente normal)
+    - name: Build Debug
       run: |
         set -o pipefail
         xcodebuild \
           -project "${PROJECT}" \
           -scheme "${SCHEME}" \
-          -configuration "${CONFIGURATION}" \
+          -configuration Debug \
           -destination "id=${{ steps.find-sim.outputs.device_id }}" \
-          -derivedDataPath DerivedData \
+          -derivedDataPath DerivedDataDebug \
           CODE_SIGNING_ALLOWED=NO \
         | xcpretty
 
-    - name: Archive Build Artifacts
+    # 🔹 Build Release (build final)
+    - name: Build Release
+      run: |
+        set -o pipefail
+        xcodebuild \
+          -project "${PROJECT}" \
+          -scheme "${SCHEME}" \
+          -configuration Release \
+          -destination "id=${{ steps.find-sim.outputs.device_id }}" \
+          -derivedDataPath DerivedDataRelease \
+          CODE_SIGNING_ALLOWED=NO \
+        | xcpretty
+
+    # 🔹 Warning Checker
+    - name: Check Build Warnings
+      run: |
+        echo "### Build Warnings ###"
+        xcodebuild \
+          -project "${PROJECT}" \
+          -scheme "${SCHEME}" \
+          -configuration Debug \
+          -destination "id=${{ steps.find-sim.outputs.device_id }}" \
+          clean build 2>&1 | grep "warning:" || echo "Nenhum warning encontrado"
+
+    # 🔹 Upload artifacts (opcional mas muito útil)
+    - name: Upload Build Artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: Build
-        path: DerivedData
+        name: build-output
+        path: |
+          DerivedDataDebug
+          DerivedDataRelease
+
