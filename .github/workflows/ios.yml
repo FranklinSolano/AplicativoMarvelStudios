@@ -7,7 +7,7 @@ on:
 
 jobs:
   build-and-test:
-    runs-on: macos-15   # máquina da Apple com Xcode rapidinho
+    runs-on: macos-15   # Máquina nova e rápida
 
     steps:
       - name: 1 - Pega todos os arquivos do seu projeto
@@ -26,7 +26,7 @@ jobs:
           xcodebuild clean build \
             -project AplicativoMarvelStudios.xcodeproj \
             -scheme AplicativoMarvelStudios \
-            -destination 'platform=iOS Simulator,name=iPhone 15,OS=18.0' \
+            -destination 'platform=iOS Simulator,name=iPhone 15,OS=17.5' \
             -quiet
 
       - name: Sucesso! Marvel tá compilando!
