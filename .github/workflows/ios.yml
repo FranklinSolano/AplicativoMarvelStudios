@@ -7,7 +7,7 @@ on:
 
 jobs:
   build-and-test:
-    runs-on: macos-13   # máquina da Apple com Xcode rapidinho
+    runs-on: macos-15   # máquina da Apple com Xcode rapidinho
 
     steps:
       - name: 1 - Pega todos os arquivos do seu projeto
