@@ -23,7 +23,7 @@ enum DSColors {
             case .dark:
                 return UIColor(red: 8/255, green: 127/255, blue: 1/255, alpha: 1)
             default:
-                return UIColor(red: 38/255, green: 104/255, blue: 115/255, alpha: 1) // #3A69D7
+                return UIColor(red: 40/255, green: 180/255, blue: 35/255, alpha: 1) // #3A69D7
             }
         }
     }()

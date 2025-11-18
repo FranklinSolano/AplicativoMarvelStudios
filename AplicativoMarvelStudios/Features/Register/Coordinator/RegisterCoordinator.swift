@@ -8,7 +8,7 @@
 import UIKit
 
 protocol RegisterCoordinating {
-    
+    func navigationBackButtonCoordinator()
 }
 
 final class RegisterCoordinator {
@@ -18,6 +18,11 @@ final class RegisterCoordinator {
 }
 
 extension RegisterCoordinator: RegisterCoordinating {
+    func navigationBackButtonCoordinator() {
+        guard let navigationController else {return}
+        navigationController.popViewController(animated: true)
+    }
+    
     
     
 }

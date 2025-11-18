@@ -81,8 +81,8 @@ extension PersonListTableViewCell: ViewCodeProtocol {
         imagePerson.snp.makeConstraints { make in
             make.leading.equalToSuperview().offset(15)
             make.centerY.equalToSuperview()
-            make.height.equalTo(95)
-            make.width.equalTo(85)
+            make.height.equalTo(130)
+            make.width.equalTo(120)
         }
         
         characterName.snp.makeConstraints { make in
@@ -104,3 +104,4 @@ extension PersonListTableViewCell: ViewCodeProtocol {
         configureLabels()
     }
 }
+

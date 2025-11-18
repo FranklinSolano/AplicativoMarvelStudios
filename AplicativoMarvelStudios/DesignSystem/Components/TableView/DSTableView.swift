@@ -23,6 +23,7 @@ final class DSTableViewAdapter: UITableView, TableViewing {
     init() {
         super.init(frame: .zero, style: .plain)
         backgroundColor = DSColors.secondaryColor
+        self.translatesAutoresizingMaskIntoConstraints = false
     }
 
     required init?(coder: NSCoder) {

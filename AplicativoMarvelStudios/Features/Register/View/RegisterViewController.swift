@@ -8,7 +8,7 @@
 import UIKit
 
 protocol RegisterViewControllerDisplay: AnyObject {
-    
+    func showAlertErrorPassword(title: String, message: String)
 }
 
 final class RegisterViewController: UIViewController {
@@ -23,6 +23,7 @@ final class RegisterViewController: UIViewController {
         self.dependencies = dependencies
         self.screen = RegisterScreen(dependencies: dependencies)
         super.init(nibName: nil , bundle: nil)
+        self.screen.delegate = self
     }
     
     required init?(coder: NSCoder) {
@@ -39,5 +40,21 @@ final class RegisterViewController: UIViewController {
 }
 
 extension RegisterViewController: RegisterViewControllerDisplay {
+    
+    func showAlertErrorPassword(title: String, message: String) {
+        self.getAlertController(title: title, message: message)
+    }
+    
+    
+}
+
+extension RegisterViewController: RegisterScreenProtocol {
+    func actionBackButton() {
+        interactor.navigationBackButtonInteractor()
+    }
+    
+    func actionRegisterButton() {
+    }
+    
     
 }

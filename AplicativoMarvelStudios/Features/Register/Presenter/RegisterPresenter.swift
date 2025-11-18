@@ -8,7 +8,8 @@
 import UIKit
 
 protocol RegisterPresenting {
-    
+    func navigationBackButtonPresenter()
+    func validationPasswordFail()
 }
 
 final class RegisterPresenter {
@@ -22,5 +23,13 @@ final class RegisterPresenter {
 }
 
 extension RegisterPresenter: RegisterPresenting {
+    func validationPasswordFail() {
+        view?.showAlertErrorPassword(title: "Atencao", message: "Senha divergentes, tente novamente!")
+    }
+    
+    func navigationBackButtonPresenter() {
+        coordinator.navigationBackButtonCoordinator()
+    }
+    
     
 }

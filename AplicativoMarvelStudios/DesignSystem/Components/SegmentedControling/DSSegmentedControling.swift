@@ -24,6 +24,7 @@ final class DSSegmentedControlAdapter: UISegmentedControl, SegmentedControling {
     init(items: [String] = []) {
         super.init(items: items)
         addTarget(self, action: #selector(valueChanged), for: .valueChanged)
+        self.translatesAutoresizingMaskIntoConstraints = false
     }
 
     required init?(coder: NSCoder) {
