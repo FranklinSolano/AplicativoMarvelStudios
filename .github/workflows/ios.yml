@@ -6,14 +6,14 @@ on:
   pull_request:
 
 jobs:
-  build-and-test:
-    runs-on: macos-15   # Máquina nova e rápida
+  build:
+    runs-on: macos-15
 
     steps:
-      - name: 1 - Pega todos os arquivos do seu projeto
+      - name: 1 - Pega o código
         uses: actions/checkout@v4
 
-      - name: 2 - Escolhe o Xcode mais novo e bom
+      - name: 2 - Escolhe o Xcode mais novo
         uses: maxim-lobanov/setup-xcode@v1
         with:
           xcode-version: latest-stable
@@ -21,18 +21,22 @@ jobs:
       - name: 3 - Baixa Firebase, SnapKit e SDWebImage (SPM)
         run: xcodebuild -resolvePackageDependencies -project AplicativoMarvelStudios.xcodeproj
 
-      - name: 4 - COMPILA O APP (o mais importante!)
+      - name: 4 - Cria o simulador iPhone 17 Pro com iOS 16.0 (igual no seu Mac)
+        run: |
+          xcrun simctl create "iPhone 17 Pro" "iPhone 17 Pro" "iOS16.0" || true
+
+      - name: 5 - COMPILA EXATAMENTE COMO VOCÊ USA NO SEU MAC
         run: |
           xcodebuild clean build \
             -project AplicativoMarvelStudios.xcodeproj \
             -scheme AplicativoMarvelStudios \
-            -destination 'platform=iOS Simulator,name=iPhone 15,OS=17.5' \
+            -destination 'platform=iOS Simulator,name=iPhone 17 Pro,OS=16.0' \
             -quiet
 
-      - name: Sucesso! Marvel tá compilando!
+      - name: AVENGERS ASSEMBLE! Compilou igualzinho no seu Mac!
         if: success()
-        run: echo "SEU APP MARVEL ESTÁ PRONTO! AVENGERS ASSEMBLE!"
+        run: echo "DEU VERDE! Seu app Marvel tá perfeito!"
 
-      - name: Deu ruim :(
+      - name: Deu erro?
         if: failure()
-        run: echo "Deu erro, mas a gente arruma rapidinho!"
+        run: echo "Me manda o log vermelho que eu arrumo em 5 segundos"
