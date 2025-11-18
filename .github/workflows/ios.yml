@@ -2,7 +2,7 @@ name: Marvel Studios CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, develop ]
   pull_request:
 
 jobs:
@@ -13,22 +13,31 @@ jobs:
       - name: Checkout código
         uses: actions/checkout@v4
 
-      - name: Xcode mais novo
+      - name: Selecionar Xcode estável
         uses: maxim-lobanov/setup-xcode@v1
         with:
           xcode-version: latest-stable
 
-      - name: Resolve SPM
-        run: xcodebuild -resolvePackageDependencies -project AplicativoMarvelStudios.xcodeproj
+      - name: Cache SwiftPM
+        uses: actions/cache@v3
+        with:
+          path: ~/.swiftpm
+          key: ${{ runner.os }}-spm-${{ hashFiles('**/Package.resolved') }}
 
-      - name: Build (iOS Simulator)
+      - name: Resolver dependências (SPM)
+        run: xcodebuild \
+          -resolvePackageDependencies \
+          -project AplicativoMarvelStudios.xcodeproj
+
+      - name: Build em simulador
         run: |
-          xcodebuild clean build-for-testing \
+          xcodebuild \
             -project AplicativoMarvelStudios.xcodeproj \
             -scheme AplicativoMarvelStudios \
             -destination 'platform=iOS Simulator,name=iPhone 15' \
-            -quiet
+            -quiet \
+            build
 
-      - name: VERDE TOTAL!
+      - name: Tudo certo!
         if: success()
-        run: echo "DEU VERDE EM 60 SEGUNDOS! AVENGERS ASSEMBLE!"
+        run: echo "🔥 Build finalizado com sucesso — pipeline rodando na main e develop!"
