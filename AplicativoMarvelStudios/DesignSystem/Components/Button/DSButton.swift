@@ -17,6 +17,7 @@ class DSButton: UIButton {
         self.backgroundColor = DSColors.secondaryColor
         self.clipsToBounds = true
         self.layer.cornerRadius = 15
+        self.translatesAutoresizingMaskIntoConstraints = false
     }
     
     required init?(coder: NSCoder) {
@@ -32,6 +33,7 @@ class DSButtonTitles: UIButton {
         super.init(frame: frame)
         self.setTitleColor(DSColors.titleTextColor, for: .normal)
         self.backgroundColor = .clear
+        self.translatesAutoresizingMaskIntoConstraints = false
     }
     
     required init?(coder: NSCoder) {

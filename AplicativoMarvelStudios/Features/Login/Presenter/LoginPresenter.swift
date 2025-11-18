@@ -54,7 +54,7 @@ extension LoginPresenter: LoginPresenting {
     }
     
     func presentNavigateToRegister() {
-        
+        coordinator.navigateToRegister()
     }
     
     func presentNavigateToForgotPassword() {

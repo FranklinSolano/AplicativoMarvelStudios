@@ -26,7 +26,7 @@ final class LoginScreen: UIView {
     var delegate: LoginScreenProtocol?
     private let dependencies: HasDesignSystemComponentsInterface
     
-    private lazy var imageBackgroud = dependencies.designSystemComponents.makeImageView()
+    private lazy var imageBackground = dependencies.designSystemComponents.makeImageView()
     private lazy var emailLabel = dependencies.designSystemComponents.makeLabel()
     private lazy var emailTextField = dependencies.designSystemComponents.makeTextField()
     private lazy var passwordLabel = dependencies.designSystemComponents.makeLabel()
@@ -51,7 +51,7 @@ final class LoginScreen: UIView {
         endEditing(true)  // Fecha o teclado ao tocar fora dos campos de texto
     }
     
-    // MARK: - Outher Methods
+    // MARK: - Other Methods
     
     private func setupTapGesture() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
@@ -59,7 +59,7 @@ final class LoginScreen: UIView {
     }
     
     private func configureImage(){
-        imageBackgroud.image = UIImage(named: "loginBackgroud")
+        imageBackground.image = UIImage(named: "loginBackgroud")
     }
     
     private func configureLabels(){
@@ -119,7 +119,7 @@ extension LoginScreen: ViewCodeProtocol {
     // MARK: - Setup Methods
     
     func setupElements() {
-        addSubview(imageBackgroud)
+        addSubview(imageBackground)
         addSubview(emailLabel)
         addSubview(emailTextField)
         addSubview(passwordLabel)
@@ -131,7 +131,7 @@ extension LoginScreen: ViewCodeProtocol {
     
     func setupConstraints() {
         
-        imageBackgroud.snp.makeConstraints { make in
+        imageBackground.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
         
@@ -164,10 +164,11 @@ extension LoginScreen: ViewCodeProtocol {
         
         loginButton.snp.makeConstraints { make in
             make.top.equalTo(forgotPasswordButton.snp.bottom).offset(20)
-            make.leading.trailing.equalToSuperview().inset(25)
             make.height.equalTo(50)
+            make.width.equalTo(185)
+            make.centerX.equalToSuperview()
         }
-        
+
         registerButton.snp.makeConstraints { make in
             make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom)
             make.centerX.equalToSuperview()

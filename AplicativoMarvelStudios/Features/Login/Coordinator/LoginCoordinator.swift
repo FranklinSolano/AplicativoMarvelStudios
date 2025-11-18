@@ -16,7 +16,7 @@ protocol LoginCoordinating: AnyObject{
 }
 @MainActor
 final class LoginCoordinator {
-
+    
     var navigationController: UINavigationController?
     var presenter: LoginPresenting?
     
@@ -42,9 +42,10 @@ extension LoginCoordinator: LoginCoordinating {
     }
     
     func navigateToRegister() {
-        //        guard let navigationController else { return }
-        //        let register = TabbarViewController(homeFactory: homeFactory)
-        //        navigationController.setViewControllers([tabBarController], animated: true)
+        guard let navigationController else { return }
+        let registerFactory = RegisterFactory()
+        let registerVC = registerFactory.make(navigationController: navigationController)
+        navigationController.pushViewController(registerVC, animated: true)
     }
     
     

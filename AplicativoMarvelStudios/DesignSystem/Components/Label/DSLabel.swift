@@ -47,6 +47,7 @@ class DSLabel: UILabel {
         self.font = dto.font
         self.numberOfLines = dto.numberOfLines
         self.textAlignment = dto.textAlignment
+        self.translatesAutoresizingMaskIntoConstraints = false
     }
 }
 

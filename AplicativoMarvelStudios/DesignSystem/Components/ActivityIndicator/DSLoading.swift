@@ -23,6 +23,7 @@ final class DSActivityIndicatorAdapter: UIActivityIndicatorView, LoadingIndicata
         super.init(style: .large)
         hidesWhenStopped = true
         color = DSColors.titleTextColor
+        self.translatesAutoresizingMaskIntoConstraints = false
     }
 
     required init(coder: NSCoder) {

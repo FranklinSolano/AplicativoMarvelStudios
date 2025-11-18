@@ -47,6 +47,7 @@ class DSTextField: UITextField {
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 12, height: 0))
         self.leftView = paddingView
         self.leftViewMode = .always
+        self.translatesAutoresizingMaskIntoConstraints = false
     }
     
     func setDTO(_ dto: TextFieldDTO) {

@@ -31,6 +31,7 @@ class DSImageView: UIImageView {
         self.contentMode = .scaleAspectFill
         self.clipsToBounds = true
         self.layer.cornerRadius = 15
+        self.translatesAutoresizingMaskIntoConstraints = false
     }
 }
 

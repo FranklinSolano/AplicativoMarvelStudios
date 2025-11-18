@@ -79,18 +79,6 @@ final class ProfileScreen: UIView {
     
     
     // MARK: - Actions
-    
-    private func configTranslatesAutoresizingMaskIntoConstraints(){
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        imageUser.translatesAutoresizingMaskIntoConstraints = false
-        nameUserLabel.translatesAutoresizingMaskIntoConstraints = false
-        emailLabel.translatesAutoresizingMaskIntoConstraints = false
-        emailTextField.translatesAutoresizingMaskIntoConstraints = false
-        exitButton.translatesAutoresizingMaskIntoConstraints = false
-        selectThemeLabel.translatesAutoresizingMaskIntoConstraints = false
-        themeSwitcher.translatesAutoresizingMaskIntoConstraints = false
-        descriptionVersionApp.translatesAutoresizingMaskIntoConstraints = false
-    }
 }
 
 // MARK: - ViewCodeProtocol
@@ -152,7 +140,6 @@ extension ProfileScreen: ViewCodeProtocol {
         configureTextFields()
         configureButtons()
         configureSegmentedControl()
-        configTranslatesAutoresizingMaskIntoConstraints()
         imageUser.tintColor = DSColors.secondaryColor
     }
 }

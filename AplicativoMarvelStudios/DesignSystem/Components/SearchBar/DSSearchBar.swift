@@ -25,6 +25,7 @@ final class DSSearchBarAdapter: UISearchBar, SearchBaring {
         barTintColor = DSColors.secondaryColor
         searchBarStyle = .minimal
         searchTextField.backgroundColor = DSColors.secondaryColor
+        self.translatesAutoresizingMaskIntoConstraints = false
     }
 
     required init?(coder: NSCoder) {
