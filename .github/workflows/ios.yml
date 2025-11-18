@@ -1,0 +1,38 @@
+name: Marvel Studios CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  build-and-test:
+    runs-on: macos-13   # máquina da Apple com Xcode rapidinho
+
+    steps:
+      - name: 1 - Pega todos os arquivos do seu projeto
+        uses: actions/checkout@v4
+
+      - name: 2 - Escolhe o Xcode mais novo e bom
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+
+      - name: 3 - Baixa Firebase, SnapKit e SDWebImage (SPM)
+        run: xcodebuild -resolvePackageDependencies -project AplicativoMarvelStudios.xcodeproj
+
+      - name: 4 - COMPILA O APP (o mais importante!)
+        run: |
+          xcodebuild clean build \
+            -project AplicativoMarvelStudios.xcodeproj \
+            -scheme AplicativoMarvelStudios \
+            -destination 'platform=iOS Simulator,name=iPhone 15,OS=18.0' \
+            -quiet
+
+      - name: Sucesso! Marvel tá compilando!
+        if: success()
+        run: echo "SEU APP MARVEL ESTÁ PRONTO! AVENGERS ASSEMBLE!"
+
+      - name: Deu ruim :(
+        if: failure()
+        run: echo "Deu erro, mas a gente arruma rapidinho!"
