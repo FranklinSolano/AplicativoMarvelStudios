@@ -50,7 +50,7 @@ final class DetailsService: DetailsServicing {
                        id: character.id ?? 0,
                        heroName: character.name,
                        imageURL: character.thumbnail.fullPath,
-                       descrepitionPerson: character.description
+                       descrepitionPerson: character.description ?? ""
                    )
                    completion(.success(hero))
                    

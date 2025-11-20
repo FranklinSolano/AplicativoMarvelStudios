@@ -20,7 +20,7 @@ final class FavoritesCoordinator: FavoritesCoordinating {
     
     // MARK: - Properties
     
-    var navigationController: UINavigationController? //weak
+   weak var navigationController: UINavigationController? 
     var presenter: FavoritesPresenting?
     
     // MARK: - Navigation Methods

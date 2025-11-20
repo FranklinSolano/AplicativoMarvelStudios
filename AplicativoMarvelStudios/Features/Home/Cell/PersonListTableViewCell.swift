@@ -10,51 +10,52 @@ import SnapKit
 import SDWebImage
 
 // MARK: - PersonListTableViewCell
-
 final class PersonListTableViewCell: UITableViewCell {
-    
-    // MARK: - Properties
     
     static let identifier: String = "PersonListTableViewCell"
     
-    // MARK: - UI Elements
+    // MARK: - Properties
     
-    private lazy var imagePerson: UIImageView = {
-        let imageView = DSImageView(image: .placeholder)
-        return imageView
-    }()
-    
-    private lazy var heroName: UILabel = {
-        let label = DSLabel(text: "", textColor: DSColors.titleTextColor, font: DSFonts.subtitleSemibold16, numberOfLines: 0, textAlignment: .left)
-        return label
-    }()
-    
+    private let imagePerson: ImageViewing
+    private let heroName: Labeling
+
     // MARK: - Init
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    init(
+        imagePerson: ImageViewing = DSImageViewAdapter(image: .placeholder),
+        heroName: Labeling = DSLabelAdapter()
+    ) {
+        self.imagePerson = imagePerson
+        self.heroName = heroName
+        super.init(style: .default, reuseIdentifier: Self.identifier)
         setupView()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Outher Methods
+    private func configureLabels(){
+        heroName.setDTO(.init(text: "", textColor: DSColors.titleTextColor, font: DSFonts.subtitleSemibold16, numberOfLines: 0, textAlignment: .left))
+    }
+    
+    // MARK: - Setup
     
     func setupCell(data: HeroesModel?) {
         heroName.text = data?.heroName
         
-        if let urlString = data?.imageURL, let url = URL(string: urlString) {
-            imagePerson.sd_setImage(with: url, placeholderImage: UIImage(named: "placeholder"))
+        if let urlString = data?.imageURL {
+            imagePerson.setImage(from: urlString)
         } else {
-            imagePerson.image = UIImage(named: "placeholder")
+            imagePerson.image = .placeholder
         }
-    }}
+    }
+}
+
 
 // MARK: - ViewCodeProtocol
-
 extension PersonListTableViewCell: ViewCodeProtocol {
+    
     func setupElements() {
         addSubview(imagePerson)
         addSubview(heroName)
@@ -72,11 +73,11 @@ extension PersonListTableViewCell: ViewCodeProtocol {
             make.leading.equalTo(imagePerson.snp.trailing).offset(15)
             make.centerY.equalTo(imagePerson.snp.centerY)
         }
-        
     }
     
     func setupAdditionalConfiguration() {
         backgroundColor = DSColors.primaryColor
         selectionStyle = .none
+        configureLabels()
     }
 }

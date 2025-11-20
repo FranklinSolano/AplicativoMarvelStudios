@@ -23,7 +23,7 @@ final class HomeViewController: UIViewController {
     // MARK: - Properties
     
     private var screen: HomeScreen?
-    var interactor: HomeInteracting?
+    let interactor: HomeInteracting
     private var characters: [HeroesModel] = [] {
         didSet {
             screen?.hideLoading()
@@ -32,6 +32,17 @@ final class HomeViewController: UIViewController {
     }
     var presenter: LeakedPresenter? = LeakedPresenter() // metodo para da Leaks forcado e aprender usar o instruments
     
+    // MARK: - Init
+    
+    init(interactor: HomeInteracting){
+        self.interactor = interactor
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     // MARK: - Lifecycle
     
     override func loadView() {
@@ -39,17 +50,16 @@ final class HomeViewController: UIViewController {
         screen?.configTableView(delegate: self, dataSource: self)
         view = screen
     }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         screen?.showLoading()
-        interactor?.fetchHeroes()
+        interactor.fetchHeroes()
         presenter = nil // metodo para da Leaks forcado e aprender usar o instruments
     }
 }
 
 // MARK: - HomeViewDisplay
-@MainActor //Garantir que os metodos rode na Thread Principal
+
 extension HomeViewController: HomeViewDisplay {
     
     func displayCharacters(_ characters: [HeroesModel]) {
@@ -89,7 +99,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let idPerson = characters[indexPath.row]
-        interactor?.navigateToDetail(data: self.characters, idPerson: idPerson)
+        interactor.navigateToDetail(data: self.characters, idPerson: idPerson)
     }
     
 }

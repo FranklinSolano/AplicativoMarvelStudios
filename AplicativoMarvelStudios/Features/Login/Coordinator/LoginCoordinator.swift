@@ -8,20 +8,22 @@
 import UIKit
 
 // MARK: - Protocol
-
-protocol LoginCoordinating {
+@MainActor
+protocol LoginCoordinating: AnyObject{
     func navigateToHome()
     func navigateToForgotPassword()
     func navigateToRegister()
 }
-
+@MainActor
 final class LoginCoordinator {
-    
-    var navigationController: UINavigationController? //weak
+
+    var navigationController: UINavigationController?
     var presenter: LoginPresenting?
-    let homeFactory = HomeFactory()
-    let favoritesFactory = FavoritesFactory()
-    let profileFactory = ProfileFactory()
+    
+    private let homeFactory = HomeFactory()
+    private let favoritesFactory = FavoritesFactory()
+    private let profileFactory = ProfileFactory()
+    
 }
 
 // MARK: - LoginCoordinating

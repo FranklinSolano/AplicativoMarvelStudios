@@ -9,7 +9,7 @@ import UIKit
 
 // MARK: - Protocol
 
-protocol ProfilePresenting: AnyObject {
+protocol ProfilePresenting {
     func logoutSuccess()
     func logoutFailed(error: Error)
 }
@@ -20,12 +20,12 @@ final class ProfilePresenter: ProfilePresenting {
     
     // MARK: - Properties
     
-    var view: ProfileViewDisplay? //weak
-    private var coordinator: ProfileCoordinating?
+    weak var view: ProfileViewDisplay? 
+    private var coordinator: ProfileCoordinating
     
     // MARK: - Init
     
-    init(view: ProfileViewDisplay, coordinator: ProfileCoordinating) {
+    init(view: ProfileViewDisplay? = nil, coordinator: ProfileCoordinating) {
         self.view = view
         self.coordinator = coordinator
     }
@@ -33,7 +33,7 @@ final class ProfilePresenter: ProfilePresenting {
     // MARK: - ProfilePresenting Methods
     
     func logoutSuccess() {
-        coordinator?.navigateToLogin()
+        coordinator.navigateToLogin()
     }
     
     func logoutFailed(error: any Error) {

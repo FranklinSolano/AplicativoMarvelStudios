@@ -21,7 +21,7 @@ final class DetailsCoordinator: DetailsCoordinating {
     
     // MARK: - Properties
     
-    var navigationController: UINavigationController?
+    weak var navigationController: UINavigationController?
     var presenter: DetailsPresenting?
     
     // MARK: - Navigation Methods

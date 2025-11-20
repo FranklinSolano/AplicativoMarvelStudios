@@ -9,8 +9,8 @@ import Foundation
 
 
 // MARK: - Protocol
-
-protocol LoginPresenting: AnyObject {
+@MainActor
+protocol LoginPresenting {
     func presentNavigateToHome()
     func presentNavigateToRegister()
     func presentNavigateToForgotPassword()
@@ -23,12 +23,12 @@ final class LoginPresenter {
     
     // MARK: - Properties
     
-    var view: LoginViewControllerDisplay? //weak
-    private var coordinator: LoginCoordinating?
+    weak var view: LoginViewControllerDisplay? 
+    private var coordinator: LoginCoordinating
     
     // MARK: - Init
     
-    init(view: LoginViewControllerDisplay, coordinator: LoginCoordinating) {
+    init(view: LoginViewControllerDisplay?, coordinator: LoginCoordinating) {
         self.view = view
         self.coordinator = coordinator
     }
@@ -49,8 +49,8 @@ extension LoginPresenter: LoginPresenting {
     }
     
     
-    func presentNavigateToHome() {
-        coordinator?.navigateToHome()
+ func presentNavigateToHome() {
+        coordinator.navigateToHome()
     }
     
     func presentNavigateToRegister() {

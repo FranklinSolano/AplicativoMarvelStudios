@@ -10,7 +10,7 @@ import FirebaseAuth
 
 // MARK: - Protocol
 
-protocol LoginServicing: AnyObject {
+protocol LoginServicing {
     func callServiceLogin(email: String, password: String, completion: @escaping (Bool, String?) -> Void)
 }
 

@@ -9,7 +9,7 @@ import UIKit
 
 //MARK: - DetailsInteracting
 
-protocol DetailsInteracting: AnyObject {
+protocol DetailsInteracting {
     func navigateBack()
     func fetchDetailsPerson(idPerson: Int)
     func updateDetails(id: HeroesModel, data: [HeroesModel])
@@ -20,7 +20,7 @@ protocol DetailsInteracting: AnyObject {
 final class DetailsInteractor {
     
     //MARK: - Properties
-    var presenter: DetailsPresenting? //weak
+    var presenter: DetailsPresenting
     private var  service: DetailsServicing?
     
     //MARK: - Init
@@ -34,35 +34,37 @@ final class DetailsInteractor {
 //MARK: - DetailsInteracting
 
 extension DetailsInteractor: DetailsInteracting {
-    func updateDetails(id: HeroesModel, data: [HeroesModel]) {
-        Task { @MainActor in
-            presenter?.updateDetails(id: id, data: data)
+    
+    func updateDetails(id: HeroesModel, data: [HeroesModel])  {
+        Task {
+            await presenter.updateDetails(id: id, data: data)
         }
-        
     }
     
-    func fetchDetailsPerson(idPerson: Int) {
-        Task { @MainActor in
-            presenter?.showLoading()
-        }
+    func fetchDetailsPerson(idPerson: Int)  {
+        presenter.showLoading()
         
         service?.fetchCharacterDetail(id: idPerson, completion: { [weak self] result in
-                    guard let self else { return }
-            Task { @MainActor in
+            guard let self else { return }
+            
+            Task {
                 switch result {
                 case .success(let hero):
-                    self.presenter?.getDetailsPerson(result: hero)
-                case.failure:
-                    self.presenter?.showResultAlertError(title: "Atencao", message: "Erro ao buscar personagens. Tente Novamente mais tarde!")
+                    self.presenter.getDetailsPerson(result: hero)
+                case .failure:
+                    self.presenter.showResultAlertError(
+                        title: "Atenção",
+                        message: "Erro ao buscar personagens. Tente novamente mais tarde!"
+                    )
                 }
             }
-            
         })
     }
     
-    func navigateBack() {
-        Task { @MainActor in
-            presenter?.navigateBack()
+    func navigateBack()  {
+        Task {
+            await presenter.navigateBack()
         }
+        
     }
 }

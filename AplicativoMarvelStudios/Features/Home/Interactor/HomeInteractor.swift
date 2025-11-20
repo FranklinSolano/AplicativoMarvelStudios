@@ -9,7 +9,7 @@ import UIKit
 
 // MARK: - Protocol
 
-protocol HomeInteracting: AnyObject {
+protocol HomeInteracting {
     func fetchHeroes()
     func navigateToDetail(data: [HeroesModel], idPerson: HeroesModel)
 }
@@ -20,8 +20,8 @@ final class HomeInteractor{
     
     // MARK: - Properties
     
-    var presenter: HomePresenting? //weak
-    private var service: HomeService?
+    var presenter: HomePresenting
+    private var service: HomeService
     
     // MARK: - Init
     
@@ -37,26 +37,26 @@ final class HomeInteractor{
 
 extension HomeInteractor: HomeInteracting {
     func navigateToDetail(data: [HeroesModel], idPerson: HeroesModel) {
-        Task { @MainActor in
-            presenter?.navigateToDetail(data: data, idPerson: idPerson)
+        Task {
+            await presenter.navigateToDetail(data: data, idPerson: idPerson)
         }
     }
     
     func fetchHeroes() {
         Task {
             await MainActor.run {
-                presenter?.showLoading()
+                presenter.showLoading()
             }
             
-            service?.fetchCharacters { [ weak self] result in
+            service.fetchCharacters { [ weak self] result in
                 guard let self = self else { return }
                 
                 Task { @MainActor in
                     switch result {
                     case .success(let characters):
-                        self.presenter?.presentCharacters(characters)
+                        self.presenter.presentCharacters(characters)
                     case .failure:
-                        self.presenter?.showAlertError()
+                        self.presenter.showAlertError()
                     }
                 }
             }

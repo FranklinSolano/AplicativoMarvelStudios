@@ -8,8 +8,8 @@
 import Foundation
 
 // MARK: - Protocol
-
-protocol LoginInteracting: AnyObject{
+@MainActor
+protocol LoginInteracting {
     func navigateToHome()
     func navigateToForgotPassword()
     func navigateToRegister()
@@ -22,8 +22,8 @@ class LoginInteractor {
     
     // MARK: - Properties
     
-    var presenter: LoginPresenting? //weak
-    private var service: LoginServicing?
+    let presenter: LoginPresenting
+    private let service: LoginServicing
     
     // MARK: - Init
     
@@ -40,22 +40,22 @@ class LoginInteractor {
 extension LoginInteractor: LoginInteracting {
     
     func callServiceLogin(email: String, password: String) {
-        service?.callServiceLogin(email: email, password: password, completion: { [ self] success, errorMessage in //weak
+        service.callServiceLogin(email: email, password: password, completion: { [ weak self] success, errorMessage in //weak
             DispatchQueue.main.async {
-                self.presenter?.presentShowAlertLogin(success: success, errorMessage: errorMessage)
+                self?.presenter.presentShowAlertLogin(success: success, errorMessage: errorMessage)
             }
         })
     }
     
     func navigateToHome() {
-        presenter?.presentNavigateToHome()
+        presenter.presentNavigateToHome()
     }
     
     func navigateToForgotPassword() {
-        presenter?.presentNavigateToForgotPassword()
+        presenter.presentNavigateToForgotPassword()
     }
     
     func navigateToRegister() {
-        presenter?.presentNavigateToRegister()
+        presenter.presentNavigateToRegister()
     }
 }
