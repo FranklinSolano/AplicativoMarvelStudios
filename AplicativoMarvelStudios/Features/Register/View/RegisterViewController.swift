@@ -7,8 +7,8 @@
 
 import UIKit
 
-protocol RegisterViewControllerDisplay: AnyObject {
-    func showAlertErrorPassword(title: String, message: String)
+protocol RegisterViewControllerDisplay: AnyObject{
+    func showAlertLogin(title: String, message: String, success: Bool)
 }
 
 final class RegisterViewController: UIViewController {
@@ -38,23 +38,33 @@ final class RegisterViewController: UIViewController {
         super.viewDidLoad()
     }
 }
-
-extension RegisterViewController: RegisterViewControllerDisplay {
-    
-    func showAlertErrorPassword(title: String, message: String) {
-        self.getAlertController(title: title, message: message)
-    }
-    
-    
-}
-
 extension RegisterViewController: RegisterScreenProtocol {
     func actionBackButton() {
         interactor.navigationBackButtonInteractor()
     }
     
     func actionRegisterButton() {
+        interactor.registerUser(
+                  name: screen.nameTextField.text,
+                  email: screen.emailTextField.text,
+                  password: screen.passwordTextField.text,
+                  confirmPassword: screen.confirmedPasswordTextField.text)
     }
+
+}
+
+//MARK: - RegisterViewControllerDisplay
+extension RegisterViewController: RegisterViewControllerDisplay {
+    func showAlertLogin(title: String, message: String, success: Bool) {
+        self.getAlertController(title: title, message: message) { [weak self] in //weak
+            if success {
+                self?.interactor.navigationHomeButtonInteractor()
+            }
+            // Se não for sucesso, não faz nada após o alerta
+        }
+    }
+    
+    
     
     
 }

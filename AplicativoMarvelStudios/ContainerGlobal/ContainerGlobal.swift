@@ -73,6 +73,7 @@ final class DesignSystemComponents: DesignSystemComponentsInterface {
 
 protocol HttpServicesInterface {
     func makeLoginSErvice() -> LoginServicing
+    func makeRegisterService() -> RegisterService
     func makeHomeService() -> HomeServicing
     func makeDetailsService() -> DetailsServicing
     func makeProfileService() -> ProfileServicing
@@ -80,6 +81,10 @@ protocol HttpServicesInterface {
 }
 
 final class HttpServices: HttpServicesInterface {
+    func makeRegisterService() -> RegisterService {
+        return RegisterService()
+    }
+    
     func makeFavoritesService() -> FavoritesService {
         return FavoritesService()
     }

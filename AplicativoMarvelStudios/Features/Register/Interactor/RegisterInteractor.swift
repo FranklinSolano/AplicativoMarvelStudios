@@ -9,10 +9,8 @@ import Foundation
 
 protocol RegisterInteracting {
     func navigationBackButtonInteractor()
-    func creatCollectionUser()
-    func registerUser()
-    func creatCollectionFavorites()
-    func validationPassword(password: String, confirmedPassword: String)
+    func navigationHomeButtonInteractor()
+    func registerUser(name: String?, email: String?, password: String?, confirmPassword: String?)
 }
 
 final class RegisterInteractor {
@@ -27,30 +25,60 @@ final class RegisterInteractor {
     
 }
 
+//MARK: - RegisterInteracting
 extension RegisterInteractor: RegisterInteracting {
-    func validationPassword(password: String, confirmedPassword: String) {
-        if password != confirmedPassword {
-            presenter.validationPasswordFail()
-        } else {
-            creatCollectionUser()
+    func navigationHomeButtonInteractor() {
+        self.presenter.navigationHomeButtonPresenter()
+    }
+    
+    
+    func registerUser(name: String?, email: String?, password: String?, confirmPassword: String?) {
+        do {
+            let user = try validateUserInput(name: name, email: email, password: password, confirmPassword: confirmPassword)
+            
+            self.dependneciesService.httpServices.makeRegisterService().createUser(user) { result in
+                
+                switch result {
+                    
+                case .success:
+                    self.presenter.showAlertSuccessPresenter()
+                case .failure(let error):
+                    let registerError = AuthenticationError.firebaseError(error.localizedDescription)
+                    self.presenter.showAlertFailPresenter(registerError)
+                }
+            }
+        } catch {
+            
+            if let registerError = error as? AuthenticationError {
+                self.presenter.showAlertFailPresenter(registerError)
+            } else {
+                self.presenter.showAlertFailPresenter(.firebaseError(error.localizedDescription))
+            }
         }
-    }
-    
-    func creatCollectionUser() {
-        
-    }
-    
-    func registerUser() {
-        
-    }
-    
-    func creatCollectionFavorites() {
-        
     }
     
     func navigationBackButtonInteractor() {
         presenter.navigationBackButtonPresenter()
     }
     
-    
+    private func validateUserInput(name: String?, email: String?, password: String?, confirmPassword: String?) throws -> UserModel {
+         guard let name, !name.isEmpty else {
+             throw AuthenticationError.emptyName
+         }
+         guard let email, !email.isEmpty else {
+             throw AuthenticationError.emptyEmail
+         }
+         guard let password, !password.isEmpty else {
+             throw AuthenticationError.emptyPassword
+         }
+        
+         guard password.count >= 6 else {
+             throw AuthenticationError.minimumPassword
+         }
+         guard let confirmPassword, password == confirmPassword else {
+             throw AuthenticationError.passwordMismatch
+         }
+         
+         return UserModel(name: name, email: email, password: password)
+     }
 }
