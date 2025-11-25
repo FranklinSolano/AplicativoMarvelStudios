@@ -7,25 +7,43 @@ on:
     branches: [ "main", "develop" ]
 
 jobs:
+  # 🔹 Job 1: SwiftLint (roda em paralelo, mais rápido)
+  swiftlint:
+    name: SwiftLint Analysis
+    runs-on: macos-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+    
+    - name: Install SwiftLint
+      run: brew install swiftlint
+    
+    - name: Run SwiftLint
+      run: swiftlint lint --reporter github-actions-logging
+    
+    - name: SwiftLint Report (on failure)
+      if: failure()
+      run: swiftlint lint --reporter emoji
+
+  # 🔹 Job 2: Build (seu workflow atual)
   build:
     name: Build iOS App
     runs-on: macos-latest
-
     env:
       PROJECT: AplicativoMarvelStudios.xcodeproj
       SCHEME: AplicativoMarvelStudios
       CONFIGURATION: Release
-
+    
     steps:
     - name: Checkout
       uses: actions/checkout@v4
-
+    
     - name: Select Xcode
       run: sudo xcode-select -s /Applications/Xcode.app
-
+    
     - name: List Simulators
       run: xcrun simctl list
-
+    
     - name: Detect Available Simulator
       id: find-sim
       run: |
@@ -34,15 +52,13 @@ jobs:
           DEVICE=$(xcrun simctl list devices available | grep -m1 "iPhone" | awk -F '[()]' '{print $2}')
         fi
         echo "device_id=$DEVICE" >> $GITHUB_OUTPUT
-
+    
     - name: Boot Simulator (if needed)
       run: xcrun simctl boot "${{ steps.find-sim.outputs.device_id }}" || true
-
-    # 🔹 Resolve Swift Packages (importante!)
+    
     - name: Resolve Swift Packages
       run: xcodebuild -resolvePackageDependencies -project "${PROJECT}"
-
-    # 🔹 Build Debug (garante que tudo compila no ambiente normal)
+    
     - name: Build Debug
       run: |
         set -o pipefail
@@ -54,8 +70,7 @@ jobs:
           -derivedDataPath DerivedDataDebug \
           CODE_SIGNING_ALLOWED=NO \
         | xcpretty
-
-    # 🔹 Build Release (build final)
+    
     - name: Build Release
       run: |
         set -o pipefail
@@ -67,8 +82,7 @@ jobs:
           -derivedDataPath DerivedDataRelease \
           CODE_SIGNING_ALLOWED=NO \
         | xcpretty
-
-    # 🔹 Warning Checker
+    
     - name: Check Build Warnings
       run: |
         echo "### Build Warnings ###"
@@ -78,8 +92,7 @@ jobs:
           -configuration Debug \
           -destination "id=${{ steps.find-sim.outputs.device_id }}" \
           clean build 2>&1 | grep "warning:" || echo "Nenhum warning encontrado"
-
-    # 🔹 Upload artifacts (opcional mas muito útil)
+    
     - name: Upload Build Artifacts
       uses: actions/upload-artifact@v4
       with:
@@ -87,4 +100,3 @@ jobs:
         path: |
           DerivedDataDebug
           DerivedDataRelease
-
