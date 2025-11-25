@@ -82,6 +82,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7DAD353B2DE773720037B250 /* Build configuration list for PBXNativeTarget "AplicativoMarvelStudios" */;
 			buildPhases = (
+				7D5B712E2ED54C4500DF0915 /* SwiftLint */,
 				7DAD35242DE773700037B250 /* Sources */,
 				7DAD35252DE773700037B250 /* Frameworks */,
 				7DAD35262DE773700037B250 /* Resources */,
@@ -135,6 +136,7 @@
 				7DAD35C32DE77D650037B250 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				7D52628D2DF66A7A004DFA10 /* XCRemoteSwiftPackageReference "SDWebImage" */,
 				7D4035772E08A262005FCC77 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				7DD477862ED569E00007D716 /* XCRemoteSwiftPackageReference "SwiftLint" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 7DAD35292DE773700037B250 /* Products */;
@@ -156,6 +158,29 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		7D5B712E2ED54C4500DF0915 /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/zsh;
+			shellScript = "if [[ \"$(uname -m)\" == arm64 ]]; then export PATH=\"/opt/homebrew/bin:$PATH\"\nfi\nif which swiftlint > /dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		7DAD35242DE773700037B250 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -175,6 +200,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = ZA8R8PH29T;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = AplicativoMarvelStudios/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = MarvelStudios;
@@ -210,6 +236,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = ZA8R8PH29T;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = AplicativoMarvelStudios/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = MarvelStudios;
@@ -402,6 +429,14 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 5.7.1;
+			};
+		};
+		7DD477862ED569E00007D716 /* XCRemoteSwiftPackageReference "SwiftLint" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/SwiftLint.git";
+			requirement = {
+				kind = exactVersion;
+				version = 0.62.2;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
