@@ -33,8 +33,7 @@ final class DesignSystemComponents: DesignSystemComponentsInterface {
     func makeTextField() -> TextFielding {
         return DSTextFieldAdapter()
     }
-    
-    func makeButton() ->  Buttoning {
+    func makeButton() -> Buttoning {
         return DSButtonAdapter()
     }
     
