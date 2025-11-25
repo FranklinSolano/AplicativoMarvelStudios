@@ -16,7 +16,7 @@ final class RegisterFactory: UIViewController  {
     func make(navigationController: UINavigationController?) -> RegisterViewController {
         
         let coordinator = RegisterCoordinator()
-        coordinator.navigationController = navigationController
+        coordinator.navigation = navigationController
         
         let presenter = RegisterPresenter(coordinator: coordinator)
         
@@ -27,7 +27,7 @@ final class RegisterFactory: UIViewController  {
         let registerVC = RegisterViewController(interactor: interactor, dependencies: dependencies)
         
         presenter.view = registerVC
-        coordinator.presenter = presenter
+//        coordinator.presenter = presenter
         
         return registerVC
     }}

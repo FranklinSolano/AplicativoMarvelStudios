@@ -11,7 +11,7 @@ import UIKit
 
 protocol HomeInteracting {
     func fetchChracters()
-    func navigateToDetail(character: RMCharacter, randomCharacters: [RMCharacter])
+    func navigateToDetail(character: SHCharacter, randomCharacters: [SHCharacter])
 }
 
 // MARK: - Interactor
@@ -37,7 +37,7 @@ final class HomeInteractor{
 
 extension HomeInteractor: HomeInteracting {
     
-    func navigateToDetail(character: RMCharacter, randomCharacters: [RMCharacter]) {
+    func navigateToDetail(character: SHCharacter, randomCharacters: [SHCharacter]) {
         Task {
             await presenter.navigateToDetail(character: character, randomCharacters: randomCharacters)
         }

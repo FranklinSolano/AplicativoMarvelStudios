@@ -10,7 +10,7 @@ import UIKit
 // MARK: - Protocol
 @MainActor
 protocol DetailsViewControllerDisplay: AnyObject {
-    func getResultDataPerson(data: RMCharacter)
+    func getResultDataPerson(data: SHCharacter)
     func showLoading()
     func hideLoading()
     func showResultAlertError(title: String, message: String)
@@ -27,7 +27,7 @@ final class DetailsViewController: UIViewController {
     
     private let screen: DetailsScreen
     private let interactor: DetailsInteracting
-    var personListImage: [RMCharacter] = [] {
+    var personListImage: [SHCharacter] = [] {
         didSet {
             screen.collectionView.reloadData()
             screen.hideLoading()
@@ -75,7 +75,7 @@ final class DetailsViewController: UIViewController {
 
 extension DetailsViewController: DetailsViewControllerDisplay {
     
-    func getResultDataPerson(data: RMCharacter) {
+    func getResultDataPerson(data: SHCharacter) {
         screen.setupView(data: data)
         shufflePersonImages()
     }

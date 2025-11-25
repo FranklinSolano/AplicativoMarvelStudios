@@ -60,10 +60,10 @@ final class PersonListTableViewCell: UITableViewCell {
     }
     
     // MARK: - Setup
-    func setupCell(data: RMCharacter) {
+    func setupCell(data: SHCharacter) {
         characterName.text = data.name
-        characterSpecies.text = data.species
-        imagePerson.setImage(from: data.image)
+        characterSpecies.text = "Super Hero" // ou remova esse label
+        imagePerson.setImage(from: data.images.lg)
     }
 }
 

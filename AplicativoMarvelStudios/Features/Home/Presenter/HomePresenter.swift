@@ -10,11 +10,11 @@ import UIKit
 // MARK: - Protocol
 @MainActor
 protocol HomePresenting {
-    func presentCharacters(_ characters: [RMCharacter])
+    func presentCharacters(_ characters: [SHCharacter])
     func showAlertError()
     func showLoading()
     func hideLoading()
-    func navigateToDetail(character: RMCharacter, randomCharacters: [RMCharacter])
+    func navigateToDetail(character: SHCharacter, randomCharacters: [SHCharacter])
 }
 
 // MARK: - Presenter
@@ -33,11 +33,11 @@ final class HomePresenter {
 
 // MARK: - HomePresenting
 extension HomePresenter: HomePresenting {
-    func navigateToDetail(character: RMCharacter, randomCharacters: [RMCharacter]) {
+    func navigateToDetail(character: SHCharacter, randomCharacters: [SHCharacter]) {
         coordinator.navigateToDetail(character: character, randomCharacters: randomCharacters)
     }
     
-    func presentCharacters(_ characters: [RMCharacter]) {
+    func presentCharacters(_ characters: [SHCharacter]) {
         view?.displayCharacters(characters)
     }
     
