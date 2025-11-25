@@ -1,17 +1,100 @@
+# SwiftLint - Clean Code Configuration
+# Baseado em princípios de Clean Code e padrões da indústria iOS
+
+# Regras desabilitadas (preferência do time ou muito restritivas)
 disabled_rules:
-  - trailing_whitespace
-
+  - todo                         # TODOs são úteis durante desenvolvimento
+  - trailing_comma               # Questão de estilo
+  
+# Regras Clean Code ATIVADAS
 opt_in_rules:
-  - empty_count
-  - force_unwrapping
+  # Segurança e Prevenção de Crashes
+  - force_unwrapping             # Evita crashes com force unwrap (!)
+  - implicitly_unwrapped_optional # Evita IBOutlets perigosos (!)
+  
+  # Legibilidade e Manutenibilidade  
+  - empty_count                  # Use .isEmpty ao invés de .count == 0
+  - explicit_init                # Evita .init() redundante
+  - closure_spacing              # Espaçamento consistente em closures
+  - redundant_nil_coalescing     # Remove ?? nil desnecessários
+  - unused_optional_binding      # Remove if let não utilizados
+  
+  # Organização
+  - sorted_imports               # Imports organizados alfabeticamente
+  - vertical_parameter_alignment_on_call # Alinhamento de parâmetros
 
+# Diretórios incluídos
 included:
   - AplicativoMarvelStudios
 
+# Diretórios excluídos
 excluded:
   - Pods
   - .build
   - DerivedData
+  - DerivedDataDebug
+  - DerivedDataRelease
 
-line_length: 120
+# Configurações de Clean Code
+line_length: 
+  warning: 120                   # Limite razoável
+  error: 150
+  ignores_comments: true         # Comentários podem ser maiores
+  ignores_urls: true             # URLs podem ser maiores
 
+function_body_length:
+  warning: 50                    # Funções devem ser pequenas
+  error: 80
+
+type_body_length:
+  warning: 300                   # Classes devem ser coesas
+  error: 500
+
+file_length:
+  warning: 500                   # Arquivos devem ser modulares
+  error: 800
+
+cyclomatic_complexity:
+  warning: 10                    # Funções devem ser simples
+  error: 20
+
+nesting:
+  type_level: 2                  # Evita nesting excessivo
+  statement_level: 5
+
+# Nomes significativos (Clean Code fundamental)
+identifier_name:
+  min_length:
+    warning: 3                   # Nomes devem ser descritivos
+    error: 2
+  max_length:
+    warning: 40
+    error: 50
+  excluded:                      # Exceções conhecidas
+    - id
+    - url
+    - URL
+    - i
+    - j
+    - x
+    - y
+
+type_name:
+  min_length: 3
+  max_length: 40
+
+# Força boas práticas
+trailing_whitespace: error       # Remove espaços desnecessários
+trailing_newline: warning        # Arquivo deve terminar com newline
+vertical_whitespace:
+  max_empty_lines: 1             # Máximo 1 linha vazia
+  
+opening_brace: warning           # Consistência: func() {
+comment_spacing: warning         # Consistência: // comment
+comma: warning                   # Consistência: [1, 2, 3]
+
+# MARK deve ser formatado corretamente
+mark: warning
+
+# Reporter
+reporter: "xcode"
