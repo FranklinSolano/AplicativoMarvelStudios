@@ -10,7 +10,7 @@ import UIKit
 // MARK: - Protocol
 @MainActor
 protocol HomeViewDisplay: AnyObject {
-    func displayCharacters(_ characters: [RMCharacter])
+    func displayCharacters(_ characters: [SHCharacter])
     func showAlertError(title: String, message: String)
     func showLoading()
     func hideLoading()
@@ -26,7 +26,7 @@ final class HomeViewController: UIViewController {
     private let screen: HomeScreen
     let interactor: HomeInteracting
     
-    private var characters: [RMCharacter] = [] {
+    private var characters: [SHCharacter] = [] {
         didSet {
             screen.hideLoading()
             screen.tableView.reloadData()
@@ -64,7 +64,7 @@ final class HomeViewController: UIViewController {
 // MARK: - HomeViewDisplay
 extension HomeViewController: HomeViewDisplay {
     
-    func displayCharacters(_ characters: [RMCharacter]) {
+    func displayCharacters(_ characters: [SHCharacter]) {
         self.characters = characters
     }
     

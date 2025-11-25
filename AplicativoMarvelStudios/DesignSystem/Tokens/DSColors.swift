@@ -8,34 +8,56 @@
 import UIKit
 
 enum DSColors {
-    
+
+    // MARK: - Primary (fundo)
     static let primaryColor: UIColor = {
-        return UIColor { traitCollection in
-            return traitCollection.userInterfaceStyle == .dark
-            ? UIColor(red: 20/255, green: 20/255, blue: 20/255, alpha: 1)  // Dark mode
-            : UIColor(red: 245/255, green: 247/255, blue: 250/255, alpha: 1) // Light mode
+        return UIColor { trait in
+            switch trait.userInterfaceStyle {
+            case .dark:
+                // Dourado intenso
+                return UIColor(red: 242/255, green: 201/255, blue: 76/255, alpha: 1)
+
+            default:
+                // Fundo claro
+                return UIColor(red: 245/255, green: 247/255, blue: 250/255, alpha: 1)
+            }
         }
     }()
-    
+
+    // MARK: - Secondary (botões e bordas)
     static let secondaryColor: UIColor = {
         return UIColor { trait in
             switch trait.userInterfaceStyle {
             case .dark:
-                return UIColor(red: 8/255, green: 127/255, blue: 1/255, alpha: 1)
+                // Preto profundo
+                return UIColor(red: 10/255, green: 10/255, blue: 10/255, alpha: 1)
+
             default:
-                return UIColor(red: 40/255, green: 180/255, blue: 35/255, alpha: 1) // #3A69D7
+                // Cinza azulado (melhor que o verde)
+                return UIColor(red: 60/255, green: 65/255, blue: 85/255, alpha: 1)
             }
         }
     }()
-    
+
+    // MARK: - Textos
     static let titleTextColor: UIColor = {
-        return UIColor { traitCollection in
-            return traitCollection.userInterfaceStyle == .dark
-            ? .white
-            : .black
+        return UIColor { trait in
+            return trait.userInterfaceStyle == .dark
+            ? UIColor.black        // TEXTO PRETO NO DARK MODE
+            : UIColor.black        // Texto preto no light também
+        }
+    }()
+
+    static let subtitleTextColor: UIColor = {
+        return UIColor { trait in
+            return trait.userInterfaceStyle == .dark
+            ? UIColor(white: 0.1, alpha: 1)   // quase preto
+            : UIColor.darkGray
         }
     }()
 }
+
+
 
 final class ThemeManager {
     

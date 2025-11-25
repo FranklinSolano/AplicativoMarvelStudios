@@ -10,7 +10,7 @@ import UIKit
 // MARK: - Protocol
 @MainActor
 protocol HomeCoordinating {
-    func navigateToDetail(character: RMCharacter, randomCharacters: [RMCharacter])
+    func navigateToDetail(character: SHCharacter, randomCharacters: [SHCharacter])
 }
 
 final class HomeCoordinator: HomeCoordinating {
@@ -19,7 +19,7 @@ final class HomeCoordinator: HomeCoordinating {
     weak var navigationController: UINavigationController?
     var presenter: HomePresenting?
     
-    func navigateToDetail(character: RMCharacter,randomCharacters: [RMCharacter] ) {
+    func navigateToDetail(character: SHCharacter,randomCharacters: [SHCharacter] ) {
         guard let navigationController else { return }
         
         let detailsFactory = DetailsFactory()
@@ -27,7 +27,7 @@ final class HomeCoordinator: HomeCoordinating {
         
         // Aqui você passa o personagem selecionado para a tela de detalhes
         detailsVC.idPerson = character.id
-        detailsVC.personListImage = randomCharacters   // ⚡ ajuste no DetailsViewController para receber RMCharacter
+        detailsVC.personListImage = randomCharacters  // ⚡ ajuste no DetailsViewController para receber RMCharacter
         
         navigationController.pushViewController(detailsVC, animated: true)
     }

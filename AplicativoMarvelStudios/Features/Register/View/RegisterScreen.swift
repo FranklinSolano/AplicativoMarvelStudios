@@ -73,7 +73,7 @@ final class RegisterScreen: UIView {
     }
     
     private func configureBackGroundImage(){
-        backGroudImage.image = UIImage(named: "imageRegister")
+        backGroudImage.image = UIImage(named: "")
     }
     
     private func setupTapGesture() {

@@ -27,7 +27,6 @@ protocol TextFielding: UIView {
 }
 
 //MARK: - DSTextField
-
 class DSTextField: UITextField {
     
     override init(frame: CGRect) {
@@ -39,33 +38,54 @@ class DSTextField: UITextField {
         self.backgroundColor = .clear
         self.clipsToBounds = true
         self.layer.cornerRadius = 15
-        self.layer.borderWidth = 3
-        self.layer.borderColor = DSColors.secondaryColor.cgColor
+        self.layer.borderWidth = 2
         self.autocapitalizationType = .none
-        self.textColor = DSColors.titleTextColor
+        self.layer.borderColor = DSColors.secondaryColor.cgColor
         
+        self.textColor = DSColors.titleTextColor
+        self.updateColors()
+        
+        // Padding
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 12, height: 0))
         self.leftView = paddingView
         self.leftViewMode = .always
+        
         self.translatesAutoresizingMaskIntoConstraints = false
     }
     
     func setDTO(_ dto: TextFieldDTO) {
         self.placeholder = dto.placeholder
         self.isSecureTextEntry = dto.isSecureTextEntry
-        self.attributedPlaceholder = NSAttributedString(
-            string: dto.placeholder,
-            attributes: [NSAttributedString.Key.foregroundColor: DSColors.titleTextColor]
-        )
+        
+        updatePlaceholder()
+    }
+    
+    // MARK: - Dynamic Theme Updates
+    private func updateColors() {
+        self.textColor = DSColors.titleTextColor
+        updatePlaceholder()
+    }
+    
+    private var dynamicPlaceholderColor: UIColor {
+        return UIColor { trait in
+            trait.userInterfaceStyle == .dark
+            ? UIColor(white: 1.0, alpha: 0.6) // branco com transparência
+            : UIColor(white: 0.0, alpha: 0.45) // cinza escuro
+        }
+    }
+    
+    private func updatePlaceholder() {
+        if let placeholder = self.placeholder {
+            self.attributedPlaceholder = NSAttributedString(
+                string: placeholder,
+                attributes: [.foregroundColor: dynamicPlaceholderColor]
+            )
+        }
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-        updateBorderColor()
-    }
-    
-    private func updateBorderColor() {
-        self.layer.borderColor = DSColors.secondaryColor.cgColor
+        updateColors()
     }
     
     required init?(coder: NSCoder) {

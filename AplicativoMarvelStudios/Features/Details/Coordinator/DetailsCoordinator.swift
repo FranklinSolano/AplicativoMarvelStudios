@@ -12,7 +12,7 @@ import UIKit
 @MainActor
 protocol DetailsCoordinating {
     func navigateBack()
-    func updateDetails(id: RMCharacter, data: [RMCharacter])
+    func updateDetails(id: SHCharacter, data: [SHCharacter])
 }
 
 // MARK: - DetailsCoordinating
@@ -26,7 +26,7 @@ final class DetailsCoordinator: DetailsCoordinating {
     
     // MARK: - Navigation Methods
     
-    func updateDetails(id: RMCharacter, data: [RMCharacter]) {
+    func updateDetails(id: SHCharacter, data: [SHCharacter]) {
         guard let navigationController else { return }
         let detailsFactory = DetailsFactory()
         let detailsVC = detailsFactory.make(navigationController: navigationController)

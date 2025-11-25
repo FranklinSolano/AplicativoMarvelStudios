@@ -59,7 +59,7 @@ final class LoginScreen: UIView {
     }
     
     private func configureImage(){
-        imageBackground.image = UIImage(named: "loginBackgroud")
+        imageBackground.image = UIImage(named: "imageLogin")
     }
     
     private func configureLabels(){
