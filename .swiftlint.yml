@@ -1,5 +1,7 @@
+# ============================================
 # SwiftLint - Clean Code Configuration
 # Baseado em padrões usados no mercado iOS
+# ============================================
 
 disabled_rules:
   - todo
@@ -26,9 +28,10 @@ excluded:
   - DerivedDataDebug
   - DerivedDataRelease
 
-# ================================
+# ============================================
 # Regras de estilo e qualidade
-# ================================
+# ============================================
+
 line_length:
   warning: 120
   error: 150
@@ -55,10 +58,10 @@ nesting:
   type_level: 2
   statement_level: 5
 
-
-# ================================
+# ============================================
 # Nomes significativos
-# ================================
+# ============================================
+
 identifier_name:
   min_length:
     warning: 3
@@ -79,9 +82,24 @@ type_name:
   min_length: 3
   max_length: 40
 
-
-# ================================
+# ============================================
 # Espaçamento e formatação
-# ================================
-trailing_whitespace: error
-trail
+# ============================================
+
+trailing_whitespace:
+  ignores_empty_lines: false
+  ignores_comments: true
+
+vertical_whitespace:
+  max_empty_lines: 1
+
+opening_brace: warning
+comment_spacing: warning
+comma: warning
+mark: warning
+
+# ============================================
+# Reporter
+# ============================================
+
+reporter: "xcode"
