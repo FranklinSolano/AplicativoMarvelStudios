@@ -7,7 +7,7 @@
 
 import Foundation
 
-//MARK: - RegisterPresenting
+// MARK: - RegisterPresenting
 protocol RegisterPresenting {
     func navigationBackButtonPresenter()
     func navigationHomeButtonPresenter()
@@ -15,14 +15,14 @@ protocol RegisterPresenting {
     func showAlertFailPresenter(_ error: AuthenticationError)
 }
 
-//MARK: - RegisterPresenter
+// MARK: - RegisterPresenter
 final class RegisterPresenter {
     
-    //MARK: - Properties
+    // MARK: - Properties
     weak var view: RegisterViewControllerDisplay?
     let coordinator: RegisterCoordinating?
     
-    //MARK: - Init
+    // MARK: - Init
     
     init(view: RegisterViewControllerDisplay? = nil, coordinator: RegisterCoordinating?) {
         self.view = view
@@ -30,7 +30,7 @@ final class RegisterPresenter {
     }
 }
 
-//MARK: - RegisterPresenting
+// MARK: - RegisterPresenting
 extension RegisterPresenter: RegisterPresenting {
     func navigationHomeButtonPresenter() {
         coordinator?.navigationhomeButtonCoordinator()
@@ -43,7 +43,6 @@ extension RegisterPresenter: RegisterPresenting {
     func showAlertFailPresenter(_ error: AuthenticationError) {
         view?.showAlertLogin(title: "Atencao", message: error.localizedDescription, success: false)
     }
-    
     
     func navigationBackButtonPresenter() {
         coordinator?.navigationBackButtonCoordinator()

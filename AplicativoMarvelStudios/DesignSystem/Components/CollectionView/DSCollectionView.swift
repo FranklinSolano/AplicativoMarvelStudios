@@ -6,7 +6,7 @@
 //
 
 import UIKit
-//MARK: - CollectionViewing
+// MARK: - CollectionViewing
 
 protocol CollectionViewing: UIView {
     var delegate: UICollectionViewDelegate? { get set }
@@ -16,11 +16,11 @@ protocol CollectionViewing: UIView {
     var isHidden: Bool { get set }
 }
 
-//MARK: - DSCollectionView
+// MARK: - DSCollectionView
 
 class DSCollectionView: UICollectionView {
     
-    init(scroll: UICollectionView.ScrollDirection = .horizontal, spacing: CGFloat){
+    init(scroll: UICollectionView.ScrollDirection = .horizontal, spacing: CGFloat) {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = scroll
         layout.minimumLineSpacing = spacing
@@ -40,6 +40,6 @@ class DSCollectionView: UICollectionView {
     
 }
 
-//MARK: - DSCollectionViewAdapter
+// MARK: - DSCollectionViewAdapter
 
 final class DSCollectionViewAdapter: DSCollectionView, CollectionViewing {}

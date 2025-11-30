@@ -16,7 +16,7 @@ protocol HomeInteracting {
 
 // MARK: - Interactor
 
-final class HomeInteractor{
+final class HomeInteractor {
     
     // MARK: - Properties
     
@@ -30,10 +30,10 @@ final class HomeInteractor{
         self.dependenciesService = dependenciesService
     }
     
-    //MARK: - Outher Methods
+    // MARK: - Outher Methods
 }
 
-//MARK: - HomeInteracting
+// MARK: - HomeInteracting
 
 extension HomeInteractor: HomeInteracting {
     

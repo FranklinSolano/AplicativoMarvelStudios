@@ -32,19 +32,19 @@ class LoginInteractor {
         self.dependenciesService = dependenciesService
     }
     
-    //MARK: - Outher Methods
+    // MARK: - Outher Methods
 }
 
-//MARK: - LoginInteracting
+// MARK: - LoginInteracting
 
 extension LoginInteractor: LoginInteracting {
-    
     
     func callServiceLogin(email: String, password: String) {
         
         let loginService = dependenciesService.httpServices.makeLoginSErvice()
         
-        loginService.callServiceLogin(email: email, password: password, completion: { [ weak self] success, errorMessage in //weak
+        loginService.callServiceLogin(email: email, password: password,
+                                      completion: { [ weak self] success, errorMessage in // weak
             DispatchQueue.main.async {
                 self?.presenter.presentShowAlertLogin(success: success, errorMessage: errorMessage)
             }

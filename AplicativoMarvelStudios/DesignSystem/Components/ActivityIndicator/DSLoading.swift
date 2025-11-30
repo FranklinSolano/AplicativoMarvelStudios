@@ -7,7 +7,7 @@
 
 import UIKit
 
-//MARK: - LoadingIndicatable
+// MARK: - LoadingIndicatable
 
 protocol LoadingIndicatable: UIView {
     func startAnimating()
@@ -15,7 +15,7 @@ protocol LoadingIndicatable: UIView {
     var isHidden: Bool { get set }
 }
 
-//MARK: - DSActivityIndicatorAdapter
+// MARK: - DSActivityIndicatorAdapter
 
 final class DSActivityIndicatorAdapter: UIActivityIndicatorView, LoadingIndicatable {
     

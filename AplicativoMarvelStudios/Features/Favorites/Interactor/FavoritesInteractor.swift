@@ -7,13 +7,13 @@
 
 import UIKit
 
-//MARK: - Protocol
+// MARK: - Protocol
 
 protocol FavoritesInteracting {
     
 }
 
-//MARK: - FavoritesInteractor
+// MARK: - FavoritesInteractor
 
 final class FavoritesInteractor {
     
@@ -26,7 +26,7 @@ final class FavoritesInteractor {
     }
 }
 
-//MARK: - FavoritesInteracting
+// MARK: - FavoritesInteracting
 
 extension FavoritesInteractor: FavoritesInteracting {
     

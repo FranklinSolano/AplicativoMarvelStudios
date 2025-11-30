@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol RegisterViewControllerDisplay: AnyObject{
+protocol RegisterViewControllerDisplay: AnyObject {
     func showAlertLogin(title: String, message: String, success: Bool)
 }
 
@@ -22,7 +22,7 @@ final class RegisterViewController: UIViewController {
         self.interactor = interactor
         self.dependencies = dependencies
         self.screen = RegisterScreen(dependencies: dependencies)
-        super.init(nibName: nil , bundle: nil)
+        super.init(nibName: nil, bundle: nil)
         self.screen.delegate = self
     }
     
@@ -32,10 +32,6 @@ final class RegisterViewController: UIViewController {
     
     override func loadView() {
         view = screen
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
     }
 }
 extension RegisterViewController: RegisterScreenProtocol {
@@ -50,21 +46,17 @@ extension RegisterViewController: RegisterScreenProtocol {
                   password: screen.passwordTextField.text,
                   confirmPassword: screen.confirmedPasswordTextField.text)
     }
-
 }
 
-//MARK: - RegisterViewControllerDisplay
+// MARK: - RegisterViewControllerDisplay
+
 extension RegisterViewController: RegisterViewControllerDisplay {
     func showAlertLogin(title: String, message: String, success: Bool) {
-        self.getAlertController(title: title, message: message) { [weak self] in //weak
+        self.getAlertController(title: title, message: message) { [weak self] in // weak
             if success {
                 self?.interactor.navigationHomeButtonInteractor()
             }
             // Se não for sucesso, não faz nada após o alerta
         }
     }
-    
-    
-    
-    
 }

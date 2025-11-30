@@ -5,10 +5,9 @@
 //  Created by Franklin  Stilhano Solano on 06/06/25.
 //
 
-
 import UIKit
 
-//MARK: - DetailsCoordinating
+// MARK: - DetailsCoordinating
 @MainActor
 protocol DetailsCoordinating {
     func navigateBack()

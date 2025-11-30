@@ -20,7 +20,7 @@ final class ProfilePresenter: ProfilePresenting {
     
     // MARK: - Properties
     
-    weak var view: ProfileViewDisplay? 
+    weak var view: ProfileViewDisplay?
     private var coordinator: ProfileCoordinating
     
     // MARK: - Init

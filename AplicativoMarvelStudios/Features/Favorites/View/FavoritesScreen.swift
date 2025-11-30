@@ -4,15 +4,13 @@
 //
 //  Created by Franklin  Stilhano Solano on 09/06/25.
 //
-
-import UIKit
 import SnapKit
+import UIKit
 
 final class FavoritesScreen: UIView {
     
     // MARK: - UI Elements
     private let dependencies: HasDesignSystemComponentsInterface
-    
     private lazy var titleLabel = dependencies.designSystemComponents.makeLabel()
     private lazy var collectionViewFavorites = dependencies.designSystemComponents.makeCollectionView()
 
@@ -30,7 +28,7 @@ final class FavoritesScreen: UIView {
 
     // MARK: - Methods
     
-    private func configureLabels(){
+    private func configureLabels() {
         titleLabel.setDTO(.init(text: "Favorites Characters",
                                 textColor: DSColors.titleTextColor,
                                 font: DSFonts.titleBold22,
@@ -43,19 +41,18 @@ final class FavoritesScreen: UIView {
         collectionViewFavorites.dataSource = dataSource
     }
     
-    private func registerCells(){
-        collectionViewFavorites.register(FavoritesEmptyCell.self, forCellWithReuseIdentifier: FavoritesEmptyCell.identifier)
-        collectionViewFavorites.register(ListCharactersCollectionViewCell.self, forCellWithReuseIdentifier: ListCharactersCollectionViewCell.identifier)
+    private func registerCells() {
+        collectionViewFavorites.register(FavoritesEmptyCell.self,
+                                         forCellWithReuseIdentifier: FavoritesEmptyCell.identifier)
+        collectionViewFavorites.register(ListCharactersCollectionViewCell.self,
+                                         forCellWithReuseIdentifier: ListCharactersCollectionViewCell.identifier)
     }
 }
 
-
 // MARK: - ViewCodeProtocol
-
 extension FavoritesScreen: ViewCodeProtocol {
     func setupElements() {
-        addSubview(titleLabel)
-        addSubview(collectionViewFavorites)
+        [titleLabel, collectionViewFavorites].forEach(addSubview)
     }
     
     func setupConstraints() {

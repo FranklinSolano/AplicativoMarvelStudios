@@ -4,7 +4,7 @@
 //
 //  Created by Franklin  Stilhano Solano on 28/05/25.
 //
-
+import Foundation
 
 protocol ViewCodeProtocol {
     func setupElements()
@@ -14,7 +14,7 @@ protocol ViewCodeProtocol {
 }
 
 extension ViewCodeProtocol {
-    func setupView(){
+    func setupView() {
         setupElements()
         setupConstraints()
         setupAdditionalConfiguration()

@@ -4,18 +4,16 @@
 //
 //  Created by Franklin  Stilhano Solano on 02/09/25.
 //
-
-import Foundation
 import FirebaseAuth
 import FirebaseFirestore
+import Foundation
 
-//MARK: - RegisterServicing
+// MARK: - RegisterServicing
 protocol RegisterServicing {
     func createUser(_ user: UserModel, completion: @escaping (Result<Void, Error>) -> Void)
-    
 }
 
-//MARK: - RegisterService
+// MARK: - RegisterService
 final class RegisterService: RegisterServicing {
     func createUser(_ user: UserModel, completion: @escaping (Result<Void, any Error>) -> Void) {
         Auth.auth().createUser(withEmail: user.email, password: user.password) { authResut, error in
@@ -48,4 +46,3 @@ final class RegisterService: RegisterServicing {
         }
     }
 }
-

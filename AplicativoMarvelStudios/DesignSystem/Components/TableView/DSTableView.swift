@@ -7,7 +7,7 @@
 
 import UIKit
 
-//MARK: - TableViewing
+// MARK: - TableViewing
 
 protocol TableViewing: UIView {
     var delegate: UITableViewDelegate? { get set }
@@ -17,7 +17,7 @@ protocol TableViewing: UIView {
     var isHidden: Bool { get set }
 }
 
-//MARK: - DSTableViewAdapter
+// MARK: - DSTableViewAdapter
 
 final class DSTableViewAdapter: UITableView, TableViewing {
     init() {

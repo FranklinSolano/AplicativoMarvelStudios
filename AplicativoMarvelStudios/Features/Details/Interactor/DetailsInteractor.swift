@@ -7,7 +7,7 @@
 
 import UIKit
 
-//MARK: - DetailsInteracting
+// MARK: - DetailsInteracting
 
 protocol DetailsInteracting {
     func navigateBack()
@@ -15,15 +15,15 @@ protocol DetailsInteracting {
     func updateDetails(id: SHCharacter, data: [SHCharacter])
 }
 
-//MARK: - DetailsInteractor
+// MARK: - DetailsInteractor
 
 final class DetailsInteractor {
     
-    //MARK: - Properties
+    // MARK: - Properties
     var presenter: DetailsPresenting
     private var  dependenciesService: HasHttpServicesInterface
     
-    //MARK: - Init
+    // MARK: - Init
     
     init(presenter: DetailsPresenting, dependenciesService: HasHttpServicesInterface) {
         self.presenter = presenter
@@ -31,17 +31,17 @@ final class DetailsInteractor {
     }
 }
 
-//MARK: - DetailsInteracting
+// MARK: - DetailsInteracting
 
 extension DetailsInteractor: DetailsInteracting {
     
-    func updateDetails(id: SHCharacter, data: [SHCharacter])  {
+    func updateDetails(id: SHCharacter, data: [SHCharacter]) {
         Task {
             await presenter.updateDetails(id: id, data: data)
         }
     }
     
-    func fetchDetailsPerson(idPerson: Int)  {
+    func fetchDetailsPerson(idPerson: Int) {
         presenter.showLoading()
         
         let detailsService = dependenciesService.httpServices.makeDetailsService()
@@ -63,10 +63,9 @@ extension DetailsInteractor: DetailsInteracting {
         })
     }
     
-    func navigateBack()  {
+    func navigateBack() {
         Task {
             await presenter.navigateBack()
         }
-        
     }
 }

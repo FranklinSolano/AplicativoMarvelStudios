@@ -29,19 +29,17 @@ final class RegisterScreen: UIView {
     lazy var confirmedPasswordTextField = dependencies.designSystemComponents.makeTextField()
     private lazy var registerButton = dependencies.designSystemComponents.makeButton()
     
-    
     init(dependencies: HasDesignSystemComponentsInterface) {
         self.dependencies = dependencies
         super.init(frame: .zero)
         setupView()
     }
     
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func configureLabel(){
+    private func configureLabel() {
         nameLabel.setDTO(.init(text: "Nome:"))
         emailLabel.setDTO(.init(text: "Email:"))
         passwordLabel.setDTO(.init(text: "Senha:"))
@@ -59,7 +57,7 @@ final class RegisterScreen: UIView {
         confirmedPasswordTextField.delegate = self
     }
     
-    private func configureButton(){
+    private func configureButton() {
         backButton.setDTO(.init(title: "<- Back", isEnable: true, font: DSFonts.subtitleSemibold16))
         backButton.onClick { [weak self] in
             self?.delegate?.actionBackButton()
@@ -72,7 +70,7 @@ final class RegisterScreen: UIView {
         
     }
     
-    private func configureBackGroundImage(){
+    private func configureBackGroundImage() {
         backGroudImage.image = UIImage(named: "")
     }
     
@@ -88,17 +86,9 @@ final class RegisterScreen: UIView {
 
 extension RegisterScreen: ViewCodeProtocol {
     func setupElements() {
-        addSubview(backGroudImage)
-        addSubview(backButton)
-        addSubview(nameLabel)
-        addSubview(nameTextField)
-        addSubview(emailLabel)
-        addSubview(emailTextField)
-        addSubview(passwordLabel)
-        addSubview(passwordTextField)
-        addSubview(confirmedPasswordLabel)
-        addSubview(confirmedPasswordTextField)
-        addSubview(registerButton)
+        [backGroudImage, backButton, nameLabel, nameTextField, emailLabel, emailTextField, passwordLabel,
+         passwordTextField, confirmedPasswordLabel,
+         confirmedPasswordTextField, registerButton].forEach(addSubview)
     }
     
     func setupConstraints() {
@@ -110,7 +100,7 @@ extension RegisterScreen: ViewCodeProtocol {
             backGroudImage.bottomAnchor.constraint(equalTo: bottomAnchor),
             
             backButton.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
-            backButton.leadingAnchor.constraint(equalTo: leadingAnchor,constant: 25),
+            backButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 25),
             
             nameLabel.topAnchor.constraint(equalTo: backButton.bottomAnchor, constant: 30),
             nameLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
@@ -144,7 +134,7 @@ extension RegisterScreen: ViewCodeProtocol {
             confirmedPasswordTextField.trailingAnchor.constraint(equalTo: nameTextField.trailingAnchor),
             confirmedPasswordTextField.heightAnchor.constraint(equalToConstant: 50),
             
-            registerButton.topAnchor.constraint(equalTo: confirmedPasswordTextField.bottomAnchor,constant: 45),
+            registerButton.topAnchor.constraint(equalTo: confirmedPasswordTextField.bottomAnchor, constant: 45),
             registerButton.centerXAnchor.constraint(equalTo: centerXAnchor),
             registerButton.widthAnchor.constraint(equalToConstant: 195),
             registerButton.heightAnchor.constraint(equalToConstant: 50),
@@ -159,8 +149,6 @@ extension RegisterScreen: ViewCodeProtocol {
         configureButton()
         setupTapGesture()
     }
-    
-    
 }
 
 extension RegisterScreen: UITextFieldDelegate {

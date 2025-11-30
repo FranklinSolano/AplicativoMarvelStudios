@@ -7,7 +7,7 @@
 
 import UIKit
 
-//MARK: - SearchBaring
+// MARK: - SearchBaring
 
 protocol SearchBaring: UIView {
     var delegate: UISearchBarDelegate? { get set }
@@ -15,7 +15,7 @@ protocol SearchBaring: UIView {
     func resignFirstResponder()
 }
 
-//MARK: - SearchBaring
+// MARK: - SearchBaring
 
 final class DSSearchBarAdapter: UISearchBar, SearchBaring {
 

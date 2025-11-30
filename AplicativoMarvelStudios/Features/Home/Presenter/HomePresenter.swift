@@ -53,4 +53,3 @@ extension HomePresenter: HomePresenting {
         view?.hideLoading()
     }
 }
-

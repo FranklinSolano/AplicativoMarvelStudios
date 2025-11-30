@@ -4,8 +4,8 @@
 //
 //  Created by Franklin  Stilhano Solano on 22/06/25.
 //
-import UIKit
 import SnapKit
+import UIKit
 
 final class FavoritesEmptyCell: UICollectionViewCell {
     
@@ -34,7 +34,7 @@ final class FavoritesEmptyCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func configureLabels(){
+    private func configureLabels() {
         titleLabel.setDTO(.init(
             text: "You don't have any favorites yet 🙁",
             textColor: DSColors.titleTextColor,

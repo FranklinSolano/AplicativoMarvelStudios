@@ -6,7 +6,7 @@
 //
 import UIKit
 
-//MARK: - DSButtonAdapter
+// MARK: - DSButtonAdapter
 
 final class DSButtonAdapter: DSButton, Buttoning {
     private var onClickAction: (() -> Void)?
@@ -38,7 +38,7 @@ final class DSButtonAdapter: DSButton, Buttoning {
     }
 }
 
-//MARK: - DSButtonTitlesAdapter
+// MARK: - DSButtonTitlesAdapter
 
 final class DSButtonTitlesAdapter: DSButtonTitles, Buttoning {
     private var onClickAction: (() -> Void)?
