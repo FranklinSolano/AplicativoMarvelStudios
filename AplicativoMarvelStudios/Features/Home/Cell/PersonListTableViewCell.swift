@@ -61,7 +61,7 @@ final class PersonListTableViewCell: UITableViewCell {
     func setupCell(data: SHCharacter) {
         characterName.text = data.name
         characterSpecies.text = "Super Hero" // ou remova esse label
-        imagePerson.setImage(from: data.images.lgImage)
+        imagePerson.setImage(from: data.images.large)
     }
 }
 

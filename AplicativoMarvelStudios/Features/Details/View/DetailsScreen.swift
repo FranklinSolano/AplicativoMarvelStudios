@@ -123,7 +123,7 @@ final class DetailsScreen: UIView {
         Birthplace: \(origin)
         """
 
-        imagePerson.setImage(from: data.images.lgImage)
+        imagePerson.setImage(from: data.images.large)
     }
 
     // MARK: LOADING

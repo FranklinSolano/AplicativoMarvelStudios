@@ -44,8 +44,15 @@ struct Appearance: Codable {
 }
 
 struct SHImages: Codable {
-    let xsImage: String
-    let smImage: String
-    let mdImage: String
-    let lgImage: String
+    let extraSmall: String
+    let small: String
+    let medium: String
+    let large: String
+    
+    private enum CodingKeys: String, CodingKey {
+        case extraSmall = "xs"
+        case small      = "sm"
+        case medium     = "md"
+        case large      = "lg"
+    }
 }

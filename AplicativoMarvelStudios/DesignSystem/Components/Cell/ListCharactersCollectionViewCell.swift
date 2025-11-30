@@ -39,7 +39,7 @@ final class ListCharactersCollectionViewCell: UICollectionViewCell {
     // MARK: - Public Method
     
     func setupCell(data: SHCharacter?) {
-        imagePerson.setImage(from: data?.images.lgImage)
+        imagePerson.setImage(from: data?.images.large)
     }
 }
 
