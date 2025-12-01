@@ -5,16 +5,15 @@
 //  Created by Franklin  Stilhano Solano on 01/05/25.
 //
 
-
-import UIKit
 import SnapKit
+import UIKit
 
 // MARK: - Protocols
 
 protocol LoginScreenProtocol {
-    func ActionLoginButton()
-    func ActionRegisterButton()
-    func ActionForgotPasswordButton()
+    func actionLoginButton()
+    func actionRegisterButton()
+    func actionForgotPasswordButton()
 }
 
 // MARK: - LoginScreen
@@ -58,11 +57,11 @@ final class LoginScreen: UIView {
         addGestureRecognizer(tapGesture)  // A view detecta o toque e chama o método para fechar o teclado
     }
     
-    private func configureImage(){
+    private func configureImage() {
         imageBackground.image = UIImage(named: "imageLogin")
     }
     
-    private func configureLabels(){
+    private func configureLabels() {
         emailLabel.setDTO(.init(text: "Email"))
         passwordLabel.setDTO(.init(text: "Password"))
     }
@@ -81,24 +80,22 @@ final class LoginScreen: UIView {
         passwordTextField.text = "12345678"
     }
     
-    private func configureButtons(){
-        
+    private func configureButtons() {
         forgotPasswordButton.setDTO(
             .init(title: "Forgot Password", isEnable: true,
                   font: DSFonts.subtitleSemibold16)
         )
         
         forgotPasswordButton.onClick { [weak self] in
-            self?.delegate?.ActionForgotPasswordButton()
+            self?.delegate?.actionForgotPasswordButton()
         }
-        
         
         loginButton.setDTO(.init(title: "Login",
                                  isEnable: true)
         )
         
         loginButton.onClick { [weak self] in
-            self?.delegate?.ActionLoginButton()
+            self?.delegate?.actionLoginButton()
         }
         
         registerButton.setDTO(.init(title: "Don't have an account? Sign up",
@@ -107,7 +104,7 @@ final class LoginScreen: UIView {
         )
         
         registerButton.onClick { [weak self] in
-            self?.delegate?.ActionRegisterButton()
+            self?.delegate?.actionRegisterButton()
         }
     }
 }
@@ -119,14 +116,8 @@ extension LoginScreen: ViewCodeProtocol {
     // MARK: - Setup Methods
     
     func setupElements() {
-        addSubview(imageBackground)
-        addSubview(emailLabel)
-        addSubview(emailTextField)
-        addSubview(passwordLabel)
-        addSubview(passwordTextField)
-        addSubview(forgotPasswordButton)
-        addSubview(loginButton)
-        addSubview(registerButton)
+        [imageBackground, emailLabel, emailTextField, passwordLabel, passwordTextField,
+         forgotPasswordButton, loginButton, registerButton].forEach(addSubview)
     }
     
     func setupConstraints() {
@@ -190,7 +181,7 @@ extension LoginScreen: ViewCodeProtocol {
 extension LoginScreen: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == emailTextField {
-            passwordTextField.becomeFirstResponder() //metodo para ir para o proximo textfield
+            passwordTextField.becomeFirstResponder() // metodo para ir para o proximo textfield
         } else {
             textField.resignFirstResponder()
         }

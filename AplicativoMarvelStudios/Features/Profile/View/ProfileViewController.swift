@@ -5,9 +5,8 @@
 //  Created by Franklin  Stilhano Solano on 28/05/25.
 //
 
-
-import UIKit
 import FirebaseAuth
+import UIKit
 
 // MARK: - Protocol
 
@@ -26,8 +25,7 @@ final class ProfileViewController: UIViewController {
     private let screen: ProfileScreen
     private let interactor: ProfileInteracting
     
-    
-    //MARK: - init
+    // MARK: - init
     
     init(interactor: ProfileInteracting, dependencies: Dependencies = DependencyContainer()) {
         self.interactor = interactor
@@ -45,10 +43,6 @@ final class ProfileViewController: UIViewController {
     
     override func loadView() {
         view = screen
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
     }
 }
 

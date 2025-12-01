@@ -7,28 +7,6 @@
 
 import Foundation
 
-struct HeroesModel: Codable {
-    var id: Int
-    var heroName: String
-    var imageURL: String
-    var descrepitionPerson: String
-}
-
-
-
-struct RickAndMortyResponse: Codable {
-    let results: [RMCharacter]
-}
-
-struct RMCharacter: Codable {
-    let id: Int
-    let name: String
-    let status: String
-    let species: String
-    let image: String
-}
-
-
 struct SHCharacter: Codable {
     let id: Int
     let name: String
@@ -66,8 +44,15 @@ struct Appearance: Codable {
 }
 
 struct SHImages: Codable {
-    let xs: String
-    let sm: String
-    let md: String
-    let lg: String
+    let extraSmall: String
+    let small: String
+    let medium: String
+    let large: String
+    
+    private enum CodingKeys: String, CodingKey {
+        case extraSmall = "xs"
+        case small      = "sm"
+        case medium     = "md"
+        case large      = "lg"
+    }
 }

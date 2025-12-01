@@ -7,7 +7,7 @@
 
 import UIKit
 
-//MARK: LabelDTO
+// MARK: LabelDTO
 
 struct LabelDTO {
     let text: String
@@ -31,17 +31,17 @@ struct LabelDTO {
     }
 }
 
-//MARK: Labeling
+// MARK: Labeling
 
 protocol Labeling: UIView {
     func setDTO(_ dto: LabelDTO)
     var text: String? {get set}
 }
 
-//MARK: - DSLabel
+// MARK: - DSLabel
 
 class DSLabel: UILabel {
-    func configure(_ dto: LabelDTO){
+    func configure(_ dto: LabelDTO) {
         self.text = dto.text
         self.textColor = dto.textColor
         self.font = dto.font
@@ -51,11 +51,10 @@ class DSLabel: UILabel {
     }
 }
 
-//MARK: - DSLabelAdapter
+// MARK: - DSLabelAdapter
 
 final class DSLabelAdapter: DSLabel, Labeling {
     func setDTO(_ dto: LabelDTO) {
         configure(dto)
     }
 }
-

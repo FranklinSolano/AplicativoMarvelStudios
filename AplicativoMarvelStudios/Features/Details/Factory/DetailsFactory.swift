@@ -7,7 +7,7 @@
 
 import UIKit
 
-//MARK: - DetailsFactory
+// MARK: - DetailsFactory
 
 final class DetailsFactory: UIViewController {
     func make(navigationController: UINavigationController?) -> DetailsViewController {

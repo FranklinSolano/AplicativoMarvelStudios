@@ -7,7 +7,7 @@
 
 import UIKit
 
-//MARK: - DSButtonImageAdapter
+// MARK: - DSButtonImageAdapter
 
 final class DSButtonImageAdapter: UIButton, ButtonImageing {
     

@@ -4,18 +4,17 @@
 //
 //  Created by Franklin  Stilhano Solano on 09/06/25.
 //
-
-import UIKit
 import SDWebImage
+import UIKit
 
-//MARK: - ImageViewing
+// MARK: - ImageViewing
 
 protocol ImageViewing: UIView {
     var image: UIImage? { get set }
     func setImage(from urlString: String?)
 }
 
-//MARK: - DSImageView
+// MARK: - DSImageView
 
 class DSImageView: UIImageView {
     override init(image: UIImage?) {
@@ -35,7 +34,7 @@ class DSImageView: UIImageView {
     }
 }
 
-//MARK: - DSImageViewAdapter
+// MARK: - DSImageViewAdapter
 
 final class DSImageViewAdapter: DSImageView, ImageViewing {
     func setImage(from urlString: String?) {
@@ -46,4 +45,3 @@ final class DSImageViewAdapter: DSImageView, ImageViewing {
         self.sd_setImage(with: url, placeholderImage: UIImage(named: "placeholder"))
     }
 }
-

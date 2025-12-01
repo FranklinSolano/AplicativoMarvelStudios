@@ -5,7 +5,6 @@
 //  Created by Franklin  Stilhano Solano on 23/06/25.
 //
 
-
 import UIKit
 
 // MARK: - ProfileScreenProtocol
@@ -40,24 +39,35 @@ final class ProfileScreen: UIView {
     
     required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
     
-    private func configureLabels(){
-        titleLabel.setDTO(.init(text: "Profile", textColor: DSColors.titleTextColor, font: DSFonts.titleBold22, numberOfLines: 0, textAlignment: .center))
+    private func configureLabels() {
+        titleLabel.setDTO(.init(text: "Profile", textColor: DSColors.titleTextColor,
+                                font: DSFonts.titleBold22, numberOfLines: 0,
+                                textAlignment: .center))
         
-        nameUserLabel.setDTO(.init(text: "Username: Solas", textColor: DSColors.titleTextColor, font: DSFonts.captionLight14, numberOfLines: 0, textAlignment: .left))
+        nameUserLabel.setDTO(.init(text: "Username: Solas", textColor: DSColors.titleTextColor,
+                                   font: DSFonts.captionLight14, numberOfLines: 0,
+                                   textAlignment: .left))
         
-        emailLabel.setDTO(.init(text: "Email", textColor: DSColors.titleTextColor, font: DSFonts.titleBold18, numberOfLines: 0, textAlignment: .left))
+        emailLabel.setDTO(.init(text: "Email", textColor: DSColors.titleTextColor,
+                                font: DSFonts.titleBold18, numberOfLines: 0,
+                                textAlignment: .left))
         
-        selectThemeLabel.setDTO(.init(text: "Select a theme for the app", textColor: DSColors.titleTextColor, font: DSFonts.captionLight14, numberOfLines: 0, textAlignment: .left))
+        selectThemeLabel.setDTO(.init(text: "Select a theme for the app", textColor: DSColors.titleTextColor,
+                                      font: DSFonts.captionLight14, numberOfLines: 0,
+                                      textAlignment: .left))
         
-        descriptionVersionApp.setDTO(.init(text: "Version: 1.0.0 - Desenvolvido por Franklin Solano", textColor: DSColors.titleTextColor, font: DSFonts.captionLight14, numberOfLines: 0, textAlignment: .left))
+        descriptionVersionApp.setDTO(.init(text: "Version: 1.0.0 - Desenvolvido por Franklin Solano",
+                                           textColor: DSColors.titleTextColor,
+                                           font: DSFonts.captionLight14, numberOfLines: 0,
+                                           textAlignment: .left))
     }
     
-    private func configureTextFields(){
+    private func configureTextFields() {
         emailTextField.setDTO(.init(placeholder: "", isSecureTextEntry: false))
         emailTextField.text = "franklin@gmail.com"
     }
     
-    private func configureButtons(){
+    private func configureButtons() {
         
         exitButton.setDTO(.init(title: "Exit"))
                           
@@ -66,7 +76,7 @@ final class ProfileScreen: UIView {
         }
     }
     
-    private func configureSegmentedControl(){
+    private func configureSegmentedControl() {
         themeSwitcher.setItems(["Light", "Dark"]) // //// 🟢 Define o índice baseado no tema atual
         let currentTheme = ThemeManager.shared.currentTheme
         themeSwitcher.selectedSegmentIndex = currentTheme == .light ? 0 : 1
@@ -76,24 +86,14 @@ final class ProfileScreen: UIView {
             ThemeManager.shared.setTheme(selectedTheme)
         }
     }
-    
-    
-    // MARK: - Actions
 }
 
 // MARK: - ViewCodeProtocol
 
 extension ProfileScreen: ViewCodeProtocol {
     func setupElements() {
-        addSubview(titleLabel)
-        addSubview(imageUser)
-        addSubview(nameUserLabel)
-        addSubview(emailLabel)
-        addSubview(emailTextField)
-        addSubview(exitButton)
-        addSubview(selectThemeLabel)
-        addSubview(themeSwitcher)
-        addSubview(descriptionVersionApp)
+        [titleLabel, imageUser, nameUserLabel, emailLabel, emailTextField, exitButton,
+         selectThemeLabel, themeSwitcher, descriptionVersionApp].forEach(addSubview)
     }
     
     func setupConstraints() {

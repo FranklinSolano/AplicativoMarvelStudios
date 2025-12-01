@@ -7,7 +7,8 @@
 
 import UIKit
 
-//MARK: - Protocol
+// MARK: - Protocol
+
 protocol DetailsPresenting {
     func navigateBack() async
     func getDetailsPerson(result: SHCharacter)
@@ -17,7 +18,7 @@ protocol DetailsPresenting {
     func updateDetails(id: SHCharacter, data: [SHCharacter]) async
 }
 
-//MARK: - DetailsPresenter
+// MARK: - DetailsPresenter
 
 final class DetailsPresenter {
     

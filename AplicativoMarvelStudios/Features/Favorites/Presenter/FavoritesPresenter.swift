@@ -7,13 +7,13 @@
 
 import UIKit
 
-//MARK: - FavoritesPresenting
+// MARK: - FavoritesPresenting
 
-protocol FavoritesPresenting{
+protocol FavoritesPresenting {
     
 }
 
-//MARK: - FavoritesPresenter
+// MARK: - FavoritesPresenter
 
 final class FavoritesPresenter {
     
@@ -26,6 +26,6 @@ final class FavoritesPresenter {
     }
 }
 
-//MARK: - FavoritesPresenting
+// MARK: - FavoritesPresenting
 
 extension FavoritesPresenter: FavoritesPresenting {}

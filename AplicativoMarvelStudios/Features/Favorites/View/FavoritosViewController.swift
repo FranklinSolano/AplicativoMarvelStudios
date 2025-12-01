@@ -23,9 +23,9 @@ final class FavoritesViewController: UIViewController {
     private let dependencies: Dependencies
     private let screen: FavoritesScreen
     private let interactor: FavoritesInteracting
-    private var favorites: [HeroesModel] = []
+    private var favorites: [SHCharacter] = []
     
-    //MARK: - Init
+    // MARK: - Init
     
     init(interactor: FavoritesInteracting, dependencies: Dependencies = DependencyContainer()) {
         self.interactor = interactor
@@ -39,15 +39,10 @@ final class FavoritesViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
     // MARK: - Lifecycle
     
     override func loadView() {
         view = screen
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
     }
 }
 
@@ -57,7 +52,8 @@ extension FavoritesViewController: FavoritesViewControllerDisplay {}
 
 // MARK: - UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
 
-extension FavoritesViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension FavoritesViewController: UICollectionViewDelegate,
+                                   UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if favorites.isEmpty {
@@ -67,19 +63,25 @@ extension FavoritesViewController: UICollectionViewDelegate, UICollectionViewDat
         }
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView,
+                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if favorites.isEmpty {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FavoritesEmptyCell.identifier, for: indexPath) as? FavoritesEmptyCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FavoritesEmptyCell.identifier,
+                                                          for: indexPath) as? FavoritesEmptyCell
             return cell ?? UICollectionViewCell()
         } else {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ListCharactersCollectionViewCell.identifier, for: indexPath) as? ListCharactersCollectionViewCell
+            let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: ListCharactersCollectionViewCell.identifier,
+                for: indexPath) as? ListCharactersCollectionViewCell
             return cell ?? UICollectionViewCell()
         }
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
         if favorites.isEmpty {
-            return CGSize(width: collectionView.bounds.width, height: collectionView.bounds.height)
+            return CGSize(width: collectionView.bounds.width,
+                          height: collectionView.bounds.height)
         } else {
             let spacing: CGFloat = 10
             let horizontalInset: CGFloat = 16
@@ -88,8 +90,10 @@ extension FavoritesViewController: UICollectionViewDelegate, UICollectionViewDat
             return CGSize(width: width, height: width * 1.3)
         }
     }
- 
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         if favorites.isEmpty {
             return 1
         } else {
@@ -97,7 +101,8 @@ extension FavoritesViewController: UICollectionViewDelegate, UICollectionViewDat
         }
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
+                        insetForSectionAt section: Int) -> UIEdgeInsets {
         if favorites.isEmpty {
             return UIEdgeInsets()
         } else {

@@ -4,8 +4,6 @@
 //
 //  Created by Franklin  Stilhano Solano on 29/07/25.
 //
-
-
 import Foundation
 
 // MARK: - 1. Seus componentes e serviços
@@ -33,40 +31,39 @@ final class DesignSystemComponents: DesignSystemComponentsInterface {
     func makeTextField() -> TextFielding {
         return DSTextFieldAdapter()
     }
-    
-    func makeButton() ->  Buttoning {
+    func makeButton() -> Buttoning {
         return DSButtonAdapter()
     }
     
-    func makeButtonTitles() ->  Buttoning {
+    func makeButtonTitles() -> Buttoning {
         return DSButtonTitlesAdapter()
     }
     
-    func makeButtonImage() ->  ButtonImageing {
+    func makeButtonImage() -> ButtonImageing {
         return DSButtonImageAdapter()
     }
     
-    func makeTableView() ->  TableViewing {
+    func makeTableView() -> TableViewing {
         return DSTableViewAdapter()
     }
     
-    func makeCollectionView() ->  CollectionViewing {
+    func makeCollectionView() -> CollectionViewing {
         return DSCollectionViewAdapter(scroll: .horizontal, spacing: 10)
     }
     
-    func makeActivityIndicator() ->  LoadingIndicatable {
+    func makeActivityIndicator() -> LoadingIndicatable {
         return DSActivityIndicatorAdapter()
     }
     
-    func makeImageView() ->  ImageViewing {
+    func makeImageView() -> ImageViewing {
         return DSImageViewAdapter(image: .placeholder)
     }
     
-    func makeSearchBar() ->  SearchBaring {
+    func makeSearchBar() -> SearchBaring {
         return DSSearchBarAdapter()
     }
     
-    func makeSegmentedControling() ->  SegmentedControling {
+    func makeSegmentedControling() -> SegmentedControling {
         return DSSegmentedControlAdapter()
     }
 }
@@ -89,19 +86,19 @@ final class HttpServices: HttpServicesInterface {
         return FavoritesService()
     }
     
-    func makeProfileService() ->  ProfileServicing {
+    func makeProfileService() -> ProfileServicing {
         return ProfileService()
     }
     
-    func makeHomeService() ->  HomeServicing {
+    func makeHomeService() -> HomeServicing {
         return HomeService()
     }
     
-    func makeDetailsService() ->  DetailsServicing {
+    func makeDetailsService() -> DetailsServicing {
         return DetailsService()
     }
     
-    func makeLoginSErvice() ->  LoginServicing {
+    func makeLoginSErvice() -> LoginServicing {
         return LoginService()
     }
 }
@@ -125,7 +122,6 @@ typealias Dependencies = HasNoDependency
     & HasDesignSystemComponentsInterface
     & HasHttpServicesInterface
 
-
 // MARK: - 3. Container de dependências (injeção)
 
 /// Container responsável por fornecer as dependências usando o resolver
@@ -140,7 +136,6 @@ final class DependencyContainer: Dependencies {
         self.resolver = resolver
     }
 }
-
 
 // MARK: - 4. Resolver: Registro e resolução de dependências
 

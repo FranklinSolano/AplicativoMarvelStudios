@@ -35,7 +35,7 @@ final class DetailsViewController: UIViewController {
     }
     var idPerson: Int?
     
-    //MARK: - Init
+    // MARK: - Init
     
     init(interactor: DetailsInteracting, dependencies: Dependencies = DependencyContainer()) {
         self.interactor = interactor
@@ -50,7 +50,6 @@ final class DetailsViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
     // MARK: - Lifecycle
     
     override func loadView() {
@@ -64,9 +63,9 @@ final class DetailsViewController: UIViewController {
         interactor.fetchDetailsPerson(idPerson: idPerson)
     }
     
-    //MARK: - Outhe Methods
+    // MARK: - Outhe Methods
     
-    func shufflePersonImages(){
+    func shufflePersonImages() {
         personListImage = personListImage.shuffled()
     }
 }
@@ -93,8 +92,8 @@ extension DetailsViewController: DetailsViewControllerDisplay {
     }
 }
 
-//MARK: - DetailsViewProtocol
-extension DetailsViewController: DetailsViewProtocol{
+// MARK: - DetailsViewProtocol
+extension DetailsViewController: DetailsViewProtocol {
     func actionFavoritesSave() {
     }
     
@@ -105,13 +104,17 @@ extension DetailsViewController: DetailsViewProtocol{
 
 // MARK: - UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
 
-extension DetailsViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+ extension DetailsViewController: UICollectionViewDelegate,
+                                    UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView,
+                        numberOfItemsInSection section: Int) -> Int {
         personListImage.count
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ListCharactersCollectionViewCell.identifier, for: indexPath) as? ListCharactersCollectionViewCell
+     func collectionView(_ collectionView: UICollectionView,
+                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ListCharactersCollectionViewCell.identifier,
+                                                      for: indexPath) as? ListCharactersCollectionViewCell
         let person = personListImage[indexPath.row]
         cell?.setupCell(data: person)
         return cell ?? UICollectionViewCell()
@@ -123,7 +126,8 @@ extension DetailsViewController: UICollectionViewDelegate, UICollectionViewDataS
         return 10
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
         let largura: CGFloat = 120
         let altura = collectionView.bounds.height - 10
         return CGSize(width: largura, height: altura)

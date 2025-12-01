@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 // MARK: - Protocol
 @MainActor
 protocol LoginPresenting {
@@ -23,7 +22,7 @@ final class LoginPresenter {
     
     // MARK: - Properties
     
-    weak var view: LoginViewControllerDisplay? 
+    weak var view: LoginViewControllerDisplay?
     private var coordinator: LoginCoordinating
     
     // MARK: - Init
@@ -33,10 +32,10 @@ final class LoginPresenter {
         self.coordinator = coordinator
     }
     
-    //MARK: - Outher Methods
+    // MARK: - Outher Methods
 }
 
-//MARK: - LoginPresenting
+// MARK: - LoginPresenting
 
 extension LoginPresenter: LoginPresenting {
     func presentShowAlertLogin(success: Bool, errorMessage: String?) {
@@ -47,7 +46,6 @@ extension LoginPresenter: LoginPresenting {
             view?.showAlertLogin(title: "Erro no Login", message: message, success: false)
         }
     }
-    
     
  func presentNavigateToHome() {
         coordinator.navigateToHome()

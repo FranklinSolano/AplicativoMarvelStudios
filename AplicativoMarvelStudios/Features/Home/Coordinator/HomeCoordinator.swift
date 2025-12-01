@@ -19,7 +19,7 @@ final class HomeCoordinator: HomeCoordinating {
     weak var navigationController: UINavigationController?
     var presenter: HomePresenting?
     
-    func navigateToDetail(character: SHCharacter,randomCharacters: [SHCharacter] ) {
+    func navigateToDetail(character: SHCharacter, randomCharacters: [SHCharacter]) {
         guard let navigationController else { return }
         
         let detailsFactory = DetailsFactory()
@@ -32,4 +32,3 @@ final class HomeCoordinator: HomeCoordinating {
         navigationController.pushViewController(detailsVC, animated: true)
     }
 }
-

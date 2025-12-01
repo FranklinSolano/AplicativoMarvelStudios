@@ -21,20 +21,18 @@ final class RegisterInteractor {
         self.presenter = presenter
         self.dependneciesService = dependneciesService
     }
-    
-    
 }
 
-//MARK: - RegisterInteracting
+// MARK: - RegisterInteracting
 extension RegisterInteractor: RegisterInteracting {
     func navigationHomeButtonInteractor() {
         self.presenter.navigationHomeButtonPresenter()
     }
     
-    
     func registerUser(name: String?, email: String?, password: String?, confirmPassword: String?) {
         do {
-            let user = try validateUserInput(name: name, email: email, password: password, confirmPassword: confirmPassword)
+            let user = try validateUserInput(name: name, email: email,
+                                             password: password, confirmPassword: confirmPassword)
             
             self.dependneciesService.httpServices.makeRegisterService().createUser(user) { result in
                 
@@ -61,7 +59,8 @@ extension RegisterInteractor: RegisterInteracting {
         presenter.navigationBackButtonPresenter()
     }
     
-    private func validateUserInput(name: String?, email: String?, password: String?, confirmPassword: String?) throws -> UserModel {
+    private func validateUserInput(name: String?, email: String?,
+                                   password: String?, confirmPassword: String?) throws -> UserModel {
          guard let name, !name.isEmpty else {
              throw AuthenticationError.emptyName
          }

@@ -7,7 +7,7 @@
 
 import UIKit
 
-//MARK: - ButtonDTO
+// MARK: - ButtonDTO
 
 struct ButtonDTO {
     let title: String
@@ -23,16 +23,14 @@ struct ButtonDTO {
     }
 }
 
-//MARK: - ImageButtonDTO
+// MARK: - ImageButtonDTO
 
 struct ImageButtonDTO {
     let image: UIImage?
     let tintColor: UIColor?
     let isEnable: Bool
     
-    init(image: UIImage? = nil,
-           tintColor: UIColor? = nil,
-           isEnable: Bool = true) {
+    init(image: UIImage? = nil, tintColor: UIColor? = nil, isEnable: Bool = true) {
           self.image = image
           self.tintColor = tintColor
           self.isEnable = isEnable

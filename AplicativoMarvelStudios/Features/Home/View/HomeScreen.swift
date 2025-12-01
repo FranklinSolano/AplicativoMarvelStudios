@@ -4,9 +4,8 @@
 //
 //  Created by Franklin  Stilhano Solano on 28/05/25.
 //
-
-import UIKit
 import SnapKit
+import UIKit
 
 // MARK: - HomeScreen
 
@@ -34,7 +33,7 @@ final class HomeScreen: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func configureLabels(){
+    private func configureLabels() {
         userName.setDTO(.init(text: "Hi, Solas",
                               textColor: DSColors.titleTextColor,
                               font: DSFonts.titleBold18,
@@ -45,7 +44,6 @@ final class HomeScreen: UIView {
                                      textColor: DSColors.titleTextColor,
                                      font: DSFonts.titleBold22))
     }
-    
     
     // MARK: - Outher Methods
     
@@ -73,11 +71,8 @@ final class HomeScreen: UIView {
 
 extension HomeScreen: ViewCodeProtocol {
     func setupElements() {
-        addSubview(userName)
-        addSubview(searchPerson)
-        addSubview(descriptionName)
-        addSubview(tableView)
-        addSubview(activityIndicator)
+        [userName, searchPerson, descriptionName, tableView,
+         activityIndicator].forEach(addSubview)
     }
     
     func setupConstraints() {

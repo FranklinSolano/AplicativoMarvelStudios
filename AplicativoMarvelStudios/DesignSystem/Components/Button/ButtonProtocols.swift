@@ -7,14 +7,14 @@
 
 import UIKit
 
-//MARK: - Buttoning
+// MARK: - Buttoning
 
 protocol Buttoning: UIView {
     func setDTO(_ dto: ButtonDTO)
     func onClick(_ action: @escaping () -> Void)
 }
 
-//MARK: - ButtonImageing
+// MARK: - ButtonImageing
 
 protocol ButtonImageing: UIView {
     func setDTO(_ dto: ImageButtonDTO)

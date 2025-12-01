@@ -57,8 +57,6 @@ enum DSColors {
     }()
 }
 
-
-
 final class ThemeManager {
     
     enum Theme: String {

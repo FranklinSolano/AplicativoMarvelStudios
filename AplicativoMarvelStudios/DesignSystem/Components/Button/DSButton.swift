@@ -7,34 +7,34 @@
 
 import UIKit
 
-//MARK: - DSButton
+// MARK: - DSButton
 
 class DSButton: UIButton {
 
     override init(frame: CGRect) {
         super.init(frame: .zero)
-        self.setupStyle()
+        setupStyle()
+        registerForTraitChanges()
     }
 
     private func setupStyle() {
-        self.setTitleColor(dynamicButtonTextColor, for: .normal)
-        self.backgroundColor = DSColors.secondaryColor
-        self.clipsToBounds = true
-        self.layer.cornerRadius = 15
-        self.translatesAutoresizingMaskIntoConstraints = false
+        setTitleColor(dynamicButtonTextColor, for: .normal)
+        backgroundColor = DSColors.secondaryColor
+        clipsToBounds = true
+        layer.cornerRadius = 15
+        translatesAutoresizingMaskIntoConstraints = false
+    }
+
+    private func registerForTraitChanges() {
+        registerForTraitChanges([UITraitUserInterfaceStyle.self]) { (self: Self, _: UITraitCollection) in
+            self.setTitleColor(self.dynamicButtonTextColor, for: .normal)
+        }
     }
 
     private var dynamicButtonTextColor: UIColor {
         return UIColor { trait in
-            trait.userInterfaceStyle == .dark
-            ? .white
-            : .white     // Se quiser preto no light é só trocar aqui
+            trait.userInterfaceStyle == .dark ? .white : .black
         }
-    }
-
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        self.setTitleColor(dynamicButtonTextColor, for: .normal)
     }
 
     required init?(coder: NSCoder) {
@@ -42,16 +42,19 @@ class DSButton: UIButton {
     }
 }
 
-
-//MARK: - DSButtonTitles
+// MARK: - DSButtonTitles
 
 class DSButtonTitles: UIButton {
     
     override init(frame: CGRect = .zero) {
         super.init(frame: frame)
-        self.setTitleColor(DSColors.titleTextColor, for: .normal)
-        self.backgroundColor = .clear
-        self.translatesAutoresizingMaskIntoConstraints = false
+        setupStyle()
+    }
+    
+    private func setupStyle() {
+        setTitleColor(DSColors.titleTextColor, for: .normal)
+        backgroundColor = .clear
+        translatesAutoresizingMaskIntoConstraints = false
     }
     
     required init?(coder: NSCoder) {

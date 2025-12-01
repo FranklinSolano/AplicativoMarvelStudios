@@ -9,7 +9,7 @@ import UIKit
 
 // MARK: - Protocol
 @MainActor
-protocol LoginCoordinating: AnyObject{
+protocol LoginCoordinating: AnyObject {
     func navigateToHome()
     func navigateToForgotPassword()
     func navigateToRegister()
@@ -31,7 +31,8 @@ final class LoginCoordinator {
 extension LoginCoordinator: LoginCoordinating {
     func navigateToHome() {
         guard let navigationController else { return }
-        let tabBarController = TabbarViewController(homeFactory: homeFactory, favoritesFactory: favoritesFactory, profileFactory: profileFactory)
+        let tabBarController = TabbarViewController(homeFactory: homeFactory, favoritesFactory: favoritesFactory,
+                                                    profileFactory: profileFactory)
         navigationController.setViewControllers([tabBarController], animated: true)
     }
     
@@ -47,6 +48,4 @@ extension LoginCoordinator: LoginCoordinating {
         let registerVC = registerFactory.make(navigationController: navigationController)
         navigationController.pushViewController(registerVC, animated: true)
     }
-    
-    
 }

@@ -6,24 +6,25 @@
 //
 
 import UIKit
-//MARK: - Protocol
+// MARK: - Protocol
 protocol RegisterCoordinating {
     func navigationBackButtonCoordinator()
     func navigationhomeButtonCoordinator()
 }
 
-//MARK: - RegisterCoordinator
+// MARK: - RegisterCoordinator
 final class RegisterCoordinator {
     var navigation: UINavigationController?
     private let homeFactory = HomeFactory()
     private let favoritesFactory = FavoritesFactory()
     private let profileFactory = ProfileFactory()
 }
-//MARK: - RegisterCoordinating
+// MARK: - RegisterCoordinating
 extension RegisterCoordinator: RegisterCoordinating {
     func navigationhomeButtonCoordinator() {
         guard let navigation else { return }
-        let tabBarController = TabbarViewController(homeFactory: homeFactory, favoritesFactory: favoritesFactory, profileFactory: profileFactory)
+        let tabBarController = TabbarViewController(homeFactory: homeFactory, favoritesFactory: favoritesFactory,
+                                                    profileFactory: profileFactory)
         navigation.setViewControllers([tabBarController], animated: true)
     }
     

@@ -9,7 +9,7 @@ import UIKit
 
 // MARK: - ProfileFactory
 
-final class ProfileFactory: UIViewController  {
+final class ProfileFactory: UIViewController {
     
     // MARK: - Public Methods
     
@@ -24,7 +24,7 @@ final class ProfileFactory: UIViewController  {
         
         let interactor = ProfileInteractor(presenter: presenter, dependenciesService: dependencies)
         
-        let profileVC = ProfileViewController(interactor: interactor,dependencies: dependencies)
+        let profileVC = ProfileViewController(interactor: interactor, dependencies: dependencies)
         
         presenter.view = profileVC
         coordinator.presenter = presenter

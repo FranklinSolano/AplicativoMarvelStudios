@@ -9,7 +9,7 @@ import UIKit
 
 // MARK: - RegisterFactory
 
-final class RegisterFactory: UIViewController  {
+final class RegisterFactory: UIViewController {
     
     // MARK: - Public Methods
     

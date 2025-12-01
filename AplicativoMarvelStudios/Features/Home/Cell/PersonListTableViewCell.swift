@@ -4,10 +4,9 @@
 //
 //  Created by Franklin  Stilhano Solano on 28/05/25.
 //
-
-import UIKit
-import SnapKit
 import SDWebImage
+import SnapKit
+import UIKit
 
 // MARK: - PersonListTableViewCell
 final class PersonListTableViewCell: UITableViewCell {
@@ -22,7 +21,6 @@ final class PersonListTableViewCell: UITableViewCell {
     private lazy var characterSpecies = dependencies.designSystemComponents.makeLabel()
 
     // MARK: - Init
-    
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
             // Forneça as dependências usando o Resolver ou DependencyContainer
@@ -63,18 +61,15 @@ final class PersonListTableViewCell: UITableViewCell {
     func setupCell(data: SHCharacter) {
         characterName.text = data.name
         characterSpecies.text = "Super Hero" // ou remova esse label
-        imagePerson.setImage(from: data.images.lg)
+        imagePerson.setImage(from: data.images.large)
     }
 }
-
 
 // MARK: - ViewCodeProtocol
 extension PersonListTableViewCell: ViewCodeProtocol {
     
     func setupElements() {
-        contentView.addSubview(imagePerson)
-        contentView.addSubview(characterName)
-        contentView.addSubview(characterSpecies)
+        [imagePerson, characterName, characterSpecies].forEach(contentView.addSubview)
     }
     
     func setupConstraints() {
@@ -104,4 +99,3 @@ extension PersonListTableViewCell: ViewCodeProtocol {
         configureLabels()
     }
 }
-

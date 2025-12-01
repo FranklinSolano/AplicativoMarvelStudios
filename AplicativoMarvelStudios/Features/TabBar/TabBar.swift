@@ -32,30 +32,22 @@ class TabbarViewController: UITabBarController {
     
     private func setupTabbarController() {
         // Criar os view controllers via factory e colocar cada um dentro de um UINavigationController
-        
-        
         let homeNav = UINavigationController()
         homeNav.setNavigationBarHidden(true, animated: false)
         let homeVC = homeFactory.make(navigationController: homeNav )
         homeNav.viewControllers = [homeVC]
-        
-        
         
         let favoritosNav = UINavigationController()
         favoritosNav.setNavigationBarHidden(true, animated: false)
         let favoritesVC = favoritesFactory.make(navigationController: favoritosNav )
         favoritosNav.viewControllers = [favoritesVC]
         
-        
-        
         let profileNav = UINavigationController()
         profileNav.setNavigationBarHidden(true, animated: false)
         let profileVC = profileFactory.make(navigationController: profileNav )
         profileNav.viewControllers = [profileVC]
         
-        
         setViewControllers([homeNav, favoritosNav, profileNav], animated: false)
-        
         tabBar.backgroundColor = DSColors.secondaryColor
         tabBar.isTranslucent = false
         tabBar.barTintColor = .white

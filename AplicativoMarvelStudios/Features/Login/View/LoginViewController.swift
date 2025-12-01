@@ -5,8 +5,6 @@
 //  Created by Franklin  Stilhano Solano on 01/05/25.
 //
 
-
-
 import UIKit
 
 // MARK: - Protocols
@@ -26,8 +24,7 @@ final class LoginViewController: UIViewController {
     private let screen: LoginScreen
     private let interactor: LoginInteracting
     
-    
-    //MARK: - Init
+    // MARK: - Init
     
     init(interactor: LoginInteracting, dependencies: Dependencies = DependencyContainer()) {
         self.interactor = interactor
@@ -46,25 +43,21 @@ final class LoginViewController: UIViewController {
     override func loadView() {
         self.view = screen
     }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
 }
 
 // MARK: - LoginScreenProtocol
 
 extension LoginViewController: LoginScreenProtocol {
     
-    func ActionRegisterButton() {
+    func actionRegisterButton() {
         interactor.navigateToRegister()
     }
     
-    func ActionForgotPasswordButton() {
+    func actionForgotPasswordButton() {
         interactor.navigateToForgotPassword()
     }
     
-    func ActionLoginButton() {
+    func actionLoginButton() {
         guard let email = screen.emailText,
               let passwpord = screen.passwordText else { return }
         interactor.callServiceLogin(email: email, password: passwpord)
@@ -75,7 +68,7 @@ extension LoginViewController: LoginScreenProtocol {
 
 extension LoginViewController: LoginViewControllerDisplay {
     func showAlertLogin(title: String, message: String, success: Bool) {
-        self.getAlertController(title: title, message: message) { [ self] in //weak
+        self.getAlertController(title: title, message: message) { [ self] in // weak
             if success {
                 self.interactor.navigateToHome()
             }
@@ -83,5 +76,3 @@ extension LoginViewController: LoginViewControllerDisplay {
         }
     }
 }
-
-
