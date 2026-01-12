@@ -20,7 +20,7 @@ final class ProfileInteractor: ProfileInteracting {
     // MARK: - Properties
     
     var presenter: ProfilePresenting
-    private var dependenciesService: HasHttpServicesInterface
+    private let dependenciesService: HasHttpServicesInterface
     
     // MARK: - Init
     

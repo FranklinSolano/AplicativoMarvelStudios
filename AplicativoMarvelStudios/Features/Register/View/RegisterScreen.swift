@@ -20,9 +20,9 @@ final class RegisterScreen: UIView {
     private lazy var backGroudImage = dependencies.designSystemComponents.makeImageView()
     private lazy var backButton = dependencies.designSystemComponents.makeButtonTitles()
     private lazy var nameLabel = dependencies.designSystemComponents.makeLabel()
-     lazy var nameTextField = dependencies.designSystemComponents.makeTextField()
+    lazy var nameTextField = dependencies.designSystemComponents.makeTextField()
     private lazy var emailLabel = dependencies.designSystemComponents.makeLabel()
-     lazy var emailTextField = dependencies.designSystemComponents.makeTextField()
+    lazy var emailTextField = dependencies.designSystemComponents.makeTextField()
     private lazy var passwordLabel = dependencies.designSystemComponents.makeLabel()
     lazy var passwordTextField = dependencies.designSystemComponents.makeTextField()
     private lazy var confirmedPasswordLabel = dependencies.designSystemComponents.makeLabel()
@@ -71,7 +71,7 @@ final class RegisterScreen: UIView {
     }
     
     private func configureBackGroundImage() {
-        backGroudImage.image = UIImage(named: "")
+        backGroudImage.image = UIImage(named: "imageLogin")
     }
     
     private func setupTapGesture() {

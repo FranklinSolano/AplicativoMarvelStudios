@@ -56,6 +56,6 @@ extension LoginPresenter: LoginPresenting {
     }
     
     func presentNavigateToForgotPassword() {
-        
+        coordinator.navigateToForgotPassword()
     }
 }

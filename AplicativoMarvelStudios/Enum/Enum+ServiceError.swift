@@ -21,6 +21,10 @@ enum AuthenticationError: LocalizedError {
     case passwordMismatch
     case firebaseError(String)
     case minimumPassword
+    case invalidEmail
+    case userNotFound
+    case networkError
+    case tooManyRequests
     
     var errorDescription: String? {
         switch self {
@@ -36,6 +40,14 @@ enum AuthenticationError: LocalizedError {
             return "Erro ao criar usuário: \(message)"
         case .minimumPassword:
             return "A senha deve conter no mínimo 6 dígitos."
+        case .invalidEmail:
+            return "E-mail inválido."
+        case .userNotFound:
+            return "Nenhuma conta encontrada com este e-mail."
+        case .networkError:
+            return "Erro de conexão. Verifique sua internet."
+        case .tooManyRequests:
+            return "Muitas tentativas. Tente novamente mais tarde."
         }
     }
 }

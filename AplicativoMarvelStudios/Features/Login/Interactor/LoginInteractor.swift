@@ -18,18 +18,18 @@ protocol LoginInteracting {
 
 // MARK: - Interactor
 
-class LoginInteractor {
+final class LoginInteractor {
     
     // MARK: - Properties
     
     let presenter: LoginPresenting
-    private let dependenciesService: HasHttpServicesInterface
+    private let dependencies: HasHttpServicesInterface & HasAuthenticationValidator
     
     // MARK: - Init
     
-    init(presenter: LoginPresenting, dependenciesService: HasHttpServicesInterface) {
+    init(presenter: LoginPresenting, dependencies: HasHttpServicesInterface & HasAuthenticationValidator) {
         self.presenter = presenter
-        self.dependenciesService = dependenciesService
+        self.dependencies = dependencies
     }
     
     // MARK: - Outher Methods
@@ -41,14 +41,29 @@ extension LoginInteractor: LoginInteracting {
     
     func callServiceLogin(email: String, password: String) {
         
-        let loginService = dependenciesService.httpServices.makeLoginSErvice()
-        
-        loginService.callServiceLogin(email: email, password: password,
-                                      completion: { [ weak self] success, errorMessage in // weak
-            DispatchQueue.main.async {
-                self?.presenter.presentShowAlertLogin(success: success, errorMessage: errorMessage)
+        do {
+            let validEmail = try dependencies.authenticationValidator.validateEmail(email)
+            let validPassword = try dependencies.authenticationValidator.validatePassword(password)
+            
+            let loginService = dependencies.httpServices.makeLoginService()
+            
+            loginService.callServiceLogin(
+                email: validEmail,
+                password: validPassword
+            ) { [weak self] success, errorMessage in
+                
+                    self?.presenter.presentShowAlertLogin(
+                        success: success,
+                        errorMessage: errorMessage
+                    )
             }
-        })
+            
+        } catch {
+            presenter.presentShowAlertLogin(
+                success: false,
+                errorMessage: error.localizedDescription
+            )
+        }
     }
     
     func navigateToHome() {

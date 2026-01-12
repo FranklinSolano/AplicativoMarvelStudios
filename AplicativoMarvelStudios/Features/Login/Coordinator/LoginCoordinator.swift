@@ -37,9 +37,10 @@ extension LoginCoordinator: LoginCoordinating {
     }
     
     func navigateToForgotPassword() {
-        //        guard let navigationController else { return }
-        //        let forgotPassword = TabbarViewController(homeFactory: homeFactory)
-        //        navigationController.setViewControllers([tabBarController], animated: true)
+        guard let navigationController else { return }
+        let forgotPasswordFactory = ForgotPasswordFactory()
+        let forgotPasswordViewController = forgotPasswordFactory.make(navigationController: navigationController)
+        navigationController.pushViewController(forgotPasswordViewController, animated: true)
     }
     
     func navigateToRegister() {
