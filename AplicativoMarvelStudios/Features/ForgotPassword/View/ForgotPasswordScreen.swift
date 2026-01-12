@@ -21,7 +21,7 @@ final class ForgotPasswordScreen: UIView {
     private lazy var backButton = dependencies.designSystemComponents.makeButtonTitles()
     private lazy var titleLabel = dependencies.designSystemComponents.makeLabel()
     private lazy var emailLabel = dependencies.designSystemComponents.makeLabel()
-    private lazy var emailTextField = dependencies.designSystemComponents.makeTextField()
+    lazy var emailTextField = dependencies.designSystemComponents.makeTextField()
     private lazy var enterButton = dependencies.designSystemComponents.makeButton()
     
     init(dependencies: HasDesignSystemComponentsInterface) {

@@ -18,7 +18,7 @@ final class LoginFactory: UIViewController {
         let presenter = LoginPresenter(view: nil, coordinator: coordinator)
         coordinator.presenter = presenter
         
-        let interactor = LoginInteractor(presenter: presenter, dependenciesService: dependencies)
+        let interactor = LoginInteractor(presenter: presenter, dependencies: dependencies)
         
         let loginVC = LoginViewController(interactor: interactor, dependencies: dependencies)
         presenter.view = loginVC

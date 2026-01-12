@@ -1,6 +1,6 @@
 import UIKit
 
-final class ForgotPasswordFactory: UIViewController {
+final class ForgotPasswordFactory {
     func make(navigationController: UINavigationController?) -> ForgotPasswordViewController {
         let coordinator = ForgotPasswordCoordinator()
         coordinator.navigation = navigationController
@@ -9,7 +9,7 @@ final class ForgotPasswordFactory: UIViewController {
         
         let dependencies = DependencyContainer()
         
-        let interactor = ForgotPasswordInteractor(presenter: presenter, dependenciesService: dependencies)
+        let interactor = ForgotPasswordInteractor(presenter: presenter, dependencies: dependencies)
         
         let forgotPasswordVC = ForgotPasswordViewController(interactor: interactor, dependencies: dependencies)
         

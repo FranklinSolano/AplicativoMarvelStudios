@@ -1,7 +1,8 @@
 import UIKit
 
 protocol ForgotPasswordViewControllerDisplay: AnyObject {
-    
+    func showAlertSuccess(title: String, message: String)
+    func showAlertError(title: String, message: String)
 }
 
 final class ForgotPasswordViewController: UIViewController {
@@ -29,7 +30,17 @@ final class ForgotPasswordViewController: UIViewController {
 }
 
 extension ForgotPasswordViewController: ForgotPasswordViewControllerDisplay {
+    func showAlertSuccess(title: String, message: String) {
+        self.getAlertController(title: title, message: message) { [weak self] in
+            // Volta para tela anterior após sucesso
+            self?.interactor.navigationBackButtonInteractor()
+        }
+    }
     
+    func showAlertError(title: String, message: String) {
+        self.getAlertController(title: title, message: message)
+        // Não faz nada após o alerta de erro
+    }
 }
 
 extension ForgotPasswordViewController: ForgotPasswordScreenProtocol {
@@ -38,5 +49,7 @@ extension ForgotPasswordViewController: ForgotPasswordScreenProtocol {
     }
     
     func actionEnterButton() {
+        let email = screen.emailTextField.text
+        interactor.forgotPasswordToEnter(email: email)
     }
 }

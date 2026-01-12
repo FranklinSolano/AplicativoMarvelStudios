@@ -69,20 +69,21 @@ final class DesignSystemComponents: DesignSystemComponentsInterface {
 }
 
 protocol HttpServicesInterface {
-    func makeLoginSErvice() -> LoginServicing
-    func makeRegisterService() -> RegisterService
+    func makeLoginService() -> LoginServicing
+    func makeRegisterService() -> RegisterServicing
     func makeHomeService() -> HomeServicing
     func makeDetailsService() -> DetailsServicing
     func makeProfileService() -> ProfileServicing
-    func makeFavoritesService() -> FavoritesService
+    func makeFavoritesService() -> FavoritesServicing
+    func makeForgotPasswordService() -> ForgotPasswordServicing
 }
 
 final class HttpServices: HttpServicesInterface {
-    func makeRegisterService() -> RegisterService {
+    func makeRegisterService() -> RegisterServicing {
         return RegisterService()
     }
     
-    func makeFavoritesService() -> FavoritesService {
+    func makeFavoritesService() -> FavoritesServicing {
         return FavoritesService()
     }
     
@@ -98,8 +99,12 @@ final class HttpServices: HttpServicesInterface {
         return DetailsService()
     }
     
-    func makeLoginSErvice() -> LoginServicing {
+    func makeLoginService() -> LoginServicing {
         return LoginService()
+    }
+    
+    func makeForgotPasswordService() -> ForgotPasswordServicing {
+        return ForgotPasswordService()
     }
 }
 
@@ -114,13 +119,17 @@ protocol HasHttpServicesInterface {
     var httpServices: HttpServicesInterface { get }
 }
 
+protocol HasAuthenticationValidator {
+    var authenticationValidator: AuthenticationValidating { get }
+}
+
 // Protocolo vazio para compor facilmente tipos de dependência
 public protocol HasNoDependency {}
 
 // Combinação das dependências necessárias
 typealias Dependencies = HasNoDependency
     & HasDesignSystemComponentsInterface
-    & HasHttpServicesInterface
+    & HasHttpServicesInterface & HasAuthenticationValidator
 
 // MARK: - 3. Container de dependências (injeção)
 
@@ -131,6 +140,7 @@ final class DependencyContainer: Dependencies {
     // Lazy resolve: resolve apenas quando acessado
     lazy var designSystemComponents: DesignSystemComponentsInterface = resolver.resolve()
     lazy var httpServices: HttpServicesInterface = resolver.resolve()
+    lazy var authenticationValidator: AuthenticationValidating = resolver.resolve()
 
     init(resolver: DependencyResolving = Resolver.shared) {
         self.resolver = resolver
@@ -157,6 +167,7 @@ public final class Resolver: DependencyResolving {
     private init() {
         register(DesignSystemComponents() as DesignSystemComponentsInterface)
         register(HttpServices() as HttpServicesInterface)
+        register(AuthenticationValidator() as AuthenticationValidating)
     }
 
     /// Resolve uma dependência registrada pelo tipo solicitado

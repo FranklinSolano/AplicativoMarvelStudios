@@ -15,11 +15,11 @@ protocol RegisterInteracting {
 
 final class RegisterInteractor {
     var presenter: RegisterPresenting
-    private var dependneciesService: HasHttpServicesInterface
+    private var dependencies: HasHttpServicesInterface & HasAuthenticationValidator
     
-    init(presenter: RegisterPresenting, dependneciesService: HasHttpServicesInterface) {
+    init(presenter: RegisterPresenting, dependencies: HasHttpServicesInterface & HasAuthenticationValidator) {
         self.presenter = presenter
-        self.dependneciesService = dependneciesService
+        self.dependencies = dependencies
     }
 }
 
@@ -31,10 +31,17 @@ extension RegisterInteractor: RegisterInteracting {
     
     func registerUser(name: String?, email: String?, password: String?, confirmPassword: String?) {
         do {
-            let user = try validateUserInput(name: name, email: email,
-                                             password: password, confirmPassword: confirmPassword)
+            let validName = try dependencies.authenticationValidator.validateName(name ?? "")
+            let validEmail = try dependencies.authenticationValidator.validateEmail(email ?? "")
+            let validPassword = try dependencies.authenticationValidator.validatePassword(password ?? "")
+            _ = try dependencies.authenticationValidator.validateConfirmPassword(validPassword, confirmPassword ?? "")
             
-            self.dependneciesService.httpServices.makeRegisterService().createUser(user) { result in
+            let user = UserModel(
+                name: validName,
+                email: validEmail,
+                password: validPassword
+            )
+            self.dependencies.httpServices.makeRegisterService().createUser(user) { result in
                 
                 switch result {
                     
@@ -58,26 +65,4 @@ extension RegisterInteractor: RegisterInteracting {
     func navigationBackButtonInteractor() {
         presenter.navigationBackButtonPresenter()
     }
-    
-    private func validateUserInput(name: String?, email: String?,
-                                   password: String?, confirmPassword: String?) throws -> UserModel {
-         guard let name, !name.isEmpty else {
-             throw AuthenticationError.emptyName
-         }
-         guard let email, !email.isEmpty else {
-             throw AuthenticationError.emptyEmail
-         }
-         guard let password, !password.isEmpty else {
-             throw AuthenticationError.emptyPassword
-         }
-        
-         guard password.count >= 6 else {
-             throw AuthenticationError.minimumPassword
-         }
-         guard let confirmPassword, password == confirmPassword else {
-             throw AuthenticationError.passwordMismatch
-         }
-         
-         return UserModel(name: name, email: email, password: password)
-     }
 }

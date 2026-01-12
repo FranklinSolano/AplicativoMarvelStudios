@@ -9,7 +9,7 @@ import UIKit
 
 // MARK: - RegisterFactory
 
-final class RegisterFactory: UIViewController {
+final class RegisterFactory {
     
     // MARK: - Public Methods
     
@@ -22,12 +22,11 @@ final class RegisterFactory: UIViewController {
         
         let dependencies = DependencyContainer()
         
-        let interactor = RegisterInteractor(presenter: presenter, dependneciesService: dependencies)
+        let interactor = RegisterInteractor(presenter: presenter, dependencies: dependencies)
         
         let registerVC = RegisterViewController(interactor: interactor, dependencies: dependencies)
         
         presenter.view = registerVC
-//        coordinator.presenter = presenter
         
         return registerVC
     }}
