@@ -71,8 +71,8 @@ class DSTextField: UITextField {
         return UIColor { trait in
             // Placeholder branco com alpha 0.6 no Dark, preto com alpha 0.45 no Light
             trait.userInterfaceStyle == .dark
-            ? DSColors.textWhiteColor.withAlphaComponent(0.6)
-            : DSColors.textWhiteColor.withAlphaComponent(0.45)
+            ? DSColors.textWhiteColor.withAlphaComponent(1)
+            : DSColors.textWhiteColor.withAlphaComponent(1)
         }
     }
 

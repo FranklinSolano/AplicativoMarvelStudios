@@ -2,7 +2,7 @@
 //  TabbarViewController.swift
 //  AplicativoMarvelStudios
 //
-//  TabBar com fundo preto e ícones brancos em AMBOS os temas
+//  TabBar com fundo preto e ícones/títulos sempre brancos
 //
 
 import UIKit
@@ -31,39 +31,23 @@ class TabbarViewController: UITabBarController {
         setupTabbarController()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        // Atualiza as cores sempre que a view aparecer
-        // Isso garante que após trocar o tema, as cores atualizem
-        updateColors()
-    }
-    
-    private func updateColors() {
-        // Força as views filhas a atualizar suas cores
-        viewControllers?.forEach { viewController in
-            viewController.view.backgroundColor = DSColors.primaryColor
-        }
-    }
-    
     // MARK: - Setup
     
     private func setupTabbarController() {
-        // Criar os NavigationControllers PRIMEIRO
+        // Criar NavigationControllers e esconder as barras de navegação
         let homeNav = UINavigationController()
-        let favoritosNav = UINavigationController()
-        let profileNav = UINavigationController()
-        
-        // Ocultar as barras de navegação
         homeNav.setNavigationBarHidden(true, animated: false)
+        let favoritosNav = UINavigationController()
         favoritosNav.setNavigationBarHidden(true, animated: false)
+        let profileNav = UINavigationController()
         profileNav.setNavigationBarHidden(true, animated: false)
         
-        // Criar os view controllers passando os NavigationControllers corretos
+        // Criar ViewControllers via factories
         let homeVC = homeFactory.make(navigationController: homeNav)
         let favoritesVC = favoritesFactory.make(navigationController: favoritosNav)
         let profileVC = profileFactory.make(navigationController: profileNav)
         
-        // Setar os view controllers como root dos NavigationControllers
+        // Setar os roots
         homeNav.viewControllers = [homeVC]
         favoritosNav.viewControllers = [favoritesVC]
         profileNav.viewControllers = [profileVC]
@@ -73,58 +57,53 @@ class TabbarViewController: UITabBarController {
         configureTabBarAppearance()
         configureTabBarItems()
     }
-    
     private func configureTabBarAppearance() {
         let appearance = UITabBarAppearance()
+        appearance.shadowImage = nil
+        appearance.shadowColor = nil
+
         appearance.configureWithOpaqueBackground()
-        
-        // COR FIXA - PRETO PURO
-        let blackColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
-        // COR FIXA - BRANCO PURO
-        let whiteColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
-        
-        appearance.backgroundColor = blackColor
-        
-        // Ícones normais - brancos
-        appearance.stackedLayoutAppearance.normal.iconColor = whiteColor
-        appearance.stackedLayoutAppearance.normal.titleTextAttributes = [.foregroundColor: whiteColor]
-        
-        // Ícones selecionados - brancos
-        appearance.stackedLayoutAppearance.selected.iconColor = whiteColor
-        appearance.stackedLayoutAppearance.selected.titleTextAttributes = [.foregroundColor: whiteColor]
-        
+        appearance.backgroundColor = .black
+
+        // Ícones e títulos normais
+        appearance.stackedLayoutAppearance.normal.iconColor = .white
+        appearance.stackedLayoutAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.white]
+
+        // Ícones e títulos selecionados
+        appearance.stackedLayoutAppearance.selected.iconColor = .white
+        appearance.stackedLayoutAppearance.selected.titleTextAttributes = [.foregroundColor: UIColor.white]
+
+        // Aplica a mesma aparência em todas as situações
         tabBar.standardAppearance = appearance
-        tabBar.scrollEdgeAppearance = appearance
-        
-        tabBar.backgroundColor = blackColor
-        tabBar.barTintColor = blackColor
-        tabBar.tintColor = whiteColor
-        tabBar.unselectedItemTintColor = whiteColor
+        if #available(iOS 15.0, *) {
+            tabBar.scrollEdgeAppearance = appearance
+        }
+
         tabBar.isTranslucent = false
+        tabBar.tintColor = .white
+        tabBar.unselectedItemTintColor = .white
+
+        tabBar.overrideUserInterfaceStyle = .dark
+        view.backgroundColor = .black
+
+        // ← ESSAS DUAS LINHAS REMOVEM A BORDA DE VEZ
+        tabBar.backgroundImage = UIImage() // remove qualquer imagem de fundo
+        tabBar.shadowImage = UIImage()     // remove a linha separadora/sombra
     }
     
     private func configureTabBarItems() {
         guard let items = tabBar.items else { return }
         
-        // Home Tab
         items[0].title = "Home"
-        items[0].image = UIImage(systemName: "house")?
-            .withRenderingMode(.alwaysTemplate)
-        items[0].selectedImage = UIImage(systemName: "house.fill")?
-            .withRenderingMode(.alwaysTemplate)
+        items[0].image = UIImage(systemName: "house")?.withRenderingMode(.alwaysTemplate)
+        items[0].selectedImage = UIImage(systemName: "house.fill")?.withRenderingMode(.alwaysTemplate)
         
-        // Favorites Tab
         items[1].title = "Favorites"
-        items[1].image = UIImage(systemName: "heart")?
-            .withRenderingMode(.alwaysTemplate)
-        items[1].selectedImage = UIImage(systemName: "heart.fill")?
-            .withRenderingMode(.alwaysTemplate)
+        items[1].image = UIImage(systemName: "heart")?.withRenderingMode(.alwaysTemplate)
+        items[1].selectedImage = UIImage(systemName: "heart.fill")?.withRenderingMode(.alwaysTemplate)
         
-        // Profile Tab
         items[2].title = "Profile"
-        items[2].image = UIImage(systemName: "person.circle")?
-            .withRenderingMode(.alwaysTemplate)
-        items[2].selectedImage = UIImage(systemName: "person.circle.fill")?
-            .withRenderingMode(.alwaysTemplate)
+        items[2].image = UIImage(systemName: "person.circle")?.withRenderingMode(.alwaysTemplate)
+        items[2].selectedImage = UIImage(systemName: "person.circle.fill")?.withRenderingMode(.alwaysTemplate)
     }
 }
