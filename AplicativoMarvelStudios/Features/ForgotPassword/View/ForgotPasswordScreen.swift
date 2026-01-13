@@ -53,7 +53,7 @@ final class ForgotPasswordScreen: UIView {
     }
     
     private func configureBackGroundImage() {
-        backGroundImageView.image = UIImage(named: "imageLogin")
+        backGroundImageView.image = UIImage(named: "img_forgot_bg")
     }
 }
 

@@ -18,7 +18,7 @@ enum DSColors {
                 return UIColor(red: 242/255, green: 201/255, blue: 76/255, alpha: 1)
             default:
                 // Fundo vermelho no Light Mode
-                return UIColor(red: 1, green: 0, blue: 0, alpha: 1)
+                return UIColor(red: 199/255, green: 52/255, blue: 58/255, alpha: 1)
             }
         }
     }()
