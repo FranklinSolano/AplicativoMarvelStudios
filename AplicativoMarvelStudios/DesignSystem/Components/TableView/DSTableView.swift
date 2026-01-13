@@ -20,10 +20,27 @@ protocol TableViewing: UIView {
 // MARK: - DSTableViewAdapter
 
 final class DSTableViewAdapter: UITableView, TableViewing {
+
     init() {
         super.init(frame: .zero, style: .plain)
-        backgroundColor = DSColors.secondaryColor
+        setupStyle()
+        registerForTraitChanges()
         self.translatesAutoresizingMaskIntoConstraints = false
+    }
+
+    private func setupStyle() {
+        // Fundo da tabela
+        backgroundColor = DSColors.primaryColor
+        
+        // Separadores entre células
+        separatorColor = DSColors.secondaryColor
+    }
+
+    private func registerForTraitChanges() {
+        registerForTraitChanges([UITraitUserInterfaceStyle.self]) { (self: Self, _: UITraitCollection) in
+            self.backgroundColor = DSColors.primaryColor
+            self.separatorColor = DSColors.secondaryColor
+        }
     }
 
     required init?(coder: NSCoder) {

@@ -10,16 +10,16 @@ import UIKit
 
 final class DSButtonAdapter: DSButton, Buttoning {
     private var onClickAction: (() -> Void)?
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.addTarget(self, action: #selector(didTap), for: .touchUpInside)
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     func setDTO(_ dto: ButtonDTO) {
         self.setTitle(dto.title, for: .normal)
         self.isEnabled = dto.isEnable
@@ -28,11 +28,11 @@ final class DSButtonAdapter: DSButton, Buttoning {
             self.titleLabel?.font = font
         }
     }
-    
+
     func onClick(_ action: @escaping () -> Void) {
         self.onClickAction = action
     }
-    
+
     @objc private func didTap() {
         onClickAction?()
     }
@@ -42,16 +42,16 @@ final class DSButtonAdapter: DSButton, Buttoning {
 
 final class DSButtonTitlesAdapter: DSButtonTitles, Buttoning {
     private var onClickAction: (() -> Void)?
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.addTarget(self, action: #selector(didTap), for: .touchUpInside)
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     func setDTO(_ dto: ButtonDTO) {
         self.setTitle(dto.title, for: .normal)
         self.isEnabled = dto.isEnable
@@ -60,11 +60,11 @@ final class DSButtonTitlesAdapter: DSButtonTitles, Buttoning {
             self.titleLabel?.font = font
         }
     }
-    
+
     func onClick(_ action: @escaping () -> Void) {
         self.onClickAction = action
     }
-    
+
     @objc private func didTap() {
         onClickAction?()
     }

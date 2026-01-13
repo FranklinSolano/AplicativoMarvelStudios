@@ -4,8 +4,8 @@
 //
 //  Created by Franklin  Stilhano Solano on 09/06/25.
 //
-
 import UIKit
+
 // MARK: - CollectionViewing
 
 protocol CollectionViewing: UIView {
@@ -19,7 +19,7 @@ protocol CollectionViewing: UIView {
 // MARK: - DSCollectionView
 
 class DSCollectionView: UICollectionView {
-    
+
     init(scroll: UICollectionView.ScrollDirection = .horizontal, spacing: CGFloat) {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = scroll
@@ -28,16 +28,27 @@ class DSCollectionView: UICollectionView {
         
         super.init(frame: .zero, collectionViewLayout: layout)
         
-        backgroundColor = .clear
+        setupStyle()
+        registerForTraitChanges()
+        
         showsVerticalScrollIndicator = false
         showsHorizontalScrollIndicator = false
-        self.translatesAutoresizingMaskIntoConstraints = false
+        translatesAutoresizingMaskIntoConstraints = false
     }
-    
+
+    private func setupStyle() {
+        backgroundColor = DSColors.primaryColor
+    }
+
+    private func registerForTraitChanges() {
+        registerForTraitChanges([UITraitUserInterfaceStyle.self]) { (self: Self, _: UITraitCollection) in
+            self.backgroundColor = DSColors.primaryColor
+        }
+    }
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
 }
 
 // MARK: - DSCollectionViewAdapter

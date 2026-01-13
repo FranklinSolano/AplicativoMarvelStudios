@@ -2,7 +2,7 @@
 //  HomeCoordinator.swift
 //  AplicativoMarvelStudios
 //
-//  Created by Franklin  Stilhano Solano on 28/05/25.
+//  Created by Franklin Stilhano Solano on 28/05/25.
 //
 
 import UIKit
@@ -20,15 +20,30 @@ final class HomeCoordinator: HomeCoordinating {
     var presenter: HomePresenting?
     
     func navigateToDetail(character: SHCharacter, randomCharacters: [SHCharacter]) {
-        guard let navigationController else { return }
+        print("🔵 HomeCoordinator: navigateToDetail chamado")
+        print("🔵 Character ID: \(character.id)")
+        print("🔵 Character Name: \(character.name)")
+        
+        guard let navigationController else {
+            print("🔴 ERRO: navigationController está NIL!")
+            return
+        }
+        
+        print("🔵 navigationController OK")
         
         let detailsFactory = DetailsFactory()
         let detailsVC = detailsFactory.make(navigationController: navigationController)
         
-        // Aqui você passa o personagem selecionado para a tela de detalhes
+        print("🔵 DetailsVC criado")
+        
         detailsVC.idPerson = character.id
-        detailsVC.personListImage = randomCharacters  // ⚡ ajuste no DetailsViewController para receber RMCharacter
+        detailsVC.personListImage = randomCharacters
+        
+        print("🔵 Dados setados no DetailsVC")
+        print("🔵 Tentando fazer push...")
         
         navigationController.pushViewController(detailsVC, animated: true)
+        
+        print("✅ Push executado!")
     }
 }
