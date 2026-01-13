@@ -8,8 +8,8 @@
 import Foundation
 
 // MARK: - Protocol
-
-protocol LoginInteracting: AnyObject{
+@MainActor
+protocol LoginInteracting {
     func navigateToHome()
     func navigateToForgotPassword()
     func navigateToRegister()
@@ -18,44 +18,63 @@ protocol LoginInteracting: AnyObject{
 
 // MARK: - Interactor
 
-class LoginInteractor {
+final class LoginInteractor {
     
     // MARK: - Properties
     
-    var presenter: LoginPresenting? //weak
-    private var service: LoginServicing?
+    let presenter: LoginPresenting
+    private let dependencies: HasHttpServicesInterface & HasAuthenticationValidator
     
     // MARK: - Init
     
-    init(presenter: LoginPresenting, service: LoginServicing) {
+    init(presenter: LoginPresenting, dependencies: HasHttpServicesInterface & HasAuthenticationValidator) {
         self.presenter = presenter
-        self.service = service
+        self.dependencies = dependencies
     }
     
-    //MARK: - Outher Methods
+    // MARK: - Outher Methods
 }
 
-//MARK: - LoginInteracting
+// MARK: - LoginInteracting
 
 extension LoginInteractor: LoginInteracting {
     
     func callServiceLogin(email: String, password: String) {
-        service?.callServiceLogin(email: email, password: password, completion: { [ self] success, errorMessage in //weak
-            DispatchQueue.main.async {
-                self.presenter?.presentShowAlertLogin(success: success, errorMessage: errorMessage)
+        
+        do {
+            let validEmail = try dependencies.authenticationValidator.validateEmail(email)
+            let validPassword = try dependencies.authenticationValidator.validatePassword(password)
+            
+            let loginService = dependencies.httpServices.makeLoginService()
+            
+            loginService.callServiceLogin(
+                email: validEmail,
+                password: validPassword
+            ) { [weak self] success, errorMessage in
+                
+                    self?.presenter.presentShowAlertLogin(
+                        success: success,
+                        errorMessage: errorMessage
+                    )
             }
-        })
+            
+        } catch {
+            presenter.presentShowAlertLogin(
+                success: false,
+                errorMessage: error.localizedDescription
+            )
+        }
     }
     
     func navigateToHome() {
-        presenter?.presentNavigateToHome()
+        presenter.presentNavigateToHome()
     }
     
     func navigateToForgotPassword() {
-        presenter?.presentNavigateToForgotPassword()
+        presenter.presentNavigateToForgotPassword()
     }
     
     func navigateToRegister() {
-        presenter?.presentNavigateToRegister()
+        presenter.presentNavigateToRegister()
     }
 }

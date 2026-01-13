@@ -7,62 +7,65 @@
 
 import UIKit
 
-//MARK: - DetailsInteracting
+// MARK: - DetailsInteracting
 
-protocol DetailsInteracting: AnyObject {
+protocol DetailsInteracting {
     func navigateBack()
     func fetchDetailsPerson(idPerson: Int)
-    func updateDetails(id: HeroesModel, data: [HeroesModel])
+    func updateDetails(id: SHCharacter, data: [SHCharacter])
 }
 
-//MARK: - DetailsInteractor
+// MARK: - DetailsInteractor
 
 final class DetailsInteractor {
     
-    //MARK: - Properties
-    var presenter: DetailsPresenting? //weak
-    private var  service: DetailsServicing?
+    // MARK: - Properties
+    var presenter: DetailsPresenting
+    private var  dependenciesService: HasHttpServicesInterface
     
-    //MARK: - Init
+    // MARK: - Init
     
-    init(presenter: DetailsPresenting, service: DetailsServicing) {
+    init(presenter: DetailsPresenting, dependenciesService: HasHttpServicesInterface) {
         self.presenter = presenter
-        self.service = service
+        self.dependenciesService = dependenciesService
     }
 }
 
-//MARK: - DetailsInteracting
+// MARK: - DetailsInteracting
 
 extension DetailsInteractor: DetailsInteracting {
-    func updateDetails(id: HeroesModel, data: [HeroesModel]) {
-        Task { @MainActor in
-            presenter?.updateDetails(id: id, data: data)
+    
+    func updateDetails(id: SHCharacter, data: [SHCharacter]) {
+        Task {
+            await presenter.updateDetails(id: id, data: data)
         }
-        
     }
     
     func fetchDetailsPerson(idPerson: Int) {
-        Task { @MainActor in
-            presenter?.showLoading()
-        }
+        presenter.showLoading()
         
-        service?.fetchCharacterDetail(id: idPerson, completion: { [weak self] result in
-                    guard let self else { return }
-            Task { @MainActor in
+        let detailsService = dependenciesService.httpServices.makeDetailsService()
+        
+        detailsService.fetchCharacterDetail(id: idPerson, completion: { [weak self] result in
+            guard let self else { return }
+            
+            Task {
                 switch result {
                 case .success(let hero):
-                    self.presenter?.getDetailsPerson(result: hero)
-                case.failure:
-                    self.presenter?.showResultAlertError(title: "Atencao", message: "Erro ao buscar personagens. Tente Novamente mais tarde!")
+                    self.presenter.getDetailsPerson(result: hero)
+                case .failure:
+                    self.presenter.showResultAlertError(
+                        title: "Atenção",
+                        message: "Erro ao buscar personagens. Tente novamente mais tarde!"
+                    )
                 }
             }
-            
         })
     }
     
     func navigateBack() {
-        Task { @MainActor in
-            presenter?.navigateBack()
+        Task {
+            await presenter.navigateBack()
         }
     }
 }

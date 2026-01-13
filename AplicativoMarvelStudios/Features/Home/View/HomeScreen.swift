@@ -4,9 +4,8 @@
 //
 //  Created by Franklin  Stilhano Solano on 28/05/25.
 //
-
-import UIKit
 import SnapKit
+import UIKit
 
 // MARK: - HomeScreen
 
@@ -14,39 +13,19 @@ final class HomeScreen: UIView {
     
     // MARK: - UI Elements
     
-    private lazy var userName: UILabel = {
-        let label = DSLabel(text: "Hi, Solas", textColor: DSColors.titleTextColor, font: DSFonts.titleBold18, numberOfLines: 0, textAlignment: .center)
-        return label
-    }()
+    private let dependencies: HasDesignSystemComponentsInterface
     
-    private lazy var searchPerson: UISearchBar = {
-        let searchBar = DSSearchBar()
-        return searchBar
-    }()
-    
-    private lazy var descriptionName: UILabel = {
-        let label = DSLabel(text: "Marvel Characters", textColor: DSColors.titleTextColor, font: DSFonts.titleBold22, numberOfLines: 0, textAlignment: .left)
-        return label
-    }()
-    
-    lazy var tableView: UITableView = {
-        let tableView = UITableView()
-        tableView.backgroundColor = DSColors.secondaryColor
-        tableView.register(PersonListTableViewCell.self, forCellReuseIdentifier: PersonListTableViewCell.identifier)
-        return tableView
-    }()
-    
-    private lazy var activityIndicator: UIActivityIndicatorView = {
-        let indicator = UIActivityIndicatorView(style: .large)
-        indicator.hidesWhenStopped = true
-        indicator.color = DSColors.titleTextColor
-        return indicator
-    }()
+    private lazy var userName = dependencies.designSystemComponents.makeLabel()
+    private lazy var searchPerson = dependencies.designSystemComponents.makeSearchBar()
+    private lazy var descriptionName = dependencies.designSystemComponents.makeLabel()
+    lazy var tableView = dependencies.designSystemComponents.makeTableView()
+    lazy var activityIndicator = dependencies.designSystemComponents.makeActivityIndicator()
     
     // MARK: - Init
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(dependencies: HasDesignSystemComponentsInterface) {
+        self.dependencies = dependencies
+        super.init(frame: .zero)
         setupView()
     }
     
@@ -54,11 +33,27 @@ final class HomeScreen: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    private func configureLabels() {
+        userName.setDTO(.init(text: "Hi, Solas",
+                              textColor: DSColors.titleTextColor,
+                              font: DSFonts.titleBold18,
+                              numberOfLines: 0,
+                              textAlignment: .center))
+        
+        descriptionName.setDTO(.init(text: "Marvel Characters",
+                                     textColor: DSColors.titleTextColor,
+                                     font: DSFonts.titleBold22))
+    }
+    
     // MARK: - Outher Methods
     
     func configTableView(delegate: UITableViewDelegate, dataSource: UITableViewDataSource) {
         tableView.delegate = delegate
         tableView.dataSource = dataSource
+    }
+    
+    private func registerCells() {
+        tableView.register(PersonListTableViewCell.self, forCellReuseIdentifier: PersonListTableViewCell.identifier)
     }
     
     func showLoading() {
@@ -76,11 +71,8 @@ final class HomeScreen: UIView {
 
 extension HomeScreen: ViewCodeProtocol {
     func setupElements() {
-        addSubview(userName)
-        addSubview(searchPerson)
-        addSubview(descriptionName)
-        addSubview(tableView)
-        addSubview(activityIndicator)
+        [userName, searchPerson, descriptionName, tableView,
+         activityIndicator].forEach(addSubview)
     }
     
     func setupConstraints() {
@@ -110,10 +102,11 @@ extension HomeScreen: ViewCodeProtocol {
         activityIndicator.snp.makeConstraints { make in
             make.center.equalToSuperview()
         }
-        
     }
     
     func setupAdditionalConfiguration() {
         backgroundColor = DSColors.primaryColor
+        registerCells()
+        configureLabels()
     }
 }

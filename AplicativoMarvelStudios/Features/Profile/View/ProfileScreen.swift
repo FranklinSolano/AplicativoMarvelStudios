@@ -5,129 +5,95 @@
 //  Created by Franklin  Stilhano Solano on 23/06/25.
 //
 
-
 import UIKit
 
-// MARK: - Protocol
-
+// MARK: - ProfileScreenProtocol
 protocol ProfileScreenProtocol: AnyObject {
     func actionExitApp()
 }
 
-// MARK: - ProfileScreen
+// MARK: - ProfileScreen com ViewCodeProtocol
 
 final class ProfileScreen: UIView {
     
-    // MARK: - Properties
+    weak var delegate: ProfileScreenProtocol?
+    private let dependencies: HasDesignSystemComponentsInterface
     
-    var delegate: ProfileScreenProtocol? //weak
+    private lazy var titleLabel = dependencies.designSystemComponents.makeLabel()
+    private lazy var imageUser = dependencies.designSystemComponents.makeImageView()
+    private lazy var nameUserLabel = dependencies.designSystemComponents.makeLabel()
+    private lazy var emailLabel = dependencies.designSystemComponents.makeLabel()
+    private lazy var emailTextField = dependencies.designSystemComponents.makeTextField()
+    private lazy var exitButton = dependencies.designSystemComponents.makeButton()
+    private lazy var selectThemeLabel = dependencies.designSystemComponents.makeLabel()
+    private lazy var themeSwitcher = dependencies.designSystemComponents.makeSegmentedControling()
+    private lazy var descriptionVersionApp  = dependencies.designSystemComponents.makeLabel()
     
-    // MARK: - UI Elements
+    // MARK: - Init com injeção
     
-    private lazy var titleLabel: UILabel = {
-        let label = DSLabel(text: "Profile", textColor: DSColors.titleTextColor, font: DSFonts.titleBold22, numberOfLines: 0, textAlignment: .center)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    private lazy var imageUser: UIImageView = {
-        let image = UIImageView()
-        image.image = UIImage(systemName: "person.crop.circle.fill")
-        image.tintColor = DSColors.secondaryColor
-        image.layer.cornerRadius = 50
-        image.layer.masksToBounds = true
-        image.translatesAutoresizingMaskIntoConstraints = false
-        return image
-    }()
-    
-    private lazy var nameUserLabel: UILabel = {
-        let label = DSLabel(text: "Username: Solas", textColor: DSColors.titleTextColor, font: DSFonts.captionLight14, numberOfLines: 0, textAlignment: .left)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    private lazy var emailLabel: UILabel = {
-        let label = DSLabel(text: "Email", textColor: DSColors.titleTextColor, font: DSFonts.titleBold18, numberOfLines: 0, textAlignment: .left)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    private lazy var emailTextField: UITextField = {
-        let textField = DSTextField(placeholder: "", isSecureTextEntry: false)
-        textField.text = "franklin@gmail.com"
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        return textField
-    }()
-    
-    private lazy var exitButton: UIButton = {
-        let button = DSButton(title: "Exit")
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(tappedExitButton), for: .touchUpInside)
-        return button
-    }()
-    
-    private lazy var selecionThemeLabel: UILabel = {
-        let label = DSLabel(text: "Select a theme for the app", textColor: DSColors.titleTextColor, font: DSFonts.captionLight14, numberOfLines: 0, textAlignment: .left)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    private lazy var themeSwitcher: UISegmentedControl = {
-        let control = UISegmentedControl(items: ["Claro", "Escuro"])
-        control.selectedSegmentIndex = ThemeManager.shared.currentTheme == .dark ? 1 : 0
-        control.translatesAutoresizingMaskIntoConstraints = false
-        control.addTarget(self, action: #selector(themeChanged), for: .valueChanged)
-        return control
-    }()
-    
-    private lazy var descriptionVersionApp: UILabel = {
-        let label = DSLabel(text: "Version: 1.0.0 - Desenvolvido por Franklin Solano", textColor: DSColors.titleTextColor, font: DSFonts.captionLight14, numberOfLines: 0, textAlignment: .left)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    // MARK: - Init
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(dependencies: HasDesignSystemComponentsInterface) {
+        self.dependencies = dependencies
+        super.init(frame: .zero)
         setupView()
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
+    
+    private func configureLabels() {
+        titleLabel.setDTO(.init(text: "Profile", textColor: DSColors.titleTextColor,
+                                font: DSFonts.titleBold22, numberOfLines: 0,
+                                textAlignment: .center))
+        
+        nameUserLabel.setDTO(.init(text: "Username: Solas", textColor: DSColors.titleTextColor,
+                                   font: DSFonts.captionLight14, numberOfLines: 0,
+                                   textAlignment: .left))
+        
+        emailLabel.setDTO(.init(text: "Email", textColor: DSColors.titleTextColor,
+                                font: DSFonts.titleBold18, numberOfLines: 0,
+                                textAlignment: .left))
+        
+        selectThemeLabel.setDTO(.init(text: "Select a theme for the app", textColor: DSColors.titleTextColor,
+                                      font: DSFonts.captionLight14, numberOfLines: 0,
+                                      textAlignment: .left))
+        
+        descriptionVersionApp.setDTO(.init(text: "Version: 1.0.0 - Desenvolvido por Franklin Solano",
+                                           textColor: DSColors.titleTextColor,
+                                           font: DSFonts.captionLight14, numberOfLines: 0,
+                                           textAlignment: .left))
     }
     
-    // MARK: - Actions
-    
-    @objc private func tappedExitButton() {
-        delegate?.actionExitApp()
+    private func configureTextFields() {
+        emailTextField.setDTO(.init(placeholder: "", isSecureTextEntry: false))
+        emailTextField.text = "franklin@gmail.com"
     }
     
-    @objc private func themeChanged() {
-        selectedTheme()
+    private func configureButtons() {
+        
+        exitButton.setDTO(.init(title: "Exit"))
+                          
+        exitButton.onClick { [weak self] in
+            self?.delegate?.actionExitApp()
+        }
     }
     
-    private func selectedTheme() {
-        let selectedTheme: ThemeManager.Theme = themeSwitcher.selectedSegmentIndex == 0 ? .light : .dark
-        ThemeManager.shared.setTheme(selectedTheme)
-        themeSwitcher.selectedSegmentIndex = selectedTheme == .dark ? 1 : 0
+    private func configureSegmentedControl() {
+        themeSwitcher.setItems(["Light", "Dark"]) // //// 🟢 Define o índice baseado no tema atual
+        let currentTheme = ThemeManager.shared.currentTheme
+        themeSwitcher.selectedSegmentIndex = currentTheme == .light ? 0 : 1
+        
+        themeSwitcher.onClick { index in
+            let selectedTheme: ThemeManager.Theme = index == 0 ? .light : .dark
+            ThemeManager.shared.setTheme(selectedTheme)
+        }
     }
 }
 
 // MARK: - ViewCodeProtocol
 
 extension ProfileScreen: ViewCodeProtocol {
-    
     func setupElements() {
-        addSubview(titleLabel)
-        addSubview(imageUser)
-        addSubview(nameUserLabel)
-        addSubview(emailLabel)
-        addSubview(emailTextField)
-        addSubview(exitButton)
-        addSubview(selecionThemeLabel)
-        addSubview(themeSwitcher)
-        addSubview(descriptionVersionApp)
+        [titleLabel, imageUser, nameUserLabel, emailLabel, emailTextField, exitButton,
+         selectThemeLabel, themeSwitcher, descriptionVersionApp].forEach(addSubview)
     }
     
     func setupConstraints() {
@@ -156,11 +122,11 @@ extension ProfileScreen: ViewCodeProtocol {
             exitButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -25),
             exitButton.heightAnchor.constraint(equalToConstant: 50),
             
-            selecionThemeLabel.topAnchor.constraint(equalTo: exitButton.bottomAnchor, constant: 25),
-            selecionThemeLabel.trailingAnchor.constraint(equalTo: emailTextField.trailingAnchor),
+            selectThemeLabel.topAnchor.constraint(equalTo: exitButton.bottomAnchor, constant: 25),
+            selectThemeLabel.trailingAnchor.constraint(equalTo: emailTextField.trailingAnchor),
             
-            themeSwitcher.topAnchor.constraint(equalTo: selecionThemeLabel.bottomAnchor, constant: 5),
-            themeSwitcher.trailingAnchor.constraint(equalTo: selecionThemeLabel.trailingAnchor),
+            themeSwitcher.topAnchor.constraint(equalTo: selectThemeLabel.bottomAnchor, constant: 5),
+            themeSwitcher.trailingAnchor.constraint(equalTo: selectThemeLabel.trailingAnchor),
             themeSwitcher.widthAnchor.constraint(equalToConstant: 200),
             
             descriptionVersionApp.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -16),
@@ -170,6 +136,10 @@ extension ProfileScreen: ViewCodeProtocol {
     
     func setupAdditionalConfiguration() {
         backgroundColor = DSColors.primaryColor
+        configureLabels()
+        configureTextFields()
+        configureButtons()
+        configureSegmentedControl()
+        imageUser.tintColor = DSColors.secondaryColor
     }
 }
-

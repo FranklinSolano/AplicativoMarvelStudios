@@ -5,54 +5,50 @@
 //  Created by Franklin  Stilhano Solano on 28/05/25.
 //
 
-
 import UIKit
 
 // MARK: - Protocol
-@MainActor //Garantir que os metodos rode na Thread Principal
-protocol HomePresenting: AnyObject {
-    func presentCharacters(_ characters: [HeroesModel])
+@MainActor
+protocol HomePresenting {
+    func presentCharacters(_ characters: [SHCharacter])
     func showAlertError()
     func showLoading()
     func hideLoading()
-    func navigateToDetail(data: [HeroesModel], idPerson: HeroesModel)
+    func navigateToDetail(character: SHCharacter, randomCharacters: [SHCharacter])
 }
 
 // MARK: - Presenter
-
 final class HomePresenter {
     
     // MARK: - Properties
-    
-    var view: HomeViewDisplay? //weak
-    private var coordinator: HomeCoordinating?
+    weak var view: HomeViewDisplay?
+    private var coordinator: HomeCoordinating
     
     // MARK: - Init
-    
-    init(view: HomeViewDisplay, coordinator: HomeCoordinating) {
+    init(view: HomeViewDisplay? = nil, coordinator: HomeCoordinating) {
         self.view = view
         self.coordinator = coordinator
     }
 }
 
-//MARK: - HomePresenting
-@MainActor //Garantir que os metodos rode na Thread Principal
+// MARK: - HomePresenting
 extension HomePresenter: HomePresenting {
-    func navigateToDetail(data: [HeroesModel], idPerson: HeroesModel) {
-        coordinator?.navigateToDetail(data: data, idPerson: idPerson)
+    func navigateToDetail(character: SHCharacter, randomCharacters: [SHCharacter]) {
+        coordinator.navigateToDetail(character: character, randomCharacters: randomCharacters)
     }
     
-    func presentCharacters(_ characters: [HeroesModel]) {
+    func presentCharacters(_ characters: [SHCharacter]) {
         view?.displayCharacters(characters)
     }
     
-    func showAlertError(){
-        view?.showAlertError(title: "Atenção", message: "Error ao buscar personagens, Tente novamente!")
+    func showAlertError() {
+        view?.showAlertError(title: "Atenção", message: "Erro ao buscar personagens, tente novamente!")
     }
     
     func showLoading() {
         view?.showLoading()
     }
+    
     func hideLoading() {
         view?.hideLoading()
     }

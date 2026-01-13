@@ -7,18 +7,24 @@
 
 import UIKit
 
-final class FavoritesFactory {
-    @MainActor
+final class FavoritesFactory: UIViewController {
+    
     func make(navigationController: UINavigationController?) -> FavoritesViewController {
         
-        let favoritesVC = FavoritesViewController()
         let coordinator = FavoritesCoordinator()
         coordinator.navigationController = navigationController
-        let presenter = FavoritesPresenter(view: favoritesVC, coordinator: coordinator)
+        
+        let presenter = FavoritesPresenter(coordinator: coordinator)
+        
+        let dependencies = DependencyContainer()
+        
+        let interactor = FavoritesInteractor(presenter: presenter, dependenciesService: dependencies)
+        
+        let favoritesVC = FavoritesViewController(interactor: interactor)
+        
+        presenter.view = favoritesVC
         coordinator.presenter = presenter
-        let service = FavoritesService()
-        let interactor = FavoritesInteractor(presenter: presenter, service: service)
-        favoritesVC.interactor = interactor
+        
         return favoritesVC
     }
 }

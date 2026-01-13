@@ -9,54 +9,58 @@ import UIKit
 
 // MARK: - Protocol
 
-protocol HomeInteracting: AnyObject {
-    func fetchHeroes()
-    func navigateToDetail(data: [HeroesModel], idPerson: HeroesModel)
+protocol HomeInteracting {
+    func fetchChracters()
+    func navigateToDetail(character: SHCharacter, randomCharacters: [SHCharacter])
 }
 
 // MARK: - Interactor
 
-final class HomeInteractor{
+final class HomeInteractor {
     
     // MARK: - Properties
     
-    var presenter: HomePresenting? //weak
-    private var service: HomeService?
+    var presenter: HomePresenting
+    private let dependenciesService: HasHttpServicesInterface
     
     // MARK: - Init
     
-    init(presenter: HomePresenting, service: HomeService) {
+    init(presenter: HomePresenting, dependenciesService: HasHttpServicesInterface) {
         self.presenter = presenter
-        self.service = service
+        self.dependenciesService = dependenciesService
     }
     
-    //MARK: - Outher Methods
+    // MARK: - Outher Methods
 }
 
-//MARK: - HomeInteracting
+// MARK: - HomeInteracting
 
 extension HomeInteractor: HomeInteracting {
-    func navigateToDetail(data: [HeroesModel], idPerson: HeroesModel) {
-        Task { @MainActor in
-            presenter?.navigateToDetail(data: data, idPerson: idPerson)
+    
+    func navigateToDetail(character: SHCharacter, randomCharacters: [SHCharacter]) {
+        Task {
+            await presenter.navigateToDetail(character: character, randomCharacters: randomCharacters)
         }
+        
     }
     
-    func fetchHeroes() {
+    func fetchChracters() {
         Task {
             await MainActor.run {
-                presenter?.showLoading()
+                presenter.showLoading()
             }
             
-            service?.fetchCharacters { [ weak self] result in
-                guard let self = self else { return }
+            let homeService = dependenciesService.httpServices.makeHomeService()
+            
+            homeService.fetchCharacters { [weak self] result in
+                guard let self = self else { return}
                 
                 Task { @MainActor in
                     switch result {
                     case .success(let characters):
-                        self.presenter?.presentCharacters(characters)
+                        self.presenter.presentCharacters(characters)
                     case .failure:
-                        self.presenter?.showAlertError()
+                        self.presenter.showAlertError()
                     }
                 }
             }

@@ -4,28 +4,30 @@
 //
 //  Created by Franklin  Stilhano Solano on 22/06/25.
 //
-
 import UIKit
 
-// MARK: - FavoritesListCharactersCell
+// MARK: - ListCharactersCollectionViewCell
 
 final class ListCharactersCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Properties
     
     static let identifier: String = "ListCharactersCollectionViewCell"
+    private let dependencies: HasDesignSystemComponentsInterface
     
-    // MARK: - UI Elements
+    private lazy var imagePerson = dependencies.designSystemComponents.makeImageView()
     
-    private lazy var imagePerson: UIImageView = {
-        let imageView = DSImageView(image: .placeholder)
-        return imageView
-    }()
-    
-    // MARK: - Init
+    // MARK: - Init com injeção
     
     override init(frame: CGRect) {
+        self.dependencies = DependencyContainer() // ou sua dependência padrão
         super.init(frame: frame)
+        setupView()
+    }
+    
+    init(dependencies: HasDesignSystemComponentsInterface) {
+        self.dependencies = dependencies
+        super.init(frame: .zero)
         setupView()
     }
     
@@ -33,20 +35,17 @@ final class ListCharactersCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Outher Methods
+    // MARK: - Public Method
     
-    func SetupCell(data: HeroesModel?){
-        if let urlString = data?.imageURL, let url = URL(string: urlString) {
-            imagePerson.sd_setImage(with: url, placeholderImage: UIImage(named: "placeholder"))
-        } else {
-            imagePerson.image = UIImage(named: "placeholder")
-        }
+    func setupCell(data: SHCharacter?) {
+        imagePerson.setImage(from: data?.images.large)
     }
 }
 
 // MARK: - ViewCodeProtocol
 
 extension ListCharactersCollectionViewCell: ViewCodeProtocol {
+    
     func setupElements() {
         contentView.addSubview(imagePerson)
     }
@@ -57,5 +56,7 @@ extension ListCharactersCollectionViewCell: ViewCodeProtocol {
         }
     }
     
-    func setupAdditionalConfiguration() {}
+    func setupAdditionalConfiguration() {
+        backgroundColor = .clear
+    }
 }

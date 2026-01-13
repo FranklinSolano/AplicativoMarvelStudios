@@ -7,25 +7,28 @@
 
 import UIKit
 
-//MARK: - Protocol
+// MARK: - Protocol
 
-protocol FavoritesInteracting: AnyObject {
+protocol FavoritesInteracting {
     
 }
 
-//MARK: - FavoritesInteractor
+// MARK: - FavoritesInteractor
 
 final class FavoritesInteractor {
     
-    var presenter: FavoritesPresenting? //weak
-    private var service: FavoritesServicing?
+    var presenter: FavoritesPresenting
+    private var dependenciesService: HasHttpServicesInterface
     
-    init(presenter: FavoritesPresenting?, service: FavoritesServicing?) {
+    init(presenter: FavoritesPresenting, dependenciesService: HasHttpServicesInterface) {
         self.presenter = presenter
-        self.service = service
+        self.dependenciesService = dependenciesService
     }
 }
 
-//MARK: - FavoritesInteracting
+// MARK: - FavoritesInteracting
 
-extension FavoritesInteractor: FavoritesInteracting {}
+extension FavoritesInteractor: FavoritesInteracting {
+    
+//    let favoritesService = dependencies.httpServices.makeFavoritesService()
+}

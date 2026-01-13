@@ -7,20 +7,24 @@
 
 import UIKit
 
-//MARK: - DetailsFactory
+// MARK: - DetailsFactory
 
-final class DetailsFactory {
-    @MainActor
+final class DetailsFactory: UIViewController {
     func make(navigationController: UINavigationController?) -> DetailsViewController {
-        
-        let detailsVC = DetailsViewController()
         let coordinator = DetailsCoordinator()
         coordinator.navigationController = navigationController
-        let presenter = DetailsPresenter(view: detailsVC, coordinator: coordinator)
+        
+        let presenter = DetailsPresenter(coordinator: coordinator)
+        
+        let dependencies = DependencyContainer()
+        
+        let interactor = DetailsInteractor(presenter: presenter, dependenciesService: dependencies)
+        
+        let detailsVC = DetailsViewController(interactor: interactor, dependencies: dependencies)
+        
+        presenter.view = detailsVC
         coordinator.presenter = presenter
-        let service = DetailsService()
-        let interactor = DetailsInteractor(presenter: presenter, service: service)
-        detailsVC.interactor = interactor
+        
         return detailsVC
     }
 }

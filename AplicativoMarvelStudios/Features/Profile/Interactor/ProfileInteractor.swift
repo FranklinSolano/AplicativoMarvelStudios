@@ -5,12 +5,11 @@
 //  Created by Franklin  Stilhano Solano on 23/06/25.
 //
 
-
 import UIKit
 
 // MARK: - Protocol
 
-protocol ProfileInteracting: AnyObject {
+protocol ProfileInteracting {
     func logoutUser()
 }
 
@@ -20,24 +19,25 @@ final class ProfileInteractor: ProfileInteracting {
     
     // MARK: - Properties
     
-    var presenter: ProfilePresenting? //weak
-    private var service: ProfileServicing?
+    var presenter: ProfilePresenting
+    private let dependenciesService: HasHttpServicesInterface
     
     // MARK: - Init
     
-    init(presenter: ProfilePresenting, service: ProfileServicing) {
+    init(presenter: ProfilePresenting, dependenciesService: HasHttpServicesInterface) {
         self.presenter = presenter
-        self.service = service
+        self.dependenciesService = dependenciesService
     }
     
     // MARK: - Methods
     
     func logoutUser() {
+        let profileService = dependenciesService.httpServices.makeProfileService()
         do {
-            try service?.logoutAndShowLogin()
-            presenter?.logoutSuccess()
+            try profileService.logoutAndShowLogin()
+            presenter.logoutSuccess()
         } catch {
-            presenter?.logoutFailed(error: error)
+            presenter.logoutFailed(error: error)
         }
     }
 }

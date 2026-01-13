@@ -7,20 +7,23 @@
 
 import UIKit
 
-final class LoginFactory {
-    
-    func make(navigationController: UINavigationController) -> (viewController: LoginViewController, coordinator: LoginCoordinator) {
-        
-        let loginVC = LoginViewController()
+final class LoginFactory: UIViewController {
+
+    func make(navigationController: UINavigationController) -> (viewController: LoginViewController,
+                                                                coordinator: LoginCoordinator) {
         let coordinator = LoginCoordinator()
         coordinator.navigationController = navigationController
-        let presenter = LoginPresenter(view: loginVC, coordinator: coordinator)
+        let dependencies = DependencyContainer()
+        
+        let presenter = LoginPresenter(view: nil, coordinator: coordinator)
         coordinator.presenter = presenter
-        let service = LoginService()
-        let interactor = LoginInteractor(presenter: presenter, service: service)
-        loginVC.interactor = interactor
+        
+        let interactor = LoginInteractor(presenter: presenter, dependencies: dependencies)
+        
+        let loginVC = LoginViewController(interactor: interactor, dependencies: dependencies)
+        presenter.view = loginVC
+        
         return (loginVC, coordinator)
     }
+
 }
-
-

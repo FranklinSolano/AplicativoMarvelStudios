@@ -7,33 +7,52 @@
 
 import Foundation
 
-struct HeroesModel: Codable {
-    var id: Int
-    var heroName: String
-    var imageURL: String
-    var descrepitionPerson: String
-}
-
-struct CharacterResponse: Codable {
-    let data: CharacterData
-}
-
-struct CharacterData: Codable {
-    let results: [Character]
-}
-
-struct Character: Codable {
-    let id: Int?
+struct SHCharacter: Codable {
+    let id: Int
     let name: String
-    let description: String
-    let thumbnail: Thumbnail
+    let powerstats: PowerStats
+    let biography: Biography
+    let appearance: Appearance
+    let images: SHImages
 }
 
-struct Thumbnail: Codable {
-    let path: String
-    let `extension`: String
+// MARK: - Submodels
 
-    var fullPath: String {
-        return "\(path).\(self.extension)".replacingOccurrences(of: "http://", with: "https://")
+struct PowerStats: Codable {
+    let intelligence: Int
+    let strength: Int
+    let speed: Int
+    let durability: Int
+    let power: Int
+    let combat: Int
+}
+
+struct Biography: Codable {
+    let fullName: String
+    let alterEgos: String
+    let aliases: [String]
+    let placeOfBirth: String
+    let publisher: String?
+    let alignment: String
+}
+
+struct Appearance: Codable {
+    let gender: String
+    let race: String?
+    let height: [String]
+    let weight: [String]
+}
+
+struct SHImages: Codable {
+    let extraSmall: String
+    let small: String
+    let medium: String
+    let large: String
+    
+    private enum CodingKeys: String, CodingKey {
+        case extraSmall = "xs"
+        case small      = "sm"
+        case medium     = "md"
+        case large      = "lg"
     }
 }

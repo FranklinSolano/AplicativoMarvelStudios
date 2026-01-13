@@ -8,20 +8,22 @@
 import UIKit
 
 // MARK: - Protocol
-
-protocol LoginCoordinating {
+@MainActor
+protocol LoginCoordinating: AnyObject {
     func navigateToHome()
     func navigateToForgotPassword()
     func navigateToRegister()
 }
-
+@MainActor
 final class LoginCoordinator {
     
-    var navigationController: UINavigationController? //weak
+    var navigationController: UINavigationController?
     var presenter: LoginPresenting?
-    let homeFactory = HomeFactory()
-    let favoritesFactory = FavoritesFactory()
-    let profileFactory = ProfileFactory()
+    
+    private let homeFactory = HomeFactory()
+    private let favoritesFactory = FavoritesFactory()
+    private let profileFactory = ProfileFactory()
+    
 }
 
 // MARK: - LoginCoordinating
@@ -29,21 +31,22 @@ final class LoginCoordinator {
 extension LoginCoordinator: LoginCoordinating {
     func navigateToHome() {
         guard let navigationController else { return }
-        let tabBarController = TabbarViewController(homeFactory: homeFactory, favoritesFactory: favoritesFactory, profileFactory: profileFactory)
+        let tabBarController = TabbarViewController(homeFactory: homeFactory, favoritesFactory: favoritesFactory,
+                                                    profileFactory: profileFactory)
         navigationController.setViewControllers([tabBarController], animated: true)
     }
     
     func navigateToForgotPassword() {
-        //        guard let navigationController else { return }
-        //        let forgotPassword = TabbarViewController(homeFactory: homeFactory)
-        //        navigationController.setViewControllers([tabBarController], animated: true)
+        guard let navigationController else { return }
+        let forgotPasswordFactory = ForgotPasswordFactory()
+        let forgotPasswordViewController = forgotPasswordFactory.make(navigationController: navigationController)
+        navigationController.pushViewController(forgotPasswordViewController, animated: true)
     }
     
     func navigateToRegister() {
-        //        guard let navigationController else { return }
-        //        let register = TabbarViewController(homeFactory: homeFactory)
-        //        navigationController.setViewControllers([tabBarController], animated: true)
+        guard let navigationController else { return }
+        let registerFactory = RegisterFactory()
+        let registerVC = registerFactory.make(navigationController: navigationController)
+        navigationController.pushViewController(registerVC, animated: true)
     }
-    
-    
 }

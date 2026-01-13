@@ -5,14 +5,13 @@
 //  Created by Franklin  Stilhano Solano on 06/06/25.
 //
 
-
 import UIKit
 
-//MARK: - DetailsCoordinating
+// MARK: - DetailsCoordinating
 @MainActor
 protocol DetailsCoordinating {
     func navigateBack()
-    func updateDetails(id: HeroesModel, data: [HeroesModel])
+    func updateDetails(id: SHCharacter, data: [SHCharacter])
 }
 
 // MARK: - DetailsCoordinating
@@ -21,12 +20,12 @@ final class DetailsCoordinator: DetailsCoordinating {
     
     // MARK: - Properties
     
-    var navigationController: UINavigationController?
+    weak var navigationController: UINavigationController?
     var presenter: DetailsPresenting?
     
     // MARK: - Navigation Methods
     
-    func updateDetails(id: HeroesModel, data: [HeroesModel]) {
+    func updateDetails(id: SHCharacter, data: [SHCharacter]) {
         guard let navigationController else { return }
         let detailsFactory = DetailsFactory()
         let detailsVC = detailsFactory.make(navigationController: navigationController)

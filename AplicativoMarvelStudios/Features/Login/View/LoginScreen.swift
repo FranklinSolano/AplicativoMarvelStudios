@@ -5,16 +5,15 @@
 //  Created by Franklin  Stilhano Solano on 01/05/25.
 //
 
-
-import UIKit
 import SnapKit
+import UIKit
 
 // MARK: - Protocols
 
-protocol LoginScreenProtocol: AnyObject {
-    func ActionLoginButton()
-    func ActionRegisterButton()
-    func ActionForgotPasswordButton()
+protocol LoginScreenProtocol {
+    func actionLoginButton()
+    func actionRegisterButton()
+    func actionForgotPasswordButton()
 }
 
 // MARK: - LoginScreen
@@ -23,54 +22,23 @@ final class LoginScreen: UIView {
     
     // MARK: - Properties
     
-    var delegate: LoginScreenProtocol? //weak
+    var delegate: LoginScreenProtocol?
+    private let dependencies: HasDesignSystemComponentsInterface
     
-    // MARK: - UI Elements
-    
-    lazy var emailLabel: UILabel = {
-        let label = DSLabel(text: "Email:")
-        return label
-    }()
-    
-    lazy var emailTextField: UITextField = {
-        let textField = DSTextField(placeholder: "Enter your email", isSecureTextEntry: false)
-        textField.text = "franklin@gmail.com"
-        return textField
-    }()
-    
-    lazy var passwordLabel: UILabel = {
-        let label = DSLabel(text: "Password:")
-        return label
-    }()
-    
-    lazy var passwordTextField: UITextField = {
-        let textField = DSTextField(placeholder: "Enter your password", isSecureTextEntry: true)
-        textField.text = "12345678"
-        return textField
-    }()
-    
-    lazy var forgotPasswordButton: UIButton = {
-        let button = DSButtonTitles(title: "Forgot Password?", font: DSFonts.subtitleSemibold16)
-        button.addTarget(self, action: #selector(tappedForgotPassword), for: .touchUpInside)
-        return button
-    }()
-    
-    lazy var loginButton: UIButton = {
-        let button = DSButton(title: "Login")
-        button.addTarget(self, action: #selector(tappedLogin), for: .touchUpInside)
-        return button
-    }()
-    
-    lazy var registerButton: UIButton = {
-        let button = DSButtonTitles(title: "Don't have an account? Sign up", font: DSFonts.subtitleSemibold16)
-        button.addTarget(self, action: #selector(tappedRegister), for: .touchUpInside)
-        return button
-    }()
+    private lazy var imageBackground = dependencies.designSystemComponents.makeImageView()
+    private lazy var emailLabel = dependencies.designSystemComponents.makeLabel()
+    private lazy var emailTextField = dependencies.designSystemComponents.makeTextField()
+    private lazy var passwordLabel = dependencies.designSystemComponents.makeLabel()
+    private lazy var passwordTextField = dependencies.designSystemComponents.makeTextField()
+    private lazy var forgotPasswordButton = dependencies.designSystemComponents.makeButtonTitles()
+    private lazy var loginButton = dependencies.designSystemComponents.makeButton()
+    private lazy var registerButton = dependencies.designSystemComponents.makeButtonTitles()
     
     // MARK: - Init
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(dependencies: HasDesignSystemComponentsInterface) {
+        self.dependencies = dependencies
+        super.init(frame: .zero)
         setupView()
     }
     
@@ -78,31 +46,67 @@ final class LoginScreen: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Actions
-    
-    @objc private func tappedForgotPassword() {
-        delegate?.ActionForgotPasswordButton()
-    }
-    
-    @objc private func tappedLogin() {
-        delegate?.ActionLoginButton()
-    }
-    
-    @objc private func tappedRegister() {
-        delegate?.ActionRegisterButton()
-    }
-    
     @objc private func dismissKeyboard() {
         endEditing(true)  // Fecha o teclado ao tocar fora dos campos de texto
     }
     
-    // MARK: - Outher Methods
+    // MARK: - Other Methods
     
     private func setupTapGesture() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         addGestureRecognizer(tapGesture)  // A view detecta o toque e chama o método para fechar o teclado
     }
     
+    private func configureImage() {
+        imageBackground.image = UIImage(named: "img_login_bg")
+    }
+    
+    private func configureLabels() {
+        emailLabel.setDTO(.init(text: "Email"))
+        passwordLabel.setDTO(.init(text: "Password"))
+    }
+    
+    private func configureTextFields() {
+        emailTextField.setDTO(.init(placeholder: "Enter your Email",
+                                    isSecureTextEntry: false)
+        )
+        
+        passwordTextField.setDTO(.init(placeholder: "Enter your Password",
+                                       isSecureTextEntry: true))
+        
+        emailTextField.delegate = self  // Define o delegate para o loginTextField
+        passwordTextField.delegate = self
+        emailTextField.text = "franklin@gmail.com"
+        passwordTextField.text = "12345678"
+    }
+    
+    private func configureButtons() {
+        forgotPasswordButton.setDTO(
+            .init(title: "Forgot Password", isEnable: true,
+                  font: DSFonts.subtitleSemibold16)
+        )
+        
+        forgotPasswordButton.onClick { [weak self] in
+            self?.delegate?.actionForgotPasswordButton()
+        }
+        
+        loginButton.setDTO(.init(title: "Login",
+                                 isEnable: true)
+        )
+        
+        loginButton.onClick { [weak self] in
+            self?.delegate?.actionLoginButton()
+        }
+        
+        registerButton.setDTO(.init(title: "Don't have an account? Sign up",
+                                    isEnable: true,
+                                    font: DSFonts.subtitleSemibold16)
+        )
+        
+        registerButton.onClick { [weak self] in
+            self?.delegate?.actionRegisterButton()
+        }
+    }
 }
 
 // MARK: - ViewCodeProtocol
@@ -112,16 +116,15 @@ extension LoginScreen: ViewCodeProtocol {
     // MARK: - Setup Methods
     
     func setupElements() {
-        addSubview(emailLabel)
-        addSubview(emailTextField)
-        addSubview(passwordLabel)
-        addSubview(passwordTextField)
-        addSubview(forgotPasswordButton)
-        addSubview(loginButton)
-        addSubview(registerButton)
+        [imageBackground, emailLabel, emailTextField, passwordLabel, passwordTextField,
+         forgotPasswordButton, loginButton, registerButton].forEach(addSubview)
     }
     
     func setupConstraints() {
+        
+        imageBackground.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
         
         emailLabel.snp.makeConstraints { make in
             make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(60)
@@ -152,10 +155,11 @@ extension LoginScreen: ViewCodeProtocol {
         
         loginButton.snp.makeConstraints { make in
             make.top.equalTo(forgotPasswordButton.snp.bottom).offset(20)
-            make.leading.trailing.equalToSuperview().inset(25)
             make.height.equalTo(50)
+            make.width.equalTo(185)
+            make.centerX.equalToSuperview()
         }
-        
+
         registerButton.snp.makeConstraints { make in
             make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom)
             make.centerX.equalToSuperview()
@@ -163,9 +167,11 @@ extension LoginScreen: ViewCodeProtocol {
     }
     
     func setupAdditionalConfiguration() {
+        configureImage()
+        configureLabels()
+        configureTextFields()
+        configureButtons()
         setupTapGesture()
-        emailTextField.delegate = self  // Define o delegate para o loginTextField
-        passwordTextField.delegate = self  // Define o delegate para o passwordTextField
         backgroundColor = DSColors.primaryColor
     }
 }
@@ -175,10 +181,20 @@ extension LoginScreen: ViewCodeProtocol {
 extension LoginScreen: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == emailTextField {
-            passwordTextField.becomeFirstResponder()
+            passwordTextField.becomeFirstResponder() // metodo para ir para o proximo textfield
         } else {
             textField.resignFirstResponder()
         }
         return true
+    }
+}
+
+extension LoginScreen {
+    var emailText: String? {
+        emailTextField.text
+    }
+    
+    var passwordText: String? {
+        passwordTextField.text
     }
 }

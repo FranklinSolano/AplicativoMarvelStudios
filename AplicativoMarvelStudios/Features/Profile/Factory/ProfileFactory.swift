@@ -9,20 +9,25 @@ import UIKit
 
 // MARK: - ProfileFactory
 
-final class ProfileFactory {
+final class ProfileFactory: UIViewController {
     
     // MARK: - Public Methods
     
     func make(navigationController: UINavigationController?) -> ProfileViewController {
         
-        let profileVC = ProfileViewController()
         let coordinator = ProfileCoordinator()
         coordinator.navigationController = navigationController
-        let presenter = ProfilePresenter(view: profileVC, coordinator: coordinator)
+        
+        let presenter = ProfilePresenter(coordinator: coordinator)
+        
+        let dependencies = DependencyContainer()
+        
+        let interactor = ProfileInteractor(presenter: presenter, dependenciesService: dependencies)
+        
+        let profileVC = ProfileViewController(interactor: interactor, dependencies: dependencies)
+        
+        presenter.view = profileVC
         coordinator.presenter = presenter
-        let service = ProfileService()
-        let interactor = ProfileInteractor(presenter: presenter, service: service)
-        profileVC.interactor = interactor
+        
         return profileVC
-    }
-}
+    }}

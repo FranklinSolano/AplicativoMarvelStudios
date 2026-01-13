@@ -1,0 +1,84 @@
+# ============================================
+# SwiftLint - Clean Code Configuration
+# Baseado em padrões usados no mercado iOS
+# ============================================
+disabled_rules:
+  - todo
+  - trailing_comma
+opt_in_rules:
+  - force_unwrapping
+  - implicitly_unwrapped_optional
+  - empty_count
+  - explicit_init
+  - closure_spacing
+  - redundant_nil_coalescing
+  - unused_optional_binding
+  - sorted_imports
+  - vertical_parameter_alignment_on_call
+included:
+  - AplicativoMarvelStudios
+excluded:
+  - Pods
+  - .build
+  - DerivedData
+  - DerivedDataDebug
+  - DerivedDataRelease
+# ============================================
+# Regras de estilo e qualidade
+# ============================================
+line_length:
+  warning: 120
+  error: 150
+  ignores_comments: true
+  ignores_urls: true
+function_body_length:
+  warning: 50
+  error: 80
+type_body_length:
+  warning: 300
+  error: 500
+file_length:
+  warning: 500
+  error: 800
+cyclomatic_complexity:
+  warning: 10
+  error: 20
+nesting:
+  type_level: 2
+# ============================================
+# Nomes significativos
+# ============================================
+identifier_name:
+  min_length:
+    warning: 3
+    error: 2
+  max_length:
+    warning: 40
+    error: 50
+  excluded:
+    - id
+    - url
+    - URL
+    - i
+    - j
+    - x
+    - y
+type_name:
+  min_length: 3
+  max_length: 40
+# ============================================
+# Espaçamento e formatação
+# ============================================
+trailing_whitespace:
+  ignores_empty_lines: true
+  ignores_comments: true
+vertical_whitespace:
+  max_empty_lines: 1
+opening_brace: warning
+comment_spacing: warning
+comma: warning
+mark: warning
+# ============================================
+# Reporter
+# ============================================
+reporter: "xcode"

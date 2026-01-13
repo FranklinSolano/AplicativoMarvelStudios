@@ -4,79 +4,98 @@
 //
 //  Created by Franklin  Stilhano Solano on 28/05/25.
 //
-
-import UIKit
-import SnapKit
 import SDWebImage
+import SnapKit
+import UIKit
 
 // MARK: - PersonListTableViewCell
-
 final class PersonListTableViewCell: UITableViewCell {
-    
-    // MARK: - Properties
     
     static let identifier: String = "PersonListTableViewCell"
     
-    // MARK: - UI Elements
+    // MARK: - Properties
+    private let dependencies: HasDesignSystemComponentsInterface
     
-    private lazy var imagePerson: UIImageView = {
-        let imageView = DSImageView(image: .placeholder)
-        return imageView
-    }()
-    
-    private lazy var heroName: UILabel = {
-        let label = DSLabel(text: "", textColor: DSColors.titleTextColor, font: DSFonts.subtitleSemibold16, numberOfLines: 0, textAlignment: .left)
-        return label
-    }()
-    
+    private lazy var imagePerson = dependencies.designSystemComponents.makeImageView()
+    private lazy var characterName = dependencies.designSystemComponents.makeLabel()
+    private lazy var characterSpecies = dependencies.designSystemComponents.makeLabel()
+
     // MARK: - Init
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+            // Forneça as dependências usando o Resolver ou DependencyContainer
+            self.dependencies = DependencyContainer()
+            super.init(style: .default, reuseIdentifier: reuseIdentifier)
+            setupView()
+        }
+    
+    init(dependencies: HasDesignSystemComponentsInterface) {
+        self.dependencies = dependencies
+        super.init(style: .default, reuseIdentifier: Self.identifier)
         setupView()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Outher Methods
-    
-    func setupCell(data: HeroesModel?) {
-        heroName.text = data?.heroName
+    private func configureLabels() {
+        characterName.setDTO(
+            .init(text: "",
+                  textColor: DSColors.titleTextColor,
+                  font: DSFonts.subtitleSemibold16,
+                  numberOfLines: 1,
+                  textAlignment: .left)
+        )
         
-        if let urlString = data?.imageURL, let url = URL(string: urlString) {
-            imagePerson.sd_setImage(with: url, placeholderImage: UIImage(named: "placeholder"))
-        } else {
-            imagePerson.image = UIImage(named: "placeholder")
-        }
-    }}
+        characterSpecies.setDTO(
+            .init(text: "",
+                  textColor: DSColors.titleTextColor,
+                  font: DSFonts.captionLight14,
+                  numberOfLines: 1,
+                  textAlignment: .left)
+        )
+    }
+    
+    // MARK: - Setup
+    func setupCell(data: SHCharacter) {
+        characterName.text = data.name
+        characterSpecies.text = "Super Hero" // ou remova esse label
+        imagePerson.setImage(from: data.images.large)
+    }
+}
 
 // MARK: - ViewCodeProtocol
-
 extension PersonListTableViewCell: ViewCodeProtocol {
+    
     func setupElements() {
-        addSubview(imagePerson)
-        addSubview(heroName)
+        [imagePerson, characterName, characterSpecies].forEach(contentView.addSubview)
     }
     
     func setupConstraints() {
         imagePerson.snp.makeConstraints { make in
             make.leading.equalToSuperview().offset(15)
             make.centerY.equalToSuperview()
-            make.height.equalTo(95)
-            make.width.equalTo(85)
+            make.height.equalTo(130)
+            make.width.equalTo(120)
         }
         
-        heroName.snp.makeConstraints { make in
+        characterName.snp.makeConstraints { make in
             make.leading.equalTo(imagePerson.snp.trailing).offset(15)
-            make.centerY.equalTo(imagePerson.snp.centerY)
+            make.top.equalTo(imagePerson.snp.top).offset(10)
+            make.trailing.equalToSuperview().inset(15)
         }
         
+        characterSpecies.snp.makeConstraints { make in
+            make.leading.equalTo(characterName.snp.leading)
+            make.top.equalTo(characterName.snp.bottom).offset(5)
+            make.trailing.equalToSuperview().inset(15)
+        }
     }
     
     func setupAdditionalConfiguration() {
         backgroundColor = DSColors.primaryColor
         selectionStyle = .none
+        configureLabels()
     }
 }

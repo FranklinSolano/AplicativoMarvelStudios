@@ -7,9 +7,9 @@
 
 import Foundation
 
-//MARK: - Protocol
+// MARK: - Protocol
 
-protocol FavoritesServicing: AnyObject {
+protocol FavoritesServicing {
 
 }
 

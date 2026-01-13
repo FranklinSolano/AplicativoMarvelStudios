@@ -5,9 +5,8 @@
 //  Created by Franklin  Stilhano Solano on 28/05/25.
 //
 
-
-import UIKit
 import FirebaseAuth
+import UIKit
 
 // MARK: - Protocol
 
@@ -21,19 +20,29 @@ final class ProfileViewController: UIViewController {
     
     // MARK: - Properties
     
-    var screen: ProfileScreen?
-    var interactor: ProfileInteracting?
+    typealias Dependencies = HasDesignSystemComponentsInterface
+    private let dependencies: Dependencies
+    private let screen: ProfileScreen
+    private let interactor: ProfileInteracting
+    
+    // MARK: - init
+    
+    init(interactor: ProfileInteracting, dependencies: Dependencies = DependencyContainer()) {
+        self.interactor = interactor
+        self.dependencies = dependencies
+        self.screen = ProfileScreen(dependencies: dependencies)
+        super.init(nibName: nil, bundle: nil)
+        self.screen.delegate = self
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // MARK: - Lifecycle
     
     override func loadView() {
-        screen = ProfileScreen()
-        screen?.delegate = self
         view = screen
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
     }
 }
 
@@ -41,7 +50,7 @@ final class ProfileViewController: UIViewController {
 
 extension ProfileViewController: ProfileScreenProtocol {
     func actionExitApp() {
-        interactor?.logoutUser()
+        interactor.logoutUser()
     }
 }
 
