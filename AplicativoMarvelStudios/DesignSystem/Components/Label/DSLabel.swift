@@ -42,7 +42,7 @@ protocol Labeling: UIView {
 class DSLabel: UILabel {
 
     private var dynamicTextColor: UIColor {
-        return UIColor { trait in
+        return UIColor { _ in
             return DSColors.titleTextColor
         }
     }
