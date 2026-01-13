@@ -24,9 +24,16 @@ final class DSActivityIndicatorAdapter: UIActivityIndicatorView, LoadingIndicata
         hidesWhenStopped = true
         color = DSColors.titleTextColor
         self.translatesAutoresizingMaskIntoConstraints = false
+        registerForTraitChanges()
     }
 
     required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func registerForTraitChanges() {
+        registerForTraitChanges([UITraitUserInterfaceStyle.self]) { (self: Self, _: UITraitCollection) in
+            self.color = DSColors.titleTextColor
+        }
     }
 }

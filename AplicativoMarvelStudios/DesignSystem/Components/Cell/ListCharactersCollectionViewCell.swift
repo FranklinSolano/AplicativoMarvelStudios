@@ -4,7 +4,6 @@
 //
 //  Created by Franklin  Stilhano Solano on 22/06/25.
 //
-
 import UIKit
 
 // MARK: - ListCharactersCollectionViewCell

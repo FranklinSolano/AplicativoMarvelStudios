@@ -4,21 +4,20 @@
 //
 //  Created by Franklin  Stilhano Solano on 22/07/25.
 //
-
 import UIKit
 
 // MARK: LabelDTO
 
 struct LabelDTO {
     let text: String
-    let textColor: UIColor
+    let textColor: UIColor?
     let font: UIFont
     let numberOfLines: Int
     let textAlignment: NSTextAlignment
     
     init(
         text: String,
-        textColor: UIColor = DSColors.titleTextColor,
+        textColor: UIColor? = nil, // se não passar, usamos DSColors.titleTextColor
         font: UIFont = DSFonts.titleBold18,
         numberOfLines: Int = 0,
         textAlignment: NSTextAlignment = .left
@@ -35,19 +34,34 @@ struct LabelDTO {
 
 protocol Labeling: UIView {
     func setDTO(_ dto: LabelDTO)
-    var text: String? {get set}
+    var text: String? { get set }
 }
 
 // MARK: - DSLabel
 
 class DSLabel: UILabel {
+
+    private var dynamicTextColor: UIColor {
+        return UIColor { _ in
+            return DSColors.titleTextColor
+        }
+    }
+
     func configure(_ dto: LabelDTO) {
         self.text = dto.text
-        self.textColor = dto.textColor
+        self.textColor = dto.textColor ?? dynamicTextColor
         self.font = dto.font
         self.numberOfLines = dto.numberOfLines
         self.textAlignment = dto.textAlignment
         self.translatesAutoresizingMaskIntoConstraints = false
+
+        registerForTraitChanges()
+    }
+
+    private func registerForTraitChanges() {
+        registerForTraitChanges([UITraitUserInterfaceStyle.self]) { (self: Self, _: UITraitCollection) in
+            self.textColor = self.dynamicTextColor
+        }
     }
 }
 

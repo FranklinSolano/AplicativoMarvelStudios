@@ -18,22 +18,21 @@ class DSButton: UIButton {
     }
 
     private func setupStyle() {
-        setTitleColor(dynamicButtonTextColor, for: .normal)
+        // Fundo do botão -> secundário
         backgroundColor = DSColors.secondaryColor
         clipsToBounds = true
         layer.cornerRadius = 15
         translatesAutoresizingMaskIntoConstraints = false
+
+        // Cor do texto do botão -> branco dinâmico
+        setTitleColor(DSColors.textWhiteColor, for: .normal)
     }
 
     private func registerForTraitChanges() {
+        // Atualiza cores automaticamente ao mudar o tema
         registerForTraitChanges([UITraitUserInterfaceStyle.self]) { (self: Self, _: UITraitCollection) in
-            self.setTitleColor(self.dynamicButtonTextColor, for: .normal)
-        }
-    }
-
-    private var dynamicButtonTextColor: UIColor {
-        return UIColor { trait in
-            trait.userInterfaceStyle == .dark ? .white : .black
+            self.backgroundColor = DSColors.secondaryColor
+            self.setTitleColor(DSColors.textWhiteColor, for: .normal)
         }
     }
 
@@ -43,20 +42,29 @@ class DSButton: UIButton {
 }
 
 // MARK: - DSButtonTitles
-
 class DSButtonTitles: UIButton {
-    
+
     override init(frame: CGRect = .zero) {
         super.init(frame: frame)
         setupStyle()
+        registerForTraitChanges()
     }
-    
+
     private func setupStyle() {
-        setTitleColor(DSColors.titleTextColor, for: .normal)
+        // Botão transparente
         backgroundColor = .clear
         translatesAutoresizingMaskIntoConstraints = false
+
+        // Cor do título
+        setTitleColor(DSColors.titleTextColor, for: .normal)
     }
-    
+
+    private func registerForTraitChanges() {
+        registerForTraitChanges([UITraitUserInterfaceStyle.self]) { (self: Self, _: UITraitCollection) in
+            self.setTitleColor(DSColors.titleTextColor, for: .normal)
+        }
+    }
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

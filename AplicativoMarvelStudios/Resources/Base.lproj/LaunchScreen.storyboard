@@ -16,7 +16,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" name="AccentColor"/>
+                        <color key="backgroundColor" red="0.798828125" green="0.6069335938" blue="0.2188720703" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <color key="tintColor" name="AccentColor"/>
                     </view>
                 </viewController>
